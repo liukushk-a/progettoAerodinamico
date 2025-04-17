@@ -1,0 +1,8 @@
+# VSPGEOM Tag Key File
+/Users/danielegalluzzo/progettoAerodinamico/FW_Mark1_VSPGeom.vspgeom
+3
+
+# tag#,geom#,surf#,gname,gid,ssname1,ssname2,...,ssid1,ssid2,...
+1,0,0,FuselageGeom_S,IFSLJOONNE
+2,1,0,WingGeom_S,EMVVMDTXJS
+3,1,1,WingGeom_S,EMVVMDTXJS
