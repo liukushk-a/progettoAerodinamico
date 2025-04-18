@@ -1,0 +1,55 @@
+***************************************************************************************************************************************************************************************** 
+
+# Name                   Value      Units             
+Sref_                   0.4167220 Lunit^2             
+Cref_                   0.3200000 Lunit               
+Bref_                   1.3000000 Lunit               
+Xcg_                    0.0000000 Lunit               
+Ycg_                    0.0000000 Lunit               
+Zcg_                    0.0000000 Lunit               
+Mach_                   0.0500000 no_unit             
+AoA_                    0.0000000 deg                 
+Beta_                   0.0000000 deg                 
+Rho_                    0.0023770 Munit/Lunit^3       
+Vinf_                 100.0000000 Lunit/Tunit         
+Roll__Rate              0.0000000 rad/Tunit           
+Pitch_Rate              0.0000000 rad/Tunit           
+Yaw___Rate              0.0000000 rad/Tunit           
+
+   Wing       S        Xavg      Yavg      Zavg     Chord     V/Vref      Cl        Cd        Cs        Cx        Cy       Cz        Cmx       Cmy       Cmz 
+        1   0.06400   0.32015   0.13002   0.30512   0.32011       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        1   0.23700   0.32026   0.39002   0.30511   0.32033       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        1   0.45500   0.32037   0.65002   0.30511   0.32056       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        1   0.67300   0.32049   0.91002   0.30510   0.32078       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        1   0.89100   0.32060   1.17002   0.30510   0.32100       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        2   0.06400   0.32015  -0.13002   0.30512   0.32011       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        2   0.23700   0.32026  -0.39002   0.30511   0.32033       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        2   0.45500   0.32037  -0.65002   0.30511   0.32056       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        2   0.67300   0.32049  -0.91002   0.30510   0.32078       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        2   0.89100   0.32060  -1.17002   0.30510   0.32100       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.06131   0.46494   0.06500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.23229   0.46494   0.19500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.45164   0.46494   0.32500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.67098   0.46494   0.45500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.89033   0.46494   0.58500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.06131   0.46494  -0.06500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.23229   0.46494  -0.19500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.45164   0.46494  -0.32500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.67098   0.46494  -0.45500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.89033   0.46494  -0.58500   0.35293   0.13000       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+
+
+
+Comp      Component-Name                             Mach       AoA      Beta       CL        CDi       CS       CFx       CFy       CFz       Cmx       Cmy       Cmz 
+0                                                    0.05000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000 
+1         WingGeom                                   0.05000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+2         WingGeom                                   0.05000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+3         WingGeom                                   0.05000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+4         WingGeom                                   0.05000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+5         FuselageGeom                               0.05000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000       nan       nan       nan 
+6         FuselageGeom                               0.05000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000       nan       nan       nan 
+7         FuselageGeom                               0.05000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000       nan       nan       nan 
+8         FuselageGeom                               0.05000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000       nan       nan       nan 
+
+
+
