@@ -4,7 +4,9 @@ siano scritte con misure troppo piccole, come decimi di millimetro, si possa ope
 riscalamento globale del profilo, per non avere problemi su VSP.
 Il nuovo file .dat viene salvato nella stessa cartella in cui tu lanci lo script python.
 Il codice, tra le altre cose, prende anche i file .txt e li trasforma in .dat, quindi può
-essere usato anche per quello, se non si vuole riscalare, si mette solo 1'''
+essere usato anche per quello, se non si vuole riscalare, si mette solo 1
+È importante come il file che venga dato in input abbia soltanto numeri dentro, colonne coi
+dati e non titoli o altre cose strane dentro, quelli vanno cancellati a priori'''
 
 import pandas as pd
 import numpy as np
