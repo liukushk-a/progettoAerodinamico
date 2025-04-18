@@ -28,19 +28,17 @@ DataFrame = DataFrame*riscalamento
 # Chiede all'utilizzatore se intende capovolgere il profilo
 capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
 if capovolgimento == "Y" or capovolgimento == "y":
-    DataFrame["y"] == -DataFrame["y"]
+    DataFrame["y"] = DataFrame["y"]*(-1)
 
-# Chiede all'utilizzatore di definire un nuovo nome per il file .dat e un titolo
-# da mettere dentro il file .dat in modo tale che xfoil o openVSP lo leggano
-# bene
-nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat," \
+# Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
+# funge anche da titolo d amettere nel file .dat in modo tale che xfoil o
+# openVSP lo leggano bene
+nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
                     "solo il nome: ")
-titolo = input("Inserire titolo per il file .dat (verrà messo nella prima riga): ")
-
 # Riporta il file in .dat
 DataFrame.to_csv(f"{nuovoNome}.dat", sep=" ", index=False, header=False)
 
 # Aggiungi il titolo alla prima riga del file .dat
 with open(f"{nuovoNome}.dat", "w") as f:
-    f.write(titolo + "\n")
+    f.write(nuovoNome + "\n")
     DataFrame.to_csv(f, sep=" ", index=False, header=False)
