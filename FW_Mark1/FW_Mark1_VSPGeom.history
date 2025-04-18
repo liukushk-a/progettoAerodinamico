@@ -4,9 +4,15 @@
 Sref_                   0.4167220 Lunit^2             
 Cref_                   0.3205550 Lunit               
 Bref_                   1.3000000 Lunit               
+<<<<<<< HEAD
+Xcg_                    0.2954150 Lunit               
+Ycg_                    0.0000000 Lunit               
+Zcg_                    0.3058170 Lunit               
+=======
 Xcg_                    0.2453450 Lunit               
 Ycg_                    0.0011840 Lunit               
 Zcg_                    0.4690470 Lunit               
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 Mach_                   0.0010000 no_unit             
 AoA_                    0.0000000 deg                 
 Beta_                   0.0000000 deg                 
@@ -21,7 +27,11 @@ Yaw___Rate              0.0000000 rad/Tunit
 Solver Case: 1 
 
       Iter             Mach             AoA              Beta              CLo             CLi            CLtot              CDo              CDi             CDtot              CDt            CDtot_t           CSo              CSi            CStot               L/D              E               CFxo             CFyo             CFzo             CFxi             CFyi             CFzi             CFxtot           CFytot           CFztot           CMxo             CMyo             CMzo             CMxi             CMyi             CMzi             CMxtot           CMytot           CMztot          T/QS 
+<<<<<<< HEAD
+               1   0.001000000000   0.000000000000   0.000000000000   0.000000000000              nan              nan   0.000000100083              nan              nan              nan              nan   0.000000000000              nan              nan   0.000000000000              nan   0.000000100083   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000 
+=======
                1   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000001694069              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000001694069   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
                2   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000001694069              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000001694069   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
                3   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000001694069              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000001694069   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 

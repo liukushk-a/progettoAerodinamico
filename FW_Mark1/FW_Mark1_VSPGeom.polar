@@ -1,2 +1,6 @@
       Beta             Mach             AoA             Re/1e6             CL              CDo              CDi             CDtot             CDt            CDtot_t             CS              L/D               E               CFx              CFy              CFz              CMx              CMy              CMz              CMl              CMm              CMn              FOpt 
+<<<<<<< HEAD
+  0.000000000000   0.000000000000   0.000000000000   4.000000000000              nan   0.000000100083              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan              nan   0.000000000000
+=======
   0.000000000000   0.000000000000   0.000000000000   4.000000000000             -nan   0.000001694069              nan              nan             -nan             -nan             -nan             -nan             -nan             -nan             -nan             -nan             -nan             -nan             -nan              nan             -nan              nan   0.000000000000
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857

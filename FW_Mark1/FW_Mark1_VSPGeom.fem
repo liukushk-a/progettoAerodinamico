@@ -4,9 +4,15 @@
 Sref_                   0.4167220 Lunit^2             
 Cref_                   0.3205550 Lunit               
 Bref_                   1.3000000 Lunit               
+<<<<<<< HEAD
+Xcg_                    0.2954150 Lunit               
+Ycg_                    0.0000000 Lunit               
+Zcg_                    0.3058170 Lunit               
+=======
 Xcg_                    0.2453450 Lunit               
 Ycg_                    0.0011840 Lunit               
 Zcg_                    0.4690470 Lunit               
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 Mach_                   0.0010000 no_unit             
 AoA_                    0.0000000 deg                 
 Beta_                   0.0000000 deg                 
@@ -18,6 +24,27 @@ Yaw___Rate              0.0000000 rad/Tunit
 
    Wing       X         Y         Z         Cx        Cy        Cz        CL        CD        CS 
         1   0.48110   0.65000   0.29837       nan       nan       nan       nan       nan       nan
+<<<<<<< HEAD
+        1   0.48088   0.52000   0.29842       nan       nan       nan       nan       nan       nan
+        1   0.48066   0.39000   0.29847       nan       nan       nan       nan       nan       nan
+        1   0.48044   0.26000   0.29852       nan       nan       nan       nan       nan       nan
+        1   0.48022   0.13000   0.29858       nan       nan       nan       nan       nan       nan
+        1   0.48000   0.00000   0.29863       nan       nan       nan       nan       nan       nan
+        1   0.48022  -0.13000   0.29858       nan       nan       nan       nan       nan       nan
+        1   0.48044  -0.26000   0.29852       nan       nan       nan       nan       nan       nan
+        1   0.48066  -0.39000   0.29847       nan       nan       nan       nan       nan       nan
+        1   0.48088  -0.52000   0.29842       nan       nan       nan       nan       nan       nan
+        1   0.48110  -0.65000   0.29837       nan       nan       nan       nan       nan       nan
+        2   0.53000   0.52000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000   0.39000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000   0.26000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000   0.13000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000   0.00000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000  -0.13000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000  -0.26000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000  -0.39000   0.35000       nan       nan       nan       nan       nan       nan
+        2   0.53000  -0.52000   0.35000       nan       nan       nan       nan       nan       nan
+=======
         1   0.48088   0.52000   0.29842      -nan      -nan      -nan      -nan      -nan      -nan
         1   0.48066   0.39000   0.29847      -nan      -nan      -nan      -nan      -nan      -nan
         2   0.48110  -0.65000   0.29837       nan       nan       nan       nan       nan       nan
@@ -29,5 +56,6 @@ Yaw___Rate              0.0000000 rad/Tunit
         4   0.53000  -0.26000   0.35000      -nan      -nan      -nan      -nan      -nan      -nan
         4   0.53000  -0.39000   0.35000      -nan      -nan      -nan      -nan      -nan      -nan
         4   0.53000  -0.52000   0.35000      -nan      -nan      -nan      -nan      -nan      -nan
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 
 Note: Force coefficients are NOT 2D - they are the full 3D forces, non-dimensionalized by Q * Sref 

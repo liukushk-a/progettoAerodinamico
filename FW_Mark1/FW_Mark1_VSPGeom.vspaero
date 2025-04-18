@@ -1,9 +1,15 @@
 Sref = 0.416722 
 Cref = 0.320555 
 Bref = 1.300000 
+<<<<<<< HEAD
+X_cg = 0.295415 
+Y_cg = 0.000000 
+Z_cg = 0.305817 
+=======
 X_cg = 0.245345 
 Y_cg = 0.001184 
 Z_cg = 0.469047 
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 Mach = 0.000000 
 AoA = 0.000000 
 Beta = 0.000000 
@@ -15,7 +21,7 @@ MaxTurningAngle = -1.000000
 Symmetry = NO 
 FarDist = -1.000000 
 NumWakeNodes = 64 
-WakeIters = 3 
+WakeIters = 0 
 NumberOfControlGroups = 0 
 Preconditioner = Matrix 
 Karman-Tsien Correction = N 

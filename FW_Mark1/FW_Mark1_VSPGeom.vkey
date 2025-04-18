@@ -1,10 +1,14 @@
 # VSPGEOM Tag Key File
+<<<<<<< HEAD
+/Users/danielegalluzzo/progettoAerodinamico/FW_Mark1/FW_Mark1_VSPGeom.vspgeom
+4
+=======
 /home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/FW_Mark1/FW_Mark1_VSPGeom.vspgeom
 5
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 
 # tag#,geom#,surf#,gname,gid,ssname1,ssname2,...,ssid1,ssid2,...
-1,1,0,FuselageGeom_S,IFSLJOONNE
-2,2,0,WingGeom_S,EMVVMDTXJS
-3,2,1,WingGeom_S,EMVVMDTXJS
-4,0,0,WingGeom_S,ZIJBHAZAGG
-5,0,1,WingGeom_S,ZIJBHAZAGG
+1,1,0,WingGeom_S,EMVVMDTXJS
+2,1,1,WingGeom_S,EMVVMDTXJS
+3,0,0,WingGeom_S,ZIJBHAZAGG
+4,0,1,WingGeom_S,ZIJBHAZAGG

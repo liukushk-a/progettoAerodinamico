@@ -4,9 +4,15 @@
 Sref_                   0.4167220 Lunit^2             
 Cref_                   0.3205550 Lunit               
 Bref_                   1.3000000 Lunit               
+<<<<<<< HEAD
+Xcg_                    0.2954150 Lunit               
+Ycg_                    0.0000000 Lunit               
+Zcg_                    0.3058170 Lunit               
+=======
 Xcg_                    0.2453450 Lunit               
 Ycg_                    0.0011840 Lunit               
 Zcg_                    0.4690470 Lunit               
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 Mach_                   0.0010000 no_unit             
 AoA_                    0.0000000 deg                 
 Beta_                   0.0000000 deg                 
@@ -29,11 +35,17 @@ Yaw___Rate              0.0000000 rad/Tunit
 
 
 Comp      Component-Name                             Mach       AoA      Beta       CL        CDi       CS       CFx       CFy       CFz       Cmx       Cmy       Cmz 
+<<<<<<< HEAD
+0         Not-A-Wing                                 0.00100   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+1         Wake-Sheet-1                               0.00100   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+2         Wake-Sheet-2                               0.00100   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+=======
 0         Not-A-Wing                                 0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan      -nan      -nan      -nan 
 1         Wake-Sheet-1                               0.00100   0.00000   0.00000      -nan       nan      -nan      -nan      -nan      -nan       nan       nan       nan 
 2         Wake-Sheet-2                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
 3         Wake-Sheet-3                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
 4         Wake-Sheet-4                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan      -nan      -nan      -nan 
+>>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
 
 
 
