@@ -14,7 +14,10 @@ percorso = input("Inserire il percorso del file .txt, fino al punto esatto, " \
                     "includendo il file .txt: ")
 
 # Leggi il file .txt e trasformalo in un DataFrame
-DataFrame = pd.read_csv(percorso, delim_whitespace=True, header=None, names=["x", "y"])
+DataFrame = pd.read_csv(percorso, delim_whitespace=True, header=None, names=["x", "y", "z"])
+
+# Elimino eventuali colonne di coordinate z che non servono
+del DataFrame["z"]
 
 # Chiedi all'utilizzatore di quanto vuole riscalare il profilo
 riscalamento = float(input("Inserire riscalatura del profilo: "))
