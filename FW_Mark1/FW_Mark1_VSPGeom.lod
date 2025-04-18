@@ -1,13 +1,13 @@
 ***************************************************************************************************************************************************************************************** 
 
 # Name                   Value      Units             
-Sref_                   0.4160000 Lunit^2             
-Cref_                   0.3200000 Lunit               
+Sref_                   0.4167220 Lunit^2             
+Cref_                   0.3205550 Lunit               
 Bref_                   1.3000000 Lunit               
-Xcg_                    0.0000000 Lunit               
-Ycg_                    0.0000000 Lunit               
-Zcg_                    0.0000000 Lunit               
-Mach_                   0.1000000 no_unit             
+Xcg_                    0.2453450 Lunit               
+Ycg_                    0.0011840 Lunit               
+Zcg_                    0.4690470 Lunit               
+Mach_                   0.0010000 no_unit             
 AoA_                    0.0000000 deg                 
 Beta_                   0.0000000 deg                 
 Rho_                    0.0023770 Munit/Lunit^3       
@@ -17,31 +17,23 @@ Pitch_Rate              0.0000000 rad/Tunit
 Yaw___Rate              0.0000000 rad/Tunit           
 
    Wing       S        Xavg      Yavg      Zavg     Chord     V/Vref      Cl        Cd        Cs        Cx        Cy       Cz        Cmx       Cmy       Cmz 
-        1   0.00000   0.31772   0.58500   0.30520   0.32032       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.11111   0.31765   0.45500   0.30520   0.32010       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.22222   0.31760   0.32500   0.30521   0.31987       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.33333   0.31756   0.19500   0.30521   0.31965       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.44444   0.31753   0.06500   0.30521   0.31943       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.55556   0.31753  -0.06500   0.30521   0.31943       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.66667   0.31756  -0.19500   0.30521   0.31965       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.77778   0.31760  -0.32500   0.30521   0.31987       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   0.88889   0.31765  -0.45500   0.30520   0.32010       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        1   1.00000   0.31772  -0.58500   0.30520   0.32032       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.00000   0.46418   0.45500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.14286   0.46418   0.32500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.28571   0.46418   0.19500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.42857   0.46418   0.06500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.57143   0.46418  -0.06500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.71429   0.46418  -0.19500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   0.85714   0.46418  -0.32500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-        2   1.00000   0.46418  -0.45500   0.35294   0.12937       nan       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+        1   0.00000   0.31772   0.58500   0.30520   0.32032      -nan      -nan       nan      -nan      -nan      -nan      -nan       nan       nan       nan 
+        1   1.00000   0.31765   0.45500   0.30520   0.32010      -nan      -nan       nan      -nan      -nan      -nan      -nan      -nan      -nan      -nan 
+        2   0.00000   0.31772  -0.58500   0.30520   0.32032      -nan       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+        2   1.00000   0.31765  -0.45500   0.30520   0.32010      -nan       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+        3   0.00000   0.46723   0.33592   0.35288   0.13203      -nan       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+        3   1.00000   0.46418   0.45500   0.35294   0.12937      -nan       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+        4   0.00000   0.46723  -0.33592   0.35288   0.13203      -nan       nan      -nan       nan       nan       nan       nan      -nan      -nan      -nan 
+        4   1.00000   0.46418  -0.45500   0.35294   0.12937      -nan      -nan       nan      -nan      -nan      -nan      -nan      -nan      -nan      -nan 
 
 
 
 Comp      Component-Name                             Mach       AoA      Beta       CL        CDi       CS       CFx       CFy       CFz       Cmx       Cmy       Cmz 
-0         VSPGEOM_VSPGeom                            0.10000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000       nan       nan       nan 
-1         VSPGEOM_VSPGeom                            0.10000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
-2         VSPGEOM_VSPGeom                            0.10000   0.00000   0.00000       nan       nan       nan       nan       nan       nan       nan       nan       nan 
+0         Not-A-Wing                                 0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan      -nan      -nan      -nan 
+1         Wake-Sheet-1                               0.00100   0.00000   0.00000      -nan       nan      -nan      -nan      -nan      -nan       nan       nan       nan 
+2         Wake-Sheet-2                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+3         Wake-Sheet-3                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan       nan       nan       nan 
+4         Wake-Sheet-4                               0.00100   0.00000   0.00000       nan      -nan       nan       nan       nan       nan      -nan      -nan      -nan 
 
 
 

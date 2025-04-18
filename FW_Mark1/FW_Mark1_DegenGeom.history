@@ -2,12 +2,12 @@
 
 # Name                   Value      Units             
 Sref_                   0.4167220 Lunit^2             
-Cref_                   0.3200000 Lunit               
+Cref_                   0.3205550 Lunit               
 Bref_                   1.3000000 Lunit               
-Xcg_                    0.0000000 Lunit               
-Ycg_                    0.0000000 Lunit               
-Zcg_                    0.0000000 Lunit               
-Mach_                   0.0500000 no_unit             
+Xcg_                    0.2453450 Lunit               
+Ycg_                    0.0011840 Lunit               
+Zcg_                    0.4690470 Lunit               
+Mach_                   0.0010000 no_unit             
 AoA_                    0.0000000 deg                 
 Beta_                   0.0000000 deg                 
 Rho_                    0.0023770 Munit/Lunit^3       
@@ -21,9 +21,9 @@ Yaw___Rate              0.0000000 rad/Tunit
 Solver Case: 1 
 
       Iter             Mach             AoA              Beta              CLo             CLi            CLtot              CDo              CDi             CDtot              CDt            CDtot_t           CSo              CSi            CStot               L/D              E               CFxo             CFyo             CFzo             CFxi             CFyi             CFzi             CFxtot           CFytot           CFztot           CMxo             CMyo             CMzo             CMxi             CMyi             CMzi             CMxtot           CMytot           CMztot          T/QS 
-               1   0.050000000000   0.000000000000   0.000000000000   0.000000000000              nan              nan   0.000019662499              nan              nan              nan              nan   0.000000000000              nan              nan   0.000000000000              nan   0.000019662499   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000 
-               2   0.050000000000   0.000000000000   0.000000000000   0.000000000000              nan              nan   0.000019662499              nan              nan              nan              nan   0.000000000000              nan              nan   0.000000000000              nan   0.000019662499   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000 
-               3   0.050000000000   0.000000000000   0.000000000000   0.000000000000              nan              nan   0.000019662499              nan              nan              nan              nan   0.000000000000              nan              nan   0.000000000000              nan   0.000019662499   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000   0.000000000000   0.000000000000              nan              nan              nan              nan              nan              nan   0.000000000000 
+               1   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000000918626              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000000918626   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
+               2   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000000918626              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000000918626   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
+               3   0.001000000000   0.000000000000   0.000000000000   0.000000000000             -nan             -nan   0.000000918626              nan              nan             -nan             -nan   0.000000000000             -nan             -nan   0.000000000000             -nan   0.000000918626   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000   0.000000000000   0.000000000000             -nan             -nan             -nan             -nan             -nan             -nan   0.000000000000 
 
 
 
@@ -36,7 +36,7 @@ WingGeom                                    0.000000000000
 WingGeom                                    0.000000000000  
 WingGeom                                    0.000000000000  
 WingGeom                                    0.000000000000  
-FuselageGeom                                0.000004703511  
-FuselageGeom                                0.000004703511  
-FuselageGeom                                0.000005127739  
-FuselageGeom                                0.000005127739  
+FuselageGeom                                0.000000226016  
+FuselageGeom                                0.000000226016  
+FuselageGeom                                0.000000233297  
+FuselageGeom                                0.000000233297  

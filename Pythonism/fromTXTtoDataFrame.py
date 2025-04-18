@@ -2,7 +2,9 @@
 può ottenere un dataframe con le coordinate e non un file di testo, in modo che se le coordinate
 siano scritte con misure troppo piccole, come decimi di millimetro, si possa operare un
 riscalamento globale del profilo, per non avere problemi su VSP.
-Il nuovo file .dat viene salvato nella stessa cartella in cui tu lanci lo script python. '''
+Il nuovo file .dat viene salvato nella stessa cartella in cui tu lanci lo script python.
+Il codice, tra le altre cose, prende anche i file .txt e li trasforma in .dat, quindi può
+essere usato anche per quello, se non si vuole riscalare, si mette solo 1'''
 
 import pandas as pd
 import numpy as np
@@ -20,10 +22,14 @@ riscalamento = float(input("Inserire riscalatura del profilo: "))
 # Riscalamento effettivo
 DataFrame = DataFrame*riscalamento
 
+# Chiede all'utilizzatore se intende capovolgere il profilo
+capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
+if capovolgimento == "Y" or capovolgimento == "y":
+    DataFrame["y"] == -DataFrame["y"]
+
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat e un titolo
 # da mettere dentro il file .dat in modo tale che xfoil o openVSP lo leggano
 # bene
-
 nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat," \
                     "solo il nome: ")
 titolo = input("Inserire titolo per il file .dat (verrà messo nella prima riga): ")
