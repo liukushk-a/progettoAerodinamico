@@ -1,39 +1,21 @@
 ...Comp Geom...
-<<<<<<< HEAD
-2 Num Comps
-4 Total Num Meshes
-1968 Total Num Tris
-
-Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
-    0.887      0.887      0.015      0.015  WingGeom       
-    0.348      0.348      0.002      0.002  WingGeom       
--------------------------------------------------
-    1.235      1.235      0.017      0.017  Totals         
-
-Tag_Theo_Area   Tag_Wet_Area    Tag_Name
-        0.444          0.444    WingGeom_S_Surf0
-        0.444          0.444    WingGeom_S_Surf1
-        0.174          0.174    WingGeom_S_Surf0
-        0.174          0.174    WingGeom_S_Surf1
-=======
 3 Num Comps
 5 Total Num Meshes
-2288 Total Num Tris
+2240 Total Num Tris
 
 Theo_Area   Wet_Area   Theo_Vol    Wet_Vol  Name
-    1.400      1.373      0.129      0.129  FuselageGeom   
-    0.887      0.518      0.015      0.009  WingGeom       
-    0.348      0.198      0.002      0.001  WingGeom       
+    0.163      0.141      0.004      0.003  PodGeom        
+    0.887      0.869      0.015      0.015  WingGeom       
+    0.348      0.318      0.002      0.002  WingGeom       
 -------------------------------------------------
-    2.635      2.088      0.147      0.139  Totals         
+    1.398      1.328      0.021      0.020  Totals         
 
 Tag_Theo_Area   Tag_Wet_Area    Tag_Name
-        1.400          1.373    FuselageGeom_S_Surf0
-        0.444          0.259    WingGeom_S_Surf0
-        0.444          0.259    WingGeom_S_Surf1
-        0.174          0.099    WingGeom_S_Surf0
-        0.174          0.099    WingGeom_S_Surf1
->>>>>>> a9fbb5720b89fb8059a6801df2358c4a1b239857
+        0.163          0.141    PodGeom_S_Surf0
+        0.444          0.434    WingGeom_S_Surf0
+        0.444          0.434    WingGeom_S_Surf1
+        0.174          0.159    WingGeom_S_Surf0
+        0.174          0.159    WingGeom_S_Surf1
 WARNING: 2 open meshes merged
      Merged: WingGeom
      Merged: WingGeom
