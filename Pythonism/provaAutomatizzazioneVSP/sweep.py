@@ -14,72 +14,129 @@ from multiprocessing import Pool
 # Directory in cui lo script è archiviato
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Carico la geometria
-vsp.ReadVSPFile(os.path.join(script_dir, "{}.vsp3"))
-
 # Rimuovi eventuali analisi precedenti
 vsp.DeleteAllResults()
 
+# Carico la geometria chiedendo all'utilizzatore il nome del file .vsp3
+nomeGeometria = input("Inserisci il nome del file .vsp3 (senza .vsp3): ")
+vsp.ReadVSPFile(os.path.join(script_dir, f"{nomeGeometria}.vsp3"))
+
+# Definisco i parametri che rimangono fissi (modificabili su altri script)
+Re_l = 180000
+Machinf = 0.05
+Vinf = 19.45
+Sref = 0.41600
+bref = 1.3
+cref = 0.32
+AoA = 0.0
+NCPUs = 4
+
 # L'utilizzatore sceglie i parametri
-minSweep = input("Inserisci il valore minimo di angolo di sweep: ")
-maxSweep = input("Inserisci il valore massimo di angolo di sweep: ")
-spaceSweep = input("Inserisci il numero di punti di sweep (numero intero): ")
+minSweep = float(input("Inserisci il valore minimo di angolo di sweep: "))
+maxSweep = float(input("Inserisci il valore massimo di angolo di sweep: "))
+spaceSweep = int(input("Inserisci il numero di punti di sweep (numero intero): "))
 
 # Genero il linspace
 sweeps = np.linspace(minSweep, maxSweep, spaceSweep)
 
-# Specifico la cartella di output
-output_dir = "sweepAnalysisoutput"
-os.makedirs(output_dir, exist_ok=True)
+# Specifico la cartella di output e creo suddetta cartella (dentro tale cartella, poi,
+# creerò delle cartelle in modo ricorsivo, una per ogni angolo di sweep usato)
+os.mkdir('/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput')
 
+# Mi sposto nella cartella che contiene i risultati delle analisi
+os.chdir('/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput')
 
-def run_vspaero(params):
-    span, root_chord, sweep, dihedral, iteration = params
+# Do il nome all'analisi
+analysis_name = "VSPAEROSweep" 
+vsp.SetAnalysisInputDefaults(analysis_name)
 
-    # Ensure a clean slate for OpenVSP in the child process
-    vsp.VSPRenew()
-    vsp.ClearVSPModel()
+# Trovo l'ID della geometria, perchè a quanto pare  OpenVSP funziona con l'ID
+wing_id = vsp.FindGeom("WingGeom_main", 0)
 
-    # Add wing geometry
-    wing_id = vsp.AddGeom("WING")
-    vsp.SetParmVal(wing_id, "TotalSpan", "WingGeom", span)
-    vsp.SetParmVal(wing_id, "TotalChord", "WingGeom", root_chord)
+for sweep in sweeps:
+    # Genero la cartella apposita coi risultati
+    os.mkdir(f'./sweep_{sweep}')
+
+    # Mi sposto nella cartella dove stamperò i risultati
+    os.chdir(f'/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput/sweep_{sweep}')
+    
+    # Fisso il punto di partenza della simulazione
+    vsp.SetAnalysisInputDefaults(analysis_name)
+    
+    # Imposto lo sweep
     vsp.SetParmVal(wing_id, "Sweep", "XSec_1", sweep)  # Sweep at first section
-    vsp.SetParmVal(wing_id, "Dihedral", "XSec_1", dihedral)  # Dihedral at first section
+
+    # Aggiorno la geometria
     vsp.Update()
 
-    # Save VSP model
-    vsp_file = os.path.join(output_dir, f"aircraft_model_{iteration}.vsp3")
-    vsp.WriteVSPFile(vsp_file)
+    # Imposto i parametri della simulazione
+    vsp.SetAnalysisInput(analysis_name, "Re", Re_l)
+    vsp.SetAnalysisInput(analysis_name, "Mach", Machinf)
+    vsp.SetAnalysisInput(analysis_name, "Vinf", Vinf)
+    vsp.SetAnalysisInput(analysis_name, "Sref", Sref)
+    vsp.SetAnalysisInput(analysis_name, "bref", bref)
+    vsp.SetAnalysisInput(analysis_name, "cref", cref)
+    vsp.SetDoubleAnalysisInput(analysis_name, "Alpha", AoA)
+    vsp.SetAnalysisInput(analysis_name, "NCPUs", NCPUs)
+    vsp.SetIntAnalysisInput(analysis_name, "AnalysisMethod", [vsp.VORTEX_LATTICE])
 
-    # Run aerodynamic analysis using VSPAERO
-    vsp.ComputeCompGeom( vsp.SET_ALL, False, 0 )
-    
-def main():
-    iteration = 0
-    tasks = []
+    # Eseguo l'analisi
+    res_id = vsp.ExecAnalysis(analysis_name)
 
-    # Generate parameter combinations
-    for span in SPANS:
-        for chord in chords:
-            for sweep in sweeps:
-                for dihedral in dihedrals:
-                    tasks.append((span, chord, sweep, dihedral, iteration))
-                    iteration += 1
+    # Salvo i risultati
+    vsp.WriteResultsCSVFile(res_id, "Results.csv")
 
-    # Measure execution time
-    start_time = time.time()
-
-    # Use multiprocessing to parallelize work
-    with Pool(processes=4) as pool:
-        pool.map(run_vspaero, tasks)
-
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-
-    print(f"Benchmark completed for {iteration} iterations.")
-    print(f"Total execution time: {elapsed_time:.2f} seconds.")
+    # Stampo una stringa di conferma di scrittura dei risultati
+    print(f"Risultati salvati nela cartella sweep_{sweep}")
 
 
-if __name__ == "__main__":
-    main()
+#def run_vspaero(params):
+#    span, root_chord, sweep, dihedral, iteration = params
+#
+#    # Ensure a clean slate for OpenVSP in the child process
+#    vsp.VSPRenew()
+#    vsp.ClearVSPModel()
+#
+#    # Add wing geometry
+#    wing_id = vsp.AddGeom("WING")
+#    vsp.SetParmVal(wing_id, "TotalSpan", "WingGeom", span)
+#    vsp.SetParmVal(wing_id, "TotalChord", "WingGeom", root_chord)
+#    vsp.SetParmVal(wing_id, "Sweep", "XSec_1", sweep)  # Sweep at first section
+#    vsp.SetParmVal(wing_id, "Dihedral", "XSec_1", dihedral)  # Dihedral at first section
+#    vsp.Update()
+#
+#    # Save VSP model
+#    vsp_file = os.path.join(output_dir, f"aircraft_model_{iteration}.vsp3")
+#    vsp.WriteVSPFile(vsp_file)
+#
+#    # Run aerodynamic analysis using VSPAERO
+#    vsp.ComputeCompGeom( vsp.SET_ALL, False, 0 )
+#    
+#def main():
+#    iteration = 0
+#    tasks = []
+#
+#    # Generate parameter combinations
+#    for span in SPANS:
+#        for chord in chords:
+#            for sweep in sweeps:
+#                for dihedral in dihedrals:
+#                    tasks.append((span, chord, sweep, dihedral, iteration))
+#                    iteration += 1
+#
+#    # Measure execution time
+#    start_time = time.time()
+#
+#    # Use multiprocessing to parallelize work
+#    with Pool(processes=4) as pool:
+#        pool.map(run_vspaero, tasks)
+#
+#    end_time = time.time()
+#    elapsed_time = end_time - start_time
+#
+#    print(f"Benchmark completed for {iteration} iterations.")
+#    print(f"Total execution time: {elapsed_time:.2f} seconds.")
+#
+#
+#if __name__ == "__main__":
+#    main()
