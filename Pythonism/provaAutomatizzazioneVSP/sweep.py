@@ -5,6 +5,7 @@ import sys
 #sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages")
 sys.path.append("/opt/OpenVSP/python")
 #sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp_config/openvsp_config")
+#sys.path.append("/home/liukushka/OpenVSP/build/python_api")
 
 # Librerie necessarie
 import openvsp_config
@@ -44,10 +45,10 @@ sweeps = np.linspace(minSweep, maxSweep, spaceSweep)
 
 # Specifico la cartella di output e creo suddetta cartella (dentro tale cartella, poi,
 # creerò delle cartelle in modo ricorsivo, una per ogni angolo di sweep usato)
-os.mkdir('/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput')
+os.mkdir('./sweepAnalysisoutput')
 
 # Mi sposto nella cartella che contiene i risultati delle analisi
-os.chdir('/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput')
+os.chdir('./sweepAnalysisoutput')
 
 # Do il nome all'analisi
 analysis_name = "VSPAEROSweep" 
@@ -61,7 +62,7 @@ for sweep in sweeps:
     os.mkdir(f'./sweep_{sweep}')
 
     # Mi sposto nella cartella dove stamperò i risultati
-    os.chdir(f'/home/liukushka/Desktop/Università/Magistrale/ProgettoAerodinamico/progettoAerodinamico/Pythonism/provaAutomatizzazioneVSP/sweepAnalysisoutput/sweep_{sweep}')
+    os.chdir(f'./sweep_{sweep}')
     
     # Fisso il punto di partenza della simulazione
     vsp.SetAnalysisInputDefaults(analysis_name)
@@ -80,6 +81,8 @@ for sweep in sweeps:
     vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
     vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
 
+    # Salvo la geometria corrente nella cartella dove salverò anche i risultati
+    vsp.WriteVSPFile(vsp.GetVSPFileName())
 
     # Eseguo l'analisi
     res_id = vsp.ExecAnalysis(analysis_name)
@@ -89,6 +92,9 @@ for sweep in sweeps:
 
     # Stampo una stringa di conferma di scrittura dei risultati
     print(f"Risultati salvati nela cartella sweep_{sweep}")
+
+    # Torno alla cartella principale
+    os.chdir('..')
 
 
 #def run_vspaero(params):
