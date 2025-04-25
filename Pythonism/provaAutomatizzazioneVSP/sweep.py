@@ -2,10 +2,12 @@
 
 # Mi assicuro che Python riconosca il modulo openvsp nella cartella giusta
 import sys
-sys.path.append("/home/liukushka/OpenVSP/build/python_api")
+sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp/openvsp")
+sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp_config/openvsp_config")
 
 # Librerie necessarie
-import vsp
+import openvsp_config
+import openvsp as vsp
 import os
 import numpy as np
 import time
@@ -70,15 +72,13 @@ for sweep in sweeps:
     vsp.Update()
 
     # Imposto i parametri della simulazione
-    vsp.SetAnalysisInput(analysis_name, "Re", Re_l)
-    vsp.SetAnalysisInput(analysis_name, "Mach", Machinf)
-    vsp.SetAnalysisInput(analysis_name, "Vinf", Vinf)
-    vsp.SetAnalysisInput(analysis_name, "Sref", Sref)
-    vsp.SetAnalysisInput(analysis_name, "bref", bref)
-    vsp.SetAnalysisInput(analysis_name, "cref", cref)
-    vsp.SetDoubleAnalysisInput(analysis_name, "Alpha", AoA)
-    vsp.SetAnalysisInput(analysis_name, "NCPUs", NCPUs)
-    vsp.SetIntAnalysisInput(analysis_name, "AnalysisMethod", [vsp.VORTEX_LATTICE])
+    vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Re", [Re_l])
+    vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Mach", [Machinf])
+    vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Vinf", [Vinf])
+    vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Alpha", [AoA])
+    vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
+    vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
+
 
     # Eseguo l'analisi
     res_id = vsp.ExecAnalysis(analysis_name)
