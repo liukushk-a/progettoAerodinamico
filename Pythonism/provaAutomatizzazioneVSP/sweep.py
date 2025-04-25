@@ -2,8 +2,9 @@
 
 # Mi assicuro che Python riconosca il modulo openvsp nella cartella giusta
 import sys
-sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp/openvsp")
-sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp_config/openvsp_config")
+#sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages")
+sys.path.append("/opt/OpenVSP/python")
+#sys.path.append("/home/liukushka/OpenVSP/repo/src/python_api/packages/openvsp_config/openvsp_config")
 
 # Librerie necessarie
 import openvsp_config
@@ -17,7 +18,7 @@ from multiprocessing import Pool
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Rimuovi eventuali analisi precedenti
-vsp.DeleteAllResults()
+#vsp.DeleteAllResults()
 
 # Carico la geometria chiedendo all'utilizzatore il nome del file .vsp3
 nomeGeometria = input("Inserisci il nome del file .vsp3 (senza .vsp3): ")
