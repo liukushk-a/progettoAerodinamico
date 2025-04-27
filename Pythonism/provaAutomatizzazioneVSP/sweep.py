@@ -40,10 +40,10 @@ sweeps = np.linspace(minSweep, maxSweep, spaceSweep)
 
 # Specifico la cartella di output e creo suddetta cartella (dentro tale cartella, poi,
 # creerò delle cartelle in modo ricorsivo, una per ogni angolo di sweep usato)
-os.mkdir('./sweepAnalysisoutput')
+os.mkdir('./sweepAnalysisOutput')
 
 # Mi sposto nella cartella che contiene i risultati delle analisi
-os.chdir('./sweepAnalysisoutput')
+os.chdir('./sweepAnalysisOutput')
 
 # Do il nome all'analisi
 analysis_name = "VSPAEROSweep" 
