@@ -17,6 +17,7 @@ import os
 import numpy as np
 import time
 from multiprocessing import Pool
+#from openvsp import SPAN_WSECT_DRIVER, TAPER_WSECT_DRIVER, ROOTC_WSECT_DRIVER, AREA_WSECT_DRIVER, TIPC_WSECT_DRIVER # Prova del tizio sul blog
 
 # Directory in cui lo script è archiviato
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -85,10 +86,6 @@ os.mkdir('./analysisOutput')
 # Mi sposto nella cartella che contiene i risultati delle analisi
 os.chdir('./analysisOutput')
 
-# Do il nome all'analisi
-analysis_name = "VSPAEROSinglePoint" 
-vsp.SetAnalysisInputDefaults(analysis_name)
-
 # Trovo l'ID delle geometrie
 mainWing_id = vsp.FindGeom("WingGeom_main", 0)
 secWing_id = vsp.FindGeom("WingGeom_sec", 0)
@@ -103,6 +100,9 @@ for valore in valori:
     # Quì parte la distinzione tra le varie scelte
     if parametro == 1:
 
+        # Roba del tizio sul blog per permettermi i cambi in radice (prova)
+        #vsp.SetDriverGroup(mainWing_id, 1, SPAN_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TAPER_WSECT_DRIVER)
+
         # Imposto lo sweep
         vsp.SetParmVal(mainWing_id, "Sweep", "XSec_1", valore)  # Sweep alla sezione 1
 
@@ -112,16 +112,25 @@ for valore in valori:
         # Salvo la geometria corrente nella cartella dove salverò anche i risultati
         vsp.WriteVSPFile(f"geometry_{scelta}_{valore}.vsp3")
 
-        # Imposto i parametri della simulazione
-        vsp.SetDoubleAnalysisInput("VSPAEROSinglePoint", "Re", [Re_l])
-        vsp.SetDoubleAnalysisInput("VSPAEROSinglePoint", "Mach", [Machinf])
-        vsp.SetDoubleAnalysisInput("VSPAEROSinglePoint", "Vinf", [Vinf])
-        vsp.SetDoubleAnalysisInput("VSPAEROSinglePoint", "Alpha", [AoA])
-        vsp.SetIntAnalysisInput("VSPAEROSinglePoint", "NCPUs", [NCPUs])
-        vsp.SetIntAnalysisInput("VSPAEROSinglePoint", "AnalysisMethod", [vsp.VORTEX_LATTICE])
+        # Analisi della geometria per ottenere i file necessari
+        vsp.SetAnalysisInputDefaults("VSPAERODegenGeom")
+        vsp.ExecAnalysis("VSPAERODegenGeom")
 
-        # Eseguo l'analisi
-        res_id = vsp.ExecAnalysis(analysis_name)
+        # Setto l'analisi aerodinamica
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Re", [Re_l])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Mach", [Machinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Vinf", [Vinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Sref", [Sref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Bref", [bref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Cref", [cref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Alpha", [AoA])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [5])
+
+        # Eseguo l'analisi aerodinamica
+        res_id = vsp.ExecAnalysis("VSPAEROSweep")
 
         # Salvo i risultati
         vsp.WriteResultsCSVFile(res_id, "Results.csv")
@@ -134,6 +143,9 @@ for valore in valori:
 
     elif parametro == 2:
 
+       # Roba del tizio sul blog per permettermi i cambi in radice (prova)
+        #vsp.SetDriverGroup(mainWing_id, 1, SPAN_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TAPER_WSECT_DRIVER)
+
         # Imposto il diedro
         vsp.SetParmVal(mainWing_id, "Dihedral", "XSec_1", valore)  # Diedro alla sezione 1
 
@@ -141,10 +153,27 @@ for valore in valori:
         vsp.Update()
 
         # Salvo la geometria corrente nella cartella dove salverò anche i risultati
-        vsp.WriteVSPFile(vsp.GetVSPFileName())
+        vsp.WriteVSPFile(f"geometry_{scelta}_{valore}.vsp3")
 
-        # Eseguo l'analisi
-        res_id = vsp.ExecAnalysis(analysis_name)
+        # Analisi della geometria per ottenere i file necessari
+        vsp.SetAnalysisInputDefaults("VSPAERODegenGeom")
+        vsp.ExecAnalysis("VSPAERODegenGeom")
+
+        # Setto l'analisi aerodinamica
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Re", [Re_l])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Mach", [Machinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Vinf", [Vinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Sref", [Sref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Bref", [bref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Cref", [cref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Alpha", [AoA])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [5])
+
+        # Eseguo l'analisi aerodinamica
+        res_id = vsp.ExecAnalysis("VSPAEROSweep")
 
         # Salvo i risultati
         vsp.WriteResultsCSVFile(res_id, "Results.csv")
@@ -154,12 +183,15 @@ for valore in valori:
 
         # Torno alla cartella principale
         os.chdir('..')
-    
+   
     elif parametro == 3:
 
+       # Roba del tizio sul blog per permettermi i cambi in radice (prova)
+        #vsp.SetDriverGroup(mainWing_id, 1, AREA_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TIPC_WSECT_DRIVER );
+
         # Imposto il twist sia alla radice che all'estremità alare
+        vsp.SetParmVal(mainWing_id, "Twist", "XSec_0", valore) # Twist alla radice
         vsp.SetParmVal(mainWing_id, "Twist", "XSec_1", valore)  # Twist alla sezione 1
-        vsp.SetParmVal(mainWing_id, "Twist", "XSec_2", valore)  # Twist alla sezione 2
 
         # Aggiorno la geometria
         vsp.Update()
@@ -167,8 +199,25 @@ for valore in valori:
         # Salvo la geometria corrente nella cartella dove salverò anche i risultati
         vsp.WriteVSPFile(vsp.GetVSPFileName())
 
-        # Eseguo l'analisi
-        res_id = vsp.ExecAnalysis(analysis_name)
+        # Analisi della geometria per ottenere i file necessari
+        vsp.SetAnalysisInputDefaults("VSPAERODegenGeom")
+        vsp.ExecAnalysis("VSPAERODegenGeom")
+
+        # Setto l'analisi aerodinamica
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Re", [Re_l])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Mach", [Machinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Vinf", [Vinf])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Sref", [Sref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Bref", [bref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Cref", [cref])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "Alpha", [AoA])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [5])
+
+        # Eseguo l'analisi aerodinamica
+        res_id = vsp.ExecAnalysis("VSPAEROSweep")
 
         # Salvo i risultati
         vsp.WriteResultsCSVFile(res_id, "Results.csv")
