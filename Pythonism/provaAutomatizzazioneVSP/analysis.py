@@ -48,6 +48,8 @@ print("5. Coordinate Z secondary wing (di default si trova a +0.35 sull'asse Z)"
 print("6. Sweep secondary wing")
 print("7. Dihedral secondary wing")
 print("8. Twist secondary wing")
+print("NOTA BENE: se cambi la posizione dell'ala secondaria, il cambiamento che fai è assoluto, " \
+        "quindi se metti 0.1 sulla x, non avrai l'ala a 0.1, ma a 0.4 + 0.1 = 0.5 ")
 
 # L'utilizzatore sceglie il parametro da variare
 parametro = int(input("Inserire il numero corrispondente al parametro da variare: "))
@@ -234,7 +236,7 @@ for valore in valori:
         #vsp.SetDriverGroup(mainWing_id, 1, AREA_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TIPC_WSECT_DRIVER );
 
         # Imposto la coordinata X della wing secondaria
-        vsp.SetParmVal(secWing_id, "X_Rel_Location", "XForm", valore) # Notare che per le posizioni usi XForm
+        vsp.SetParmVal(secWing_id, "X_Rel_Location", "XForm", 0.4 + valore) # Notare che per le posizioni usi XForm
 
         # Aggiorno la geometria
         vsp.Update()
@@ -277,7 +279,7 @@ for valore in valori:
         #vsp.SetDriverGroup(mainWing_id, 1, AREA_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TIPC_WSECT_DRIVER );
 
         # Imposto la coordinata X della wing secondaria
-        vsp.SetParmVal(secWing_id, "Z_Rel_Location", "XForm", valore) # Notare che per le posizioni usi XForm
+        vsp.SetParmVal(secWing_id, "Z_Rel_Location", "XForm", 0.35 + valore) # Notare che per le posizioni usi XForm
 
         # Aggiorno la geometria
         vsp.Update()
