@@ -1,5 +1,5 @@
 '''Lo script deve essere eseguito nella stessa cartella in cui è presente il file .vsp3
-Ricordarsi di cancellare la cartella di output di eventuali precedentia analisi
+Ricordarsi di cancellare la cartella di output di eventuali precedenti analisi
 In osstanza ciò che ho intenzione di fare adesso è estendere il codice dello script
 sweep.py in modo tale che sia l'utilizzatore a scegliere che parametro cambiare tramite
 un input. In questo modo, l'analisi non sarà più limitata solo all'angolo di sweep, ma
