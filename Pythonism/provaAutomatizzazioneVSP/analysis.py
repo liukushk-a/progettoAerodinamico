@@ -83,10 +83,10 @@ valori = np.linspace(startValue, endValue, spacing)
 
 # Specifico la cartella di output e creo suddetta cartella (dentro tale cartella, poi,
 # creerò delle cartelle in modo ricorsivo, una per ogni angolo di sweep usato)
-os.mkdir('./analysisOutput')
+os.mkdir(f'./analysisOutput{scelta}')
 
 # Mi sposto nella cartella che contiene i risultati delle analisi
-os.chdir('./analysisOutput')
+os.chdir(f'./analysisOutput{scelta}')
 
 # Trovo l'ID delle geometrie
 mainWing_id = vsp.FindGeom("WingGeom_main", 0)
