@@ -2,7 +2,13 @@
 cartella generale e navigare in tutte le cartelle dentro la cartella di analisysOutput, per
 estrarre i risultati da ogni analisi, in ogni cartella e compararli tra di loro, in modo
 da saper subito quale configurazione ci dà i risultati migliori.
-Affinchè questo script funzioni, deve essere runnato NELLA STESSA CARTELLA DI analysis.py '''
+Affinchè questo script funzioni, deve essere runnato NELLA STESSA CARTELLA DI analysis.py.
+
+Note tecniche: non so come mai ma ho dovuto usare il metodo os.path.join per entrare
+nelle varie cartelle, per motivi sconosciuti al genere umano, se uso os.chidir, è come
+se python non riconoscesse che io intendo entrare solo nelle cartelle, perchè è chiaro
+che non posso entrare nei file .csv, ma solo nelle cartelle che contengono i file .csv, 
+ma in ogni caso non vuole funzionare, quindi ho dovuto fare sta modifica.'''
 
 import re
 import pandas as pd
@@ -24,7 +30,7 @@ directoryDiPartenza = os.getcwd()
 for folder in os.listdir(directoryDiPartenza):
 
     # Mi sposto nella cartella analysisOutput... del caso
-    os.chdir(f'./{folder}')
+    folder_path = os.path.join(directoryDiPartenza, folder)
 
     # Ottengo dove mi trovo
     directoryAnalysisOutput = os.getcwd()
@@ -33,7 +39,7 @@ for folder in os.listdir(directoryDiPartenza):
     for subfolder in os.listdir(directoryAnalysisOutput):
 
         # Navigo dentro ogni subfolder
-        os.chdir(f'./{subfolder}')
+        folder_path = os.path.join(directoryAnalysisOutput, subfolder)
 
         # Ottengo dove mi trovo
         directorySubfolder = os.getcwd()
@@ -43,7 +49,7 @@ for folder in os.listdir(directoryDiPartenza):
             if file.endswith(".csv"):
                 
                 # Apro il file di risultati e leggo le righe
-                with open("./analysisOutput/Sweep_main_wing_0.0/Results.txt", "r") as file:
+                with open("Results.csv", "r") as file:
                     lines = file.readlines()
 
                 # Ricerco la combinazione di lettere, caratteri speciali e numeri che mi interessa
@@ -71,6 +77,11 @@ for folder in os.listdir(directoryDiPartenza):
                     
                     # Aggiungo la nuova riga al dataframe
                     df = pd.concat([df, newRow], ignore_index=True)
+
+                    print(df)
+
+# Stampo il dataframe finale
+print(df)
 
 
 
