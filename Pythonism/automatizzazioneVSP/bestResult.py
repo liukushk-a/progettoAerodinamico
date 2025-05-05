@@ -83,7 +83,7 @@ for folder in os.listdir(directoryDiPartenza):
                                 CL = float(coeffPortanzaTotale.group(1))
 
                                 # Creo un esempio di funzione obiettivo che voglio ottimizzare
-                                funzioneObiettivo = abs(CL)*0.5 + CDtot
+                                funzioneObiettivo = abs(CL) + 0.2*CDtot
 
                                 # Creo nuove righe per il dataframe. Aggiungo il sort_values per
                                 # ordinare il dataframe in base alla funzione obiettivo
@@ -96,7 +96,7 @@ for folder in os.listdir(directoryDiPartenza):
                                 df = pd.concat([df, newRow], ignore_index=True)
 
 # Stampo il dataframe finale
-# print(df)
+print(df)
 
 # Trovo il valore massimo della funzione obiettivo
 bestResult = df['Funzione obiettivo'].max()
