@@ -9,12 +9,12 @@ chord = 1;
 
 %% Wing Airfoil Generation - NACA 3310
 
-alpha_w = 2.5*pi/180;
+alpha_w = 0*pi/180;
 U_inf_w = [U_inf_abs*cos(alpha_w), U_inf_abs*sin(alpha_w)];
-M_w = 3;
-P_w = 3;
-SS_w = 10;
-n_panels_surf = 50;
+M_w = 6;
+P_w = 6;
+SS_w = 15;
+n_panels_surf = 100;
 n_panels_tot = n_panels_surf*2;
 
 [x_us_w, y_us_w, x_ls_w, y_ls_w, x_ml_w, y_ml_w, x_cl_w, y_cl_w] = NACA_4d_gen (M_w, P_w, SS_w, n_panels_surf);
@@ -281,8 +281,16 @@ plot(xc_w,-Cp_w,'r')
 xlabel('x')
 ylabel('-Cp')
 
-% Calcolo dell'angolo di incidenza indotta per l'ala
-alpha_ind_w = atan(U_w(:,2) ./ U_inf_w(1)); % Angolo in radianti
+% Calcolo della derivata della linea media al bordo d'uscita
+dy_dx_exit_us = (y_us_w(end) - y_us_w(end-1)) / (x_us_w(end) - x_us_w(end-1)); % Tangente al dorso
+dy_dx_exit_ls = (y_ls_w(end) - y_ls_w(end-1)) / (x_ls_w(end) - x_ls_w(end-1)); % Tangente al ventre
+
+% Calcolo degli angoli delle tangenti
+theta_us = atan(dy_dx_exit_us); % Angolo della tangente al dorso
+theta_ls = atan(dy_dx_exit_ls); % Angolo della tangente al ventre
+
+% Calcolo della bisettrice degli angoli
+alpha_ind_w = (theta_us + theta_ls) / 2; % Angolo in radianti
 
 %% Compute Velocity, Cp and Cl - Tail
 
