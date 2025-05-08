@@ -2,7 +2,6 @@ clear
 close all
 clc
 
-tic
 
 U_inf_abs = 1;
 chord = 1;
