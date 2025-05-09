@@ -1,0 +1,16 @@
+LISTA AIRFOILS: (sono nella cartella profili, insieme ad altri)
+- NACA 6408
+- NACA 6508
+- NACA 5406
+
+- NACA 45008
+
+- S1223
+- S4083
+- S1210
+- SD7037
+
+
+
+Nota: la rotazione deve essere fatta rispetto a un punto molto vicino al LE (es. 2-5%LE) e prendendo in considerazione la tangente al ventre
+
