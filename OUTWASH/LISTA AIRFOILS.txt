@@ -10,7 +10,7 @@ LISTA AIRFOILS: (sono nella cartella profili, insieme ad altri)
 - S1210
 - SD7037
 
-
+-BE092
 
 Nota: la rotazione deve essere fatta rispetto a un punto molto vicino al LE (es. 2-5%LE) e prendendo in considerazione la tangente al ventre
 
