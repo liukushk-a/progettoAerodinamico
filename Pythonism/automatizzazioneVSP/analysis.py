@@ -38,6 +38,10 @@ bref = 1.3
 cref = 0.32
 AoA = 0
 NCPUs = 8
+farDist = 20
+wakeNumIter = 16
+numWakeNodes = 128
+groundHeight = 0.5
 
 # Faccio capire all'utilizzatore che numeri corrispondono ai parametri
 print("1. Sweep main wing")
@@ -127,12 +131,16 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
+
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -175,12 +183,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])        
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -224,12 +235,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -272,12 +286,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -320,12 +337,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -368,12 +388,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -416,12 +439,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
@@ -465,12 +491,15 @@ for valore in valori:
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaStart", [0.0])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "AlphaEnd", [0.0])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AlphaNpts", [1])
-        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [0.03])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "GroundEffectToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "GroundEffect", [groundHeight])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NCPUs", [NCPUs])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "AnalysisMethod", [vsp.VORTEX_LATTICE])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [20])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [64])
+        #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
         res_id = vsp.ExecAnalysis("VSPAEROSweep")
