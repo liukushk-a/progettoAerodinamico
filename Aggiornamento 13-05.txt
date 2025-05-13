@@ -18,5 +18,28 @@ VSP:
 
 SCRIPT: 
 1. Pre-processing AoA: 
-	- rendere automatizzata il file path 
+	- rendere automatizzata il file path (usa dat)
+	- per il resto funziona 
+
+2. Calcolo Deviazione Flusso: 
+	- creare cartella e prendere profili tutti da li (usa dat)
+	- angolo al TE 
+	- sistemare anche gli altri 
+
+3. Post Processing
+	- Usiamo XFLR5
+	- Paretiamo con : Xtr vs. Cd vs. angolo di deviazione del flusso 
+
+4. Calcolo Deviazione Flusso n°2:
+	- Scalare profilo
+	- Scelta del punto sul dorso (intanto 20%c, poi vediamo)
+	- Calcolo della tangente in quel punto 
+	- Allineamento della tangente 
+	- Ricalcolo dell'angolo totale di deviazione 
+NB. Per il momento stesso profilo, poi combinazioni 
 	
+
+
+
+
+

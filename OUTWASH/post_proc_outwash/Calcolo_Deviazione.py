@@ -1,8 +1,45 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+# Modifica il percorso per puntare alla cartella profili nel livello superiore
+profili_path = os.path.join(os.path.dirname(__file__), '..', 'profili')
+
+# Crea la cartella se non esiste
+if not os.path.exists(profili_path):
+    os.makedirs(profili_path)
+    print(f"Cartella 'profili' creata in: {profili_path}")
+    print("Inserisci i tuoi file .dat nella cartella appena creata")
+    exit()
+
+# Lista tutti i file .dat nella cartella profili
+dat_files = [f for f in os.listdir(profili_path) if f.endswith('.dat')]
+
+if not dat_files:
+    print("Nessun file .dat trovato nella cartella 'profili'")
+    exit()
+
+# Puoi scegliere il file da analizzare
+print("File disponibili:")
+for i, file in enumerate(dat_files):
+    print(f"{i+1}. {file}")
+
+# Chiedi all'utente quale file vuole analizzare
+while True:
+    try:
+        selection = int(input("\nSeleziona il numero del file da analizzare: ")) - 1
+        if 0 <= selection < len(dat_files):
+            selected_file = dat_files[selection]
+            break
+        else:
+            print("Selezione non valida. Riprova.")
+    except ValueError:
+        print("Inserisci un numero valido.")
+
+# Carica il profilo selezionato
+data = np.loadtxt(os.path.join(profili_path, selected_file))
 
 # 1. Carica il profilo e dividilo in upper e lower
-data = np.loadtxt('S1223.dat')
 x = data[:, 0]
 y = data[:, 1]
 
@@ -34,8 +71,13 @@ def calculate_camber_deviation(x_us, y_us, x_ls, y_ls, alpha_deg, num_points=5):
     
     return total_deviation, camber_fit
 
-# Angolo di attacco desiderato
-alpha_deg = 0  # modifica questo valore per cambiare l'angolo di attacco
+# Chiedi all'utente l'angolo di attacco
+while True:
+    try:
+        alpha_deg = float(input("\nInserisci l'angolo di attacco (in gradi): "))
+        break
+    except ValueError:
+        print("Inserisci un numero valido.")
 
 # Calcola l'angolo totale di deviazione
 total_angle, camber_fit = calculate_camber_deviation(x_us, y_us, x_ls, y_ls, alpha_deg)
