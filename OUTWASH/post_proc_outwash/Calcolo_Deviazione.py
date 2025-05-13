@@ -90,19 +90,6 @@ def rotate_airfoil(x, y, angle):
 
 x_rot, y_rot = rotate_airfoil(x, y, total_angle)
 
-# Plot
-plt.figure(figsize=(12, 8))
-plt.plot(x, y, 'b-', label='Airfoil')
-
-
-# Plot settings
-plt.axis('equal')
-plt.grid(True)
-plt.legend()
-plt.title('Airfoil Profile Plot')
-plt.xlabel('x/c')
-plt.ylabel('y/c')
-
 # 4. Stampa l'angolo di deviazione totale
 total_angle_deg = total_angle * 180 / np.pi
 print(f'Total deviation angle: {total_angle_deg:.2f}°')
