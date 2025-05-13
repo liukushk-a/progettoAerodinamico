@@ -49,6 +49,19 @@ y_us = y[:idx_min]
 x_ls = x[idx_min:]
 y_ls = y[idx_min:]
 
+# 2. Scala il profilo del 70%
+scale_factor = 0.7
+x_us_scaled = x_us * scale_factor
+y_us_scaled = y_us * scale_factor
+x_ls_scaled = x_ls * scale_factor
+y_ls_scaled = y_ls * scale_factor
+
+# 3. Trova il punto al 20% della corda sul dorso
+target_x = 0.2  # 20% della corda
+idx_20 = np.argmin(np.abs(x_us - target_x))
+x_20 = x_us[idx_20]
+y_20 = y_us[idx_20]
+
 # 2. Calcola l'angolo di deviazione dalla linea media
 def calculate_camber_deviation(x_us, y_us, x_ls, y_ls, alpha_deg, num_points=5):
     # Interpola i punti del dorso e ventre per avere x comuni
@@ -89,19 +102,6 @@ def rotate_airfoil(x, y, angle):
     return x_rot, y_rot
 
 x_rot, y_rot = rotate_airfoil(x, y, total_angle)
-
-# Plot
-plt.figure(figsize=(12, 8))
-plt.plot(x, y, 'b-', label='Airfoil')
-
-
-# Plot settings
-plt.axis('equal')
-plt.grid(True)
-plt.legend()
-plt.title('Airfoil Profile Plot')
-plt.xlabel('x/c')
-plt.ylabel('y/c')
 
 # 4. Stampa l'angolo di deviazione totale
 total_angle_deg = total_angle * 180 / np.pi
