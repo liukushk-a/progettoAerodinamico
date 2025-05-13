@@ -97,7 +97,6 @@ def rotation(polygrade,rot_location,x_camber,y_camber):
 
 ## -----------------------------------------------------------------------------------------
 
-<<<<<<< HEAD
 #file_path = "/Users/danielegalluzzo/progettoAerodinamico/OUTWASH/profili/s1210.dat" 
 
 Tk().withdraw()  # Nasconde la finestra principale
@@ -105,9 +104,6 @@ file_path = askopenfilename(title="Seleziona il file .dat", filetypes=[("DAT fil
 
 if not file_path:
     raise FileNotFoundError("Nessun file selezionato")
-=======
-file_path = "C:\Users\silvi\OneDrive\Documenti\GitHub\progettoAerodinamico\OUTWASH\profili\naca6408.dat"
->>>>>>> 701ab6b8058fbdac3e6585d9e75be92625e01b06
 
 data = np.loadtxt(file_path)
 
