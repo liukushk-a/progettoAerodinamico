@@ -1,0 +1,22 @@
+VSP:
+1. Naso/Muso: 
+	- Incicciottirlo leggermente e alzarlo (nei limiti di non impazzirci)
+
+2. Main: 
+	- Profilo ancora da decidere, per il momento stiamo fermi un sec 
+
+3. Flap secondario:
+	-  Profilo ancora da decidere, per il momento stiamo fermi un sec
+
+4. Endplate: 
+	- Naca 0001: non li tocchiamo più
+
+5. Outwash:
+	- 1st case: Flap singolo "lungo" 
+	- 2nd case: 2 Flap accoppiati più corti 
+
+
+SCRIPT: 
+1. Pre-processing AoA: 
+	- rendere automatizzata il file path 
+	
