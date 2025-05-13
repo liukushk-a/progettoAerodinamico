@@ -50,7 +50,15 @@ def load_txt_files(folder_path):
     
     return data_dict
 
-def plot_data(data_dict):
+def plot_data(data_dict, folder_path):
+    # Create Results directory in profili folder
+    results_path = os.path.join(os.path.dirname(folder_path), 'results')
+    if not os.path.exists(results_path):
+        os.makedirs(results_path)
+    
+    # Get folder name from path
+    folder_name = os.path.basename(folder_path)
+    
     # Dizionari per salvare i dati separati
     alphas = {}
     y_values = {}
@@ -74,8 +82,8 @@ def plot_data(data_dict):
         print(f"Valore al 30%: {target_xtr:.4f}")
         print(f"Alpha corrispondente: {alpha_30_percent[filename]:.2f} gradi")
     
-    # Crea una figura con subplots
-    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+    # Crea i subplots con dimensione fissa
+    fig, axs = plt.subplots(2, 2, figsize=(16, 9))
     fig.suptitle('Analisi dei dati', fontsize=16)
     
     # Converti axs in array 1D per facilità d'uso
@@ -92,7 +100,13 @@ def plot_data(data_dict):
 
     # Aggiusta il layout
     plt.tight_layout()
-    plt.show()
+    
+    # Save the plot in results folder
+    plot_filename = os.path.join(results_path, f'analysis_{folder_name}.png')
+    plt.savefig(plot_filename, dpi=300, bbox_inches='tight')
+    print(f"\nPlot saved as: {plot_filename}")
+    
+    plt.close()  # Chiude la figura senza mostrarla
     
     return alphas, y_values, alpha_30_percent
 
@@ -102,15 +116,24 @@ def main():
     
     if not folder_path:
         print("Nessuna cartella selezionata")
-        return
+        return None, None, None, None
     
     data_dict = load_txt_files(folder_path)
     
     if data_dict:
         print(f"\nCaricati {len(data_dict)} file con successo")
         # Plot dei dati
-        alphas, y_values, alpha_30_percent = plot_data(data_dict)
+        alphas, y_values, alpha_30_percent = plot_data(data_dict, folder_path)
         return data_dict, alphas, y_values, alpha_30_percent
+    else:
+        return None, None, None, None
 
 if __name__ == "__main__":
-    data, alphas, y_values, alpha_30_percent = main()
+    try:
+        data, alphas, y_values, alpha_30_percent = main()
+        if data is not None:
+            print("\nAnalisi completata con successo!")
+        else:
+            print("\nNessun dato da analizzare.")
+    except Exception as e:
+        print(f"\nErrore durante l'esecuzione: {str(e)}")
