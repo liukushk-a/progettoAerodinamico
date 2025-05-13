@@ -86,7 +86,7 @@ def rotation(polygrade,rot_location,x_camber,y_camber):
 
 ## -----------------------------------------------------------------------------------------
 
-file_path = "/Users/danielegalluzzo/progettoAerodinamico/OUTWASH/profili/naca6408.dat" 
+file_path = "C:\Users\silvi\OneDrive\Documenti\GitHub\progettoAerodinamico\OUTWASH\profili\naca6408.dat"
 
 data = np.loadtxt(file_path)
 
