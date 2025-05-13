@@ -1,6 +1,8 @@
 import numpy as np 
 import matplotlib.pyplot as plt 
 import numpy.polynomial.polynomial as Polynomial 
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 plt.style.use('fivethirtyeight')
 
 def find_rot_location(rot_location,x_camber): 
@@ -21,8 +23,17 @@ def camber_line(data):
     #find the coordinates
     x_upper = data[0:mp+1,0]
     x_lower = data[mp:,0]
+    # y_upper = data[0:mp+1,1]
+    # y_lower = data[mp:,1]
     y_upper = data[0:mp+1,1]
     y_lower = data[mp:,1]
+
+    # Allinea le lunghezze
+    min_len = min(len(y_upper), len(y_lower))
+    y_upper = y_upper[:min_len]
+    y_lower = y_lower[:min_len]
+
+    x_upper = data[0:mp+1,0][:min_len] 
 
     #min_len = min(len(x_upper), len(x_lower))
     x_camber = x_upper  # si assume che upper e lower abbiano stessi x
@@ -86,7 +97,13 @@ def rotation(polygrade,rot_location,x_camber,y_camber):
 
 ## -----------------------------------------------------------------------------------------
 
-file_path = "C:\Users\silvi\OneDrive\Documenti\GitHub\progettoAerodinamico\OUTWASH\profili\naca6408.dat"
+#file_path = "/Users/danielegalluzzo/progettoAerodinamico/OUTWASH/profili/s1210.dat" 
+
+Tk().withdraw()  # Nasconde la finestra principale
+file_path = askopenfilename(title="Seleziona il file .dat", filetypes=[("DAT files", "*.dat")])
+
+if not file_path:
+    raise FileNotFoundError("Nessun file selezionato")
 
 data = np.loadtxt(file_path)
 
