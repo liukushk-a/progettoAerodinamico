@@ -97,8 +97,18 @@ total_angle, camber_fit = calculate_camber_deviation(x_us, y_us, x_ls, y_ls, alp
 
 # 3. Ruota il profilo
 def rotate_airfoil(x, y, angle):
-    x_rot = x * np.cos(-angle) - y * np.sin(-angle)
-    y_rot = x * np.sin(-angle) + y * np.cos(-angle)
+    # Translate to make LE the origin
+    x_translated = x - x[0]
+    y_translated = y - y[0]
+    
+    # Rotate around LE (note: angle is positive when LE goes up)
+    x_rot = x_translated * np.cos(angle) - y_translated * np.sin(angle)
+    y_rot = x_translated * np.sin(angle) + y_translated * np.cos(angle)
+    
+    # Translate back
+    x_rot = x_rot + x[0]
+    y_rot = y_rot + y[0]
+    
     return x_rot, y_rot
 
 x_rot, y_rot = rotate_airfoil(x, y, total_angle)
@@ -107,5 +117,15 @@ x_rot, y_rot = rotate_airfoil(x, y, total_angle)
 total_angle_deg = total_angle * 180 / np.pi
 print(f'Total deviation angle: {total_angle_deg:.2f}°')
 
+# Plot dei profili
+plt.figure(figsize=(10, 6))
+plt.plot(x, y, 'b-', label='Profilo originale')
+plt.plot(x_rot, y_rot, 'r--', label=f'Profilo ruotato ({total_angle_deg:.1f}°)')
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.title('Profilo originale e ruotato')
+plt.xlabel('x')
+plt.ylabel('y')
 plt.show()
 
