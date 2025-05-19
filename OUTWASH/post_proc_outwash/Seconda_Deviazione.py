@@ -134,6 +134,7 @@ while True:
     except ValueError:
         print("Inserisci un numero valido.")
 
+'''
 # Chiedi all'utente l'angolo di deflessione per il profilo scalato
 while True:
     try:
@@ -142,6 +143,7 @@ while True:
         break
     except ValueError:
         print("Inserisci un numero valido.")
+'''
 
 # Ruota il profilo originale
 x_rotated_orig, y_rotated_orig = rotate_profile(x, y, alpha_rad)
@@ -162,14 +164,15 @@ idx_20_scaled = np.argmin(np.abs(x_us_scaled - target_x_scaled))
 x_20_scaled = x_us_scaled[idx_20_scaled]
 y_20_scaled = y_us_scaled[idx_20_scaled]
 
-# Posiziona il profilo scalato
-x_us_shifted = x_us_scaled + te_x + 0.1
+# Posiziona il profilo scalato in modo che la distanza tra i punti delle tangenti sia 0.3c del profilo scalato
+offset_x = 0.3 * scale_factor  # distanza = 0.3 della corda del profilo scalato
+x_us_shifted = x_us_scaled + te_x + offset_x
 y_us_shifted = y_us_scaled + te_y
-x_ls_shifted = x_ls_scaled + te_x + 0.1
+x_ls_shifted = x_ls_scaled + te_x + offset_x
 y_ls_shifted = y_ls_scaled + te_y
 
 # Trova il punto al 20% del profilo scalato traslato
-x_20_shifted = x_20_scaled + te_x + 0.1
+x_20_shifted = x_20_scaled + te_x + offset_x  # usa offset_x invece di 0.1
 y_20_shifted = y_20_scaled + te_y
 
 # Calcola la tangente al trailing edge del profilo originale RUOTATO
@@ -243,6 +246,18 @@ x_us_final, y_us_final = rotate_profile(x_us_shifted, y_us_shifted, rotation_ang
 x_ls_final, y_ls_final = rotate_profile(x_ls_shifted, y_ls_shifted, rotation_angle_rad,
                                       center_x=x_20_shifted, center_y=y_20_shifted)
 
+# Calcola la y della tangente originale nel punto x_20_shifted
+y_tangente_orig_su_20 = slope_original * (x_20_shifted - te_x) + te_y
+
+# Calcola la traslazione verticale necessaria
+idx_20_final = np.argmin(np.abs(x_us_final - x_20_shifted))
+y_20_final = y_us_final[idx_20_final]
+delta_y = y_tangente_orig_su_20 - y_20_final
+
+# Applica la traslazione verticale
+y_us_final = y_us_final + delta_y
+y_ls_final = y_ls_final + delta_y
+
 # Calcola la tangente al 20% del profilo scalato dopo la rotazione
 idx_20_final = np.argmin(np.abs(x_us_final - x_20_shifted))
 slope_scaled = calculate_tangent(x_us_final, y_us_final, idx_20_final)
@@ -258,12 +273,12 @@ slope_original = calculate_tangent(x_rotated_orig, y_rotated_orig, 0)  # tangent
 x_tangent_orig, y_tangent_orig = plot_tangent_line(te_x, te_y, slope_original, length=0.2)
 
 # Usa la stessa pendenza per la tangente del profilo scalato
-x_tangent_scaled, y_tangent_scaled = plot_tangent_line(x_20_shifted, y_20_shifted, slope_original, length=0.2)
+x_tangent_scaled, y_tangent_scaled = plot_tangent_line(x_20_shifted, y_tangente_orig_su_20, slope_original, length=0.2)
 
 # Plot delle tangenti
 plt.plot(x_tangent_orig, y_tangent_orig, 'g-', label='Tangente TE originale')
 plt.plot(x_tangent_scaled, y_tangent_scaled, 'm-', label='Tangente 20% scalato')
-plt.plot(x_20_shifted, y_20_shifted, 'ko', label='Punto di rotazione (0.2c)')
+plt.plot(x_20_shifted, y_tangente_orig_su_20, 'ko', label='Punto di rotazione (0.2c)')
 
 plt.axis('equal')
 plt.grid(True)
