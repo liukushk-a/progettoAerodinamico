@@ -117,6 +117,55 @@ delta_y = y_tangente_orig_su_20 - y_20_final
 y_us_final = y_us_final + delta_y
 y_ls_final = y_ls_final + delta_y
 
+# --- Distanza obliqua fissa tra TE originale e 20% profilo scalato ---
+d_obliqua = -0.2 * scale_factor  # 0.3 della corda del secondo profilo
+
+# --- Calcola la posizione iniziale del punto 20% profilo scalato rispetto al TE originale ---
+# (prima di traslare)
+vec_x = x_20_scaled - te_x
+vec_y = y_20_scaled - te_y
+vec_norm = np.sqrt(vec_x**2 + vec_y**2)
+
+# --- Calcola il vettore di traslazione necessario ---
+if vec_norm == 0:
+    unit_x, unit_y = 1, 0  # fallback
+else:
+    unit_x = vec_x / vec_norm
+    unit_y = vec_y / vec_norm
+
+# Offset da applicare per ottenere la distanza desiderata
+offset_x = te_x + unit_x * d_obliqua - x_20_scaled
+offset_y = te_y + unit_y * d_obliqua - y_20_scaled
+
+# Applica la traslazione a tutto il profilo scalato
+x_us_shifted = x_us_scaled + offset_x
+y_us_shifted = y_us_scaled + offset_y
+x_ls_shifted = x_ls_scaled + offset_x
+y_ls_shifted = y_ls_scaled + offset_y
+
+# Trova il nuovo punto al 20% dopo la traslazione
+x_20_shifted = x_20_scaled + offset_x
+y_20_shifted = y_20_scaled + offset_y
+
+# --- Calcolo tangenti e rotazione profilo scalato (dopo traslazione obliqua) ---
+slope_original = calculate_tangent(x_rotated_orig, y_rotated_orig, 0)
+slope_scaled = calculate_tangent(x_us_shifted, y_us_shifted, np.argmin(np.abs(x_us_shifted - x_20_shifted)))
+tangent_angle_original = np.arctan(slope_original)
+tangent_angle_scaled = np.arctan(slope_scaled)
+rotation_angle_rad = tangent_angle_original - tangent_angle_scaled
+rotation_angle_deg = np.rad2deg(rotation_angle_rad)
+
+x_us_final, y_us_final = rotate_profile(x_us_shifted, y_us_shifted, rotation_angle_rad, center_x=x_20_shifted, center_y=y_20_shifted)
+x_ls_final, y_ls_final = rotate_profile(x_ls_shifted, y_ls_shifted, rotation_angle_rad, center_x=x_20_shifted, center_y=y_20_shifted)
+
+# --- Allineamento verticale delle tangenti (dopo traslazione obliqua) ---
+y_tangente_orig_su_20 = slope_original * (x_20_shifted - te_x) + te_y
+idx_20_final = np.argmin(np.abs(x_us_final - x_20_shifted))
+y_20_final = y_us_final[idx_20_final]
+delta_y = y_tangente_orig_su_20 - y_20_final
+y_us_final = y_us_final + delta_y
+y_ls_final = y_ls_final + delta_y
+
 # --- Plot finale ---
 plt.figure(figsize=(12, 8))
 plt.plot(x_rotated_orig, y_rotated_orig, 'b-', label=f'Profilo originale (α={alpha_deg}°)')
