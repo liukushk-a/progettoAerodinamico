@@ -31,6 +31,38 @@ data = np.loadtxt(os.path.join(profili_path, selected_file))
 x = data[:, 0]
 y = data[:, 1]
 
+# Caricamento dati Cp
+try:
+    cp_data = np.loadtxt('cp_naca5406.txt', skiprows=6)  # Skip the first 6 rows
+    x_cp = cp_data[:, 0][::-1]  # Prima colonna, invertita per avere x da 0 a 1
+    cp = cp_data[:, 2][::-1]    # Terza colonna (Cp)
+    
+    # Trova il punto di minimo Cp
+    idx_min_cp = np.argmin(cp)
+    x_min_cp = x_cp[idx_min_cp]
+    cp_min = cp[idx_min_cp]
+    
+    print(f"\nPunto di minimo Cp trovato:")
+    print(f"x = {x_min_cp:.4f}")
+    print(f"Cp = {cp_min:.4f}")
+    
+    # Plot del coefficiente di pressione
+    plt.figure(figsize=(10, 6))
+    plt.plot(x_cp, cp, 'b-', label='Cp')
+    plt.plot(x_min_cp, cp_min, 'ro', label='Cp minimo')
+    plt.grid(True)
+    plt.xlabel('x/c')
+    plt.ylabel('Cp')
+    plt.title('Distribuzione del coefficiente di pressione')
+    plt.legend()
+    plt.gca().invert_yaxis()  # Inverte l'asse y per la convenzione del Cp
+    plt.show()
+
+except FileNotFoundError:
+    print("File cp_naca5406.txt non trovato nella directory corrente")
+    x_min_cp = None
+    cp_min = None
+
 # --- Divisione upper/lower e scaling ---
 idx_min = np.argmin(x)
 x_us = x[:idx_min]
@@ -182,6 +214,38 @@ plt.axis('equal')
 plt.grid(True)
 plt.legend()
 plt.title('Configurazione dei profili')
+plt.xlabel('x/c')
+plt.ylabel('y/c')
+plt.show()
+
+# --- Secondo plot con allineamento al punto Cp minimo ---
+# Calcola la traslazione necessaria
+x_min_cp_scaled = x_min_cp * scale_factor  # scala il punto di Cp minimo
+idx_cp_scaled = np.argmin(np.abs(x_us_final - x_min_cp_scaled))
+x_cp_final = x_us_final[idx_cp_scaled]
+
+# Calcola l'offset per allineare il punto x_min_cp con il TE
+x_offset = -x_min_cp_scaled
+y_offset = 0.035  # spacing verticale di 0.01
+
+# Applica la traslazione al profilo intero
+x_us_aligned = x_us_final + x_offset
+y_us_aligned = y_us_final + y_offset
+x_ls_aligned = x_ls_final + x_offset
+y_ls_aligned = y_ls_final + y_offset
+
+# Nuovo plot
+plt.figure(figsize=(12, 8))
+plt.plot(x_rotated_orig, y_rotated_orig, 'b-', label=f'Profilo originale (α={alpha_deg}°)')
+plt.plot(x_us_aligned, y_us_aligned, 'r--', label='Profilo scalato e ruotato')
+plt.plot(x_ls_aligned, y_ls_aligned, 'r--')
+
+
+
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.title('Configurazione dei profili con allineamento Cp minimo')
 plt.xlabel('x/c')
 plt.ylabel('y/c')
 plt.show()

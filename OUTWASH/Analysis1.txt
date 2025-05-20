@@ -1,0 +1,14 @@
+xflr5 v6.32
+
+ Calculated polar for: C:/Users/silvi/OneDrive/Documenti/GitHub/progettoAerodinamico/OUTWASH/profili/naca5406.dat
+
+ 1 1 Reynolds number fixed          Mach number fixed         
+
+ xtrf =   1.000 (top)        1.000 (bottom)
+ Mach =   0.000     Re =     0.400 e 6     Ncrit =   9.000
+
+  alpha     CL        CD       CDp       Cm    Top Xtr Bot Xtr   Cpmin    Chinge    XCp    
+ ------- -------- --------- --------- -------- ------- ------- -------- --------- ---------
+   0.000   0.5754   0.00609   0.00190  -0.1299  0.8216  1.0000  -0.6631   0.0000   0.4752
+
+
