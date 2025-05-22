@@ -178,7 +178,7 @@ if x_cp is not None:
     slope_at_ls_rotated = calculate_tangent(x_ls_rotated, y_ls_rotated, idx_ls)
     
     # Calcola l'offset della tangente
-    offset = -0.15
+    offset = -0.12
     # Calcola il punto sulla tangente del profilo originale
     x_ref = x_ls_point_rotated[0]
     y_ref = y_ls_point_rotated[0]
@@ -228,12 +228,12 @@ if x_cp is not None:
 # Calcola l'angolo tra le tangenti usando arctan
     angle_ls = np.arctan(slope_at_ls_rotated)  # angolo tangente ventre originale
     angle_cp_translated = np.arctan(slope_at_cp_translated)  # angolo tangente cp scalato traslato
-    angle_between = angle_ls - angle_cp_translated  # Angolo di rotazione per allineare le tangenti
+    angle_between = (angle_ls - angle_cp_translated) * 1.3  # Aumentato del 10% l'angolo di rotazione
     
     print(f"\nDebug angoli:")
     print(f"Angolo tangente ventre originale: {np.rad2deg(angle_ls):.2f}°")
     print(f"Angolo tangente cp scalato: {np.rad2deg(angle_cp_translated):.2f}°")
-    print(f"Angolo di rotazione: {np.rad2deg(angle_between):.2f}°")
+    print(f"Angolo di rotazione (aumentato del 10%): {np.rad2deg(angle_between):.2f}°")
     
     # Ruota il profilo scalato dell'angolo calcolato
     x_us_scaled_rot, y_us_scaled_rot = rotate_profile(x_us_scaled_translated, y_us_scaled_translated, 
@@ -300,4 +300,4 @@ if x_cp is not None:
     print(f"Angolo dorso: {angle_te_us:.2f}°")
     print(f"Angolo ventre: {angle_te_ls:.2f}°")
     print(f"Angolo di deviazione totale del flusso: {total_deviation:.2f}°")
-    
+
