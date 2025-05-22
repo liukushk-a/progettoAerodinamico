@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from scipy.interpolate import interp1d
 
 # --- Funzioni di utilità ---
 def calculate_tangent(x, y, idx, window=3):
@@ -24,6 +25,7 @@ def rotate_profile(x, y, angle_rad, center_x=0, center_y=0):
     x_rot = x_translated * cos_theta - y_translated * sin_theta
     y_rot = x_translated * sin_theta + y_translated * cos_theta
     return x_rot + center_x, y_rot + center_y
+
 
 # --- Parametri principali ---
 scale_factor = 0.7  # Fattore di scala per il secondo flap
@@ -117,11 +119,9 @@ x_ls_scaled_rot, y_ls_scaled_rot = rotate_profile(x_ls_scaled, y_ls_scaled, angl
 x_tangent_ref_scaled_rot, y_tangent_ref_scaled_rot = rotate_profile(x_tangent_ref_scaled, y_tangent_ref_scaled, angle_between)
 x_us_ref_scaled_rot, y_us_ref_scaled_rot = rotate_profile([x_us_ref_scaled], [y_us_ref_scaled], angle_between)
 
-# --- Applica offset verticale tra i punti di riferimento ---
-offset = -0.05  # Offset negativo: verso il basso
-
-# Calcola la traslazione verticale necessaria per l'offset
-y_translation = y_te_us_rot + offset - y_us_ref_scaled_rot[0]
+# --- Applica offset verticale: il punto di riferimento del profilo scalato deve essere sotto il TE originale di 0.5 ---
+offset = 0 # Il punto di riferimento deve essere sotto il TE di 0.5 (valore negativo = sotto)
+y_translation = (y_te_us_rot + offset) - y_us_ref_scaled_rot[0]
 
 # Applica la traslazione verticale al profilo scalato ruotato e ai relativi elementi
 y_us_scaled_rot_aligned = y_us_scaled_rot + y_translation
@@ -135,28 +135,40 @@ x_ls_scaled_rot_aligned = x_ls_scaled_rot
 x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0]
 x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot
 
-# --- Allineamento verticale: x del punto a 20% corda = x del TE originale ---
+# --- Allineamento orizzontale: x del punto a 20% corda = x del TE originale ---
 delta_x = x_te_us_rot - x_us_ref_scaled_rot[0]
 
 # Applica la traslazione orizzontale al profilo scalato ruotato e ai relativi elementi
-x_us_scaled_rot_aligned = x_us_scaled_rot + delta_x
-x_ls_scaled_rot_aligned = x_ls_scaled_rot + delta_x
-x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0] + delta_x
-x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot + delta_x
+x_us_scaled_rot_aligned = x_us_scaled_rot_aligned + delta_x
+x_ls_scaled_rot_aligned = x_ls_scaled_rot_aligned + delta_x
+x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot_aligned + delta_x
+x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot_aligned + delta_x
 
-# Le y restano invariate
-y_us_scaled_rot_aligned = y_us_scaled_rot
-y_ls_scaled_rot_aligned = y_ls_scaled_rot
-y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0]
-y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot
+# Le y restano invariate dopo la traslazione verticale
 
 # --- Allineamento verticale aggiuntivo per il secondo profilo ---
-offset_y = -0.1  # scegli tu il valore, negativo = verso il basso
+offset_y = -0.03 # scegli tu il valore, negativo = verso il basso
 
 y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
 y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
 y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot_aligned + offset_y
 y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot_aligned + offset_y
+
+
+
+
+# --- Calcolo linea media del secondo profilo (flap scalato, ruotato, traslato) ---
+# Trova intervallo comune in x
+x_min = max(np.min(x_us_scaled_rot_aligned), np.min(x_ls_scaled_rot_aligned))
+x_max = min(np.max(x_us_scaled_rot_aligned), np.max(x_ls_scaled_rot_aligned))
+x_camber = np.linspace(x_min, x_max, 200)
+
+# Interpola dorso e ventre sullo stesso asse x
+y_us_interp = np.interp(x_camber, x_us_scaled_rot_aligned, y_us_scaled_rot_aligned)
+y_ls_interp = np.interp(x_camber, x_ls_scaled_rot_aligned, y_ls_scaled_rot_aligned)
+
+# Calcola la media della linea centrale
+y_camber = (y_us_interp + y_ls_interp) / 2.0
 
 # --- Plot finale ---
 plt.figure(figsize=(10, 6))
@@ -178,4 +190,38 @@ plt.title(f'Accoppiamento Flap - Allineamento verticale su 20% corda')
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
+
+
+
+
+
+# 1. Trova l'indice della x massima (TE) sulla linea media
+idx_te_camber = np.argmax(x_camber)
+x_te_camber = x_camber[idx_te_camber]
+y_te_camber = y_camber[idx_te_camber]
+
+# 2. Calcola la derivata locale (tangente) in quel punto
+if idx_te_camber == 0:
+    # Se il TE è il primo punto, usa il secondo
+    idx_next = 1
+else:
+    idx_next = idx_te_camber - 1
+
+dx = x_camber[idx_te_camber] - x_camber[idx_next]
+dy = y_camber[idx_te_camber] - y_camber[idx_next]
+slope_te_camber = dy / dx if dx != 0 else np.sign(dy) * 1e6  # Evita divisione per zero
+
+# 3. Calcola l'angolo rispetto all'orizzontale globale
+angle_te_camber_rad = np.arctan(slope_te_camber)
+angle_te_camber_deg = np.degrees(angle_te_camber_rad)
+print(f"Angolo tangente linea media al TE rispetto all'orizzontale globale: {angle_te_camber_deg:.2f} gradi")
+
+# 4. Plotta la tangente nel plot dei profili
+# Crea i punti della tangente
+length = 0.15  # lunghezza della tangente da plottare
+x_tan_te = np.array([x_te_camber - length/2, x_te_camber + length/2])
+y_tan_te = slope_te_camber * (x_tan_te - x_te_camber) + y_te_camber
+
+# Nel plot finale dei profili, aggiungi:
+plt.plot(x_tan_te, y_tan_te, 'g-', linewidth=2, label='Tangente linea media TE (globale)')
 
