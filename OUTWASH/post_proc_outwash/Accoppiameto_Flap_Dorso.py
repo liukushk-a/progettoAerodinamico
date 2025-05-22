@@ -61,25 +61,6 @@ while True:
 data = np.loadtxt(os.path.join(profili_path, selected_file))
 x, y = data[:, 0], data[:, 1]
 
-# --- Caricamento e analisi dati Cp ---
-try:
-    cp_data = np.loadtxt('cp_naca5406.txt', skiprows=6)
-    x_cp = cp_data[:, 0][::-1]
-    cp = cp_data[:, 2][::-1]
-    idx_min_cp = np.argmin(cp)
-    x_min_cp = x_cp[idx_min_cp]
-    cp_min = cp[idx_min_cp]
-
-    
-    print(f"\nPunto di minimo Cp trovato:")
-    print(f"x = {x_min_cp:.4f}")
-    print(f"Cp = {cp_min:.4f}")
-except FileNotFoundError:
-    print("File cp_naca5406.txt non trovato")
-    x_min_cp = None
-    cp_min = None
-
-
 # --- Divisione dorso/ventre e scaling ---
 idx_min = np.argmin(x)
 x_us, y_us = x[:idx_min], y[:idx_min]  # Upper surface (dorso)
@@ -104,266 +85,97 @@ while True:
 x_rotated_orig, y_rotated_orig = rotate_profile(x, y, alpha_rad)
 te_x, te_y = x_rotated_orig[0], y_rotated_orig[0]
 
-# --- Trova punto di minimo Cp sul profilo ---
-if x_min_cp is not None:
-    target_x = x_min_cp
-    idx_cp = np.argmin(np.abs(x_us - target_x))
-    x_cp = x_us[idx_cp]
-    y_cp = y_us[idx_cp]
+# Ruota solo il dorso e il ventre separatamente
+x_us_rotated, y_us_rotated = rotate_profile(x_us, y_us, alpha_rad)
+x_ls_rotated, y_ls_rotated = rotate_profile(x_ls, y_ls, alpha_rad)
 
-    target_x_scaled = x_min_cp * scale_factor
-    idx_cp_scaled = np.argmin(np.abs(x_us_scaled - target_x_scaled))
-    x_cp_scaled = x_us_scaled[idx_cp_scaled]
-    y_cp_scaled = y_us_scaled[idx_cp_scaled]
-else:
-    print("Impossibile trovare il punto di minimo Cp. File cp_naca5406.txt non trovato.")
-    x_cp = y_cp = x_cp_scaled = y_cp_scaled = None
+# --- Scegli il punto di riferimento a x = 20% della corda sul profilo scalato ---
+x_ref_point_scaled = 0.2 * scale_factor
+idx_us_ref_scaled = np.argmin(np.abs(x_us_scaled - x_ref_point_scaled))
+x_us_ref_scaled = x_us_scaled[idx_us_ref_scaled]
+y_us_ref_scaled = y_us_scaled[idx_us_ref_scaled]
 
-# 1. Trova il punto sul profilo scalato corrispondente a x_min_cp
-if x_cp_scaled is not None:
-    # 2. Calcola la tangente nel punto di minimo Cp sul profilo scalato
-    slope_at_cp = calculate_tangent(x_us_scaled, y_us_scaled, idx_cp_scaled)
-    
-    # Calcola la linea tangente per il plot
-    x_tangent, y_tangent = plot_tangent_line(x_cp_scaled, y_cp_scaled, slope_at_cp, length=0.2)
+# Calcola la tangente nel punto di riferimento sul profilo scalato
+slope_at_us_ref_scaled = calculate_tangent(x_us_scaled, y_us_scaled, idx_us_ref_scaled)
+x_tangent_ref_scaled, y_tangent_ref_scaled = plot_tangent_line(x_us_ref_scaled, y_us_ref_scaled, slope_at_us_ref_scaled, length=0.2)
 
+# --- Calcola la tangente al dorso al TE del profilo originale ruotato ---
+idx_te_us_rot = np.argmax(x_us_rotated)
+slope_at_us_te_rotated = calculate_tangent(x_us_rotated, y_us_rotated, idx_te_us_rot)
+x_te_us_rot = x_us_rotated[idx_te_us_rot]
+y_te_us_rot = y_us_rotated[idx_te_us_rot]
+x_tangent_us_te_rotated, y_tangent_us_te_rotated = plot_tangent_line(x_te_us_rot, y_te_us_rot, slope_at_us_te_rotated, length=0.2)
 
-# --- Analisi profilo originale e scalato ---
-# Se x_cp è stato trovato, procedi con l'analisi
-if x_cp is not None:
-    # Trova il punto sul dorso che corrisponde a x_TE - x_min_cp
-    x_target_us = (te_x)
-    idx_us = np.argmin(np.abs(x_us - x_target_us))
-    x_us_point = x_us[idx_us]
-    y_us_point = y_us[idx_us]
-    
-    # Calcola le tangenti
-    slope_at_us = calculate_tangent(x_us, y_us, idx_cp)
-    slope_at_us_te = calculate_tangent(x_us, y_us, idx_us)
-    x_tangent_us, y_tangent_us = plot_tangent_line(x_cp, y_cp, slope_at_us, length=0.2)
-    x_tangent_us_te, y_tangent_us_te = plot_tangent_line(x_us_point, y_us_point, slope_at_us_te, length=0.2)
+# --- Rendi le tangenti parallele ---
+angle_ref_scaled = np.arctan(slope_at_us_ref_scaled)
+angle_te_us_rotated = np.arctan(slope_at_us_te_rotated)
+angle_between = angle_te_us_rotated - angle_ref_scaled
 
-    # Prima ruota il profilo originale
-    x_us_rotated, y_us_rotated = rotate_profile(x_us, y_us, alpha_rad)
-    x_us_point_rotated, y_us_point_rotated = rotate_profile([x_us_point], [y_us_point], alpha_rad)
-    
-    # Calcola la tangente al profilo ruotato nel punto corrispondente
-    slope_at_us_rotated = calculate_tangent(x_us_rotated, y_us_rotated, idx_us)
-    
-    # --- Calcola la tangente al dorso al TE ---
-    idx_te_us_rot = np.argmax(x_us_rotated)  # indice del trailing edge sul dorso ruotato
-    slope_at_us_te_rotated = calculate_tangent(x_us_rotated, y_us_rotated, idx_te_us_rot)
-    x_te_us_rot = x_us_rotated[idx_te_us_rot]
-    y_te_us_rot = y_us_rotated[idx_te_us_rot]
-    x_tangent_us_te_rotated, y_tangent_us_te_rotated = plot_tangent_line(x_te_us_rot, y_te_us_rot, slope_at_us_te_rotated, length=0.2)
+# Ruota tutto il profilo scalato e la sua tangente per rendere le tangenti parallele
+x_us_scaled_rot, y_us_scaled_rot = rotate_profile(x_us_scaled, y_us_scaled, angle_between)
+x_ls_scaled_rot, y_ls_scaled_rot = rotate_profile(x_ls_scaled, y_ls_scaled, angle_between)
+x_tangent_ref_scaled_rot, y_tangent_ref_scaled_rot = rotate_profile(x_tangent_ref_scaled, y_tangent_ref_scaled, angle_between)
+x_us_ref_scaled_rot, y_us_ref_scaled_rot = rotate_profile([x_us_ref_scaled], [y_us_ref_scaled], angle_between)
 
-    # --- Calcola l'offset della tangente al TE ---
-    # Calcola l'offset della tangente
-    offset = -0.03
-    # Calcola il punto sulla tangente del profilo originale
-    x_ref = x_us_point_rotated[0]
-    y_ref = y_us_point_rotated[0]
-    slope_us = slope_at_us_rotated
+# --- Applica offset verticale tra i punti di riferimento ---
+offset = -0.05  # Offset negativo: verso il basso
 
-    # Calcola il punto parallelo sulla tangente con offset
-    normal_vector = np.array([-slope_us, 1]) / np.sqrt(1 + slope_us**2)
-    y_translation = y_ref + offset * normal_vector[1]
-    
-    # Definizione della traslazione orizzontale
-    x_translation = x_ref - x_cp_scaled
+# Calcola la traslazione verticale necessaria per l'offset
+y_translation = y_te_us_rot + offset - y_us_ref_scaled_rot[0]
 
-    # --- DEFINIZIONE VARIABILI MANCANTI ---
-    # Trasla il profilo scalato (dorso e ventre)
-    x_us_scaled_translated = x_us_scaled + x_translation
-    y_us_scaled_translated = y_us_scaled + (y_translation - y_cp_scaled)
-    x_ls_scaled_translated = x_ls_scaled + x_translation
-    y_ls_scaled_translated = y_ls_scaled + (y_translation - y_cp_scaled)
+# Applica la traslazione verticale al profilo scalato ruotato e ai relativi elementi
+y_us_scaled_rot_aligned = y_us_scaled_rot + y_translation
+y_ls_scaled_rot_aligned = y_ls_scaled_rot + y_translation
+y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0] + y_translation
+y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot + y_translation
 
-    # Trasla il punto di minimo Cp del profilo scalato
-    x_cp_scaled_translated = x_cp_scaled + x_translation
-    y_cp_scaled_translated = y_cp_scaled + (y_translation - y_cp_scaled)
+# Le x restano invariate
+x_us_scaled_rot_aligned = x_us_scaled_rot
+x_ls_scaled_rot_aligned = x_ls_scaled_rot
+x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0]
+x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot
 
-    # Trasla la tangente del profilo scalato
-    x_tangent_translated = x_tangent + x_translation
-    y_tangent_translated = y_tangent + (y_translation - y_cp_scaled)
+# --- Allineamento verticale: x del punto a 20% corda = x del TE originale ---
+delta_x = x_te_us_rot - x_us_ref_scaled_rot[0]
 
-    # Rotazione del profilo originale completo
-    x_ls_rotated, y_ls_rotated = rotate_profile(x_ls, y_ls, alpha_rad)
-    
-    # Calcola l'angolo tra le tangenti per la rotazione finale
-    angle_between = np.arctan(slope_at_us_rotated) - np.arctan(slope_at_cp)
-    
-    # Rotazione del profilo scalato traslato
-    x_us_scaled_rot, y_us_scaled_rot = rotate_profile(x_us_scaled_translated, y_us_scaled_translated,
-                                                    angle_between,
-                                                    center_x=x_cp_scaled_translated,
-                                                    center_y=y_cp_scaled_translated)
-    
-    x_ls_scaled_rot, y_ls_scaled_rot = rotate_profile(x_ls_scaled_translated, y_ls_scaled_translated,
-                                                    angle_between,
-                                                    center_x=x_cp_scaled_translated,
-                                                    center_y=y_cp_scaled_translated)
-    
-    # Rotazione tangenti del bordo di uscita
-    x_tangent_us_te_rotated, y_tangent_us_te_rotated = rotate_profile(x_tangent_us_te, y_tangent_us_te, 
-                                                                     alpha_rad)
+# Applica la traslazione orizzontale al profilo scalato ruotato e ai relativi elementi
+x_us_scaled_rot_aligned = x_us_scaled_rot + delta_x
+x_ls_scaled_rot_aligned = x_ls_scaled_rot + delta_x
+x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0] + delta_x
+x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot + delta_x
 
-    
-    # Ruota il punto di minimo Cp del profilo scalato
-    x_cp_scaled_final, y_cp_scaled_final = rotate_profile([x_cp_scaled_translated], [y_cp_scaled_translated], 
-                                                        angle_between,
-                                                        center_x=x_cp_scaled_translated, 
-                                                        center_y=y_cp_scaled_translated)
-    
+# Le y restano invariate
+y_us_scaled_rot_aligned = y_us_scaled_rot
+y_ls_scaled_rot_aligned = y_ls_scaled_rot
+y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0]
+y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot
 
-    # Calcola e plotta la tangente del profilo scalato ruotato
-    x_tangent_scaled_rot, y_tangent_scaled_rot = rotate_profile(x_tangent_translated, y_tangent_translated,
-                                                              angle_between,
-                                                              center_x=x_cp_scaled_translated,
-                                                              center_y=y_cp_scaled_translated)
-    
-    
-    # Calcola l'angolo di deviazione totale al trailing edge
-    # Trova i punti vicini al trailing edge per il profilo scalato ruotato
-    idx_te_us = np.argmax(x_us_scaled_rot)  # indice del punto più a destra sul dorso
-    idx_te_ls = np.argmax(x_ls_scaled_rot)  # indice del punto più a destra sul ventre
-    
-    # Calcola le pendenze al trailing edge
-    slope_te_us = calculate_tangent(x_us_scaled_rot, y_us_scaled_rot, idx_te_us)
-    slope_te_ls = calculate_tangent(x_ls_scaled_rot, y_ls_scaled_rot, idx_te_ls)
-    
-    # Calcola gli angoli rispetto all'orizzontale in gradi
-    angle_te_us = np.rad2deg(np.arctan(slope_te_us))
-    angle_te_ls = np.rad2deg(np.arctan(slope_te_ls))
-    
-    # Calcola l'angolo di deviazione totale
-    total_deviation = angle_te_us - angle_te_ls
-    
-    print(f"\nAngoli al trailing edge del profilo scalato:")
-    print(f"Angolo dorso: {angle_te_us:.2f}°")
-    print(f"Angolo ventre: {angle_te_ls:.2f}°")
-    print(f"Angolo di deviazione totale del flusso: {total_deviation:.2f}°")
-    
-    # --- Allineamento orizzontale: TE originale <-> Cp min profilo scalato ---
-    delta_x = x_te_us_rot - x_cp_scaled_final[0]
+# --- Allineamento verticale aggiuntivo per il secondo profilo ---
+offset_y = -0.1  # scegli tu il valore, negativo = verso il basso
 
-    # Applica la traslazione orizzontale al profilo scalato ruotato e ai relativi elementi
-    x_us_scaled_rot_aligned = x_us_scaled_rot + delta_x 
-    x_ls_scaled_rot_aligned = x_ls_scaled_rot + delta_x 
-    x_cp_scaled_final_aligned = x_cp_scaled_final + delta_x
-    y_cp_scaled_final_aligned = y_cp_scaled_final
-    x_tangent_scaled_rot_aligned = x_tangent_scaled_rot + delta_x
+y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
+y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
+y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot_aligned + offset_y
+y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot_aligned + offset_y
 
-    # Plot finale: profili allineati orizzontalmente
-    plt.figure(figsize=(10, 6))
-    plt.plot(np.concatenate([x_us_rotated, x_ls_rotated]), 
-             np.concatenate([y_us_rotated, y_ls_rotated]), 
-             'b-', label='Primo flap')
-    plt.plot(x_tangent_us_te_rotated, y_tangent_us_te_rotated, 'r--', 
-             label='Tangente al dorso (TE)')
-    plt.plot(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), 
-             np.concatenate([y_us_scaled_rot, y_ls_scaled_rot]), 
-             'c-', label='Secondo Flap')
-    plt.plot(x_cp_scaled_final_aligned[0], y_cp_scaled_final_aligned[0], 'mo', label='Punto minimo Cp')
-    plt.plot(x_tangent_scaled_rot_aligned, y_tangent_scaled_rot, 'm--',
-             label=f'Tangente al dorso')
-    plt.axis('equal')
-    plt.grid(True)
-    plt.xlabel('x/c')
-    plt.ylabel('y/c')
-    plt.title(f'Accoppiamento Flap - Profilo Scalato Allineato')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    plt.show()
-    
-    # --- Scegli il punto di riferimento a x = 20% della corda sul profilo scalato ---
-    x_ref_point_scaled = 0.2 * scale_factor
-    idx_us_ref_scaled = np.argmin(np.abs(x_us_scaled - x_ref_point_scaled))
-    x_us_ref_scaled = x_us_scaled[idx_us_ref_scaled]
-    y_us_ref_scaled = y_us_scaled[idx_us_ref_scaled]
-
-    # Calcola la tangente nel punto di riferimento sul profilo scalato
-    slope_at_us_ref_scaled = calculate_tangent(x_us_scaled, y_us_scaled, idx_us_ref_scaled)
-    x_tangent_ref_scaled, y_tangent_ref_scaled = plot_tangent_line(x_us_ref_scaled, y_us_ref_scaled, slope_at_us_ref_scaled, length=0.2)
-
-    # --- Calcola la tangente al dorso al TE del profilo originale ruotato ---
-    idx_te_us_rot = np.argmax(x_us_rotated)
-    slope_at_us_te_rotated = calculate_tangent(x_us_rotated, y_us_rotated, idx_te_us_rot)
-    x_te_us_rot = x_us_rotated[idx_te_us_rot]
-    y_te_us_rot = y_us_rotated[idx_te_us_rot]
-    x_tangent_us_te_rotated, y_tangent_us_te_rotated = plot_tangent_line(x_te_us_rot, y_te_us_rot, slope_at_us_te_rotated, length=0.2)
-
-    # --- Rendi le tangenti parallele ---
-    angle_ref_scaled = np.arctan(slope_at_us_ref_scaled)
-    angle_te_us_rotated = np.arctan(slope_at_us_te_rotated)
-    angle_between = angle_te_us_rotated - angle_ref_scaled
-
-    # Ruota tutto il profilo scalato e la sua tangente per rendere le tangenti parallele
-    x_us_scaled_rot, y_us_scaled_rot = rotate_profile(x_us_scaled, y_us_scaled, angle_between)
-    x_ls_scaled_rot, y_ls_scaled_rot = rotate_profile(x_ls_scaled, y_ls_scaled, angle_between)
-    x_tangent_ref_scaled_rot, y_tangent_ref_scaled_rot = rotate_profile(x_tangent_ref_scaled, y_tangent_ref_scaled, angle_between)
-    x_us_ref_scaled_rot, y_us_ref_scaled_rot = rotate_profile([x_us_ref_scaled], [y_us_ref_scaled], angle_between)
-
-    # --- Applica offset verticale tra i punti di riferimento ---
-    offset = -0.05  # Offset negativo: verso il basso
-
-    # Calcola la traslazione verticale necessaria per l'offset
-    y_translation = y_te_us_rot + offset - y_us_ref_scaled_rot[0]
-
-    # Applica la traslazione verticale al profilo scalato ruotato e ai relativi elementi
-    y_us_scaled_rot_aligned = y_us_scaled_rot + y_translation
-    y_ls_scaled_rot_aligned = y_ls_scaled_rot + y_translation
-    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0] + y_translation
-    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot + y_translation
-
-    # Le x restano invariate
-    x_us_scaled_rot_aligned = x_us_scaled_rot
-    x_ls_scaled_rot_aligned = x_ls_scaled_rot
-    x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0]
-    x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot
-
-    
-    # --- Allineamento verticale: x del punto a 20% corda = x del TE originale ---
-    delta_x = x_te_us_rot - x_us_ref_scaled_rot[0]
-
-    # Applica la traslazione orizzontale al profilo scalato ruotato e ai relativi elementi
-    x_us_scaled_rot_aligned = x_us_scaled_rot + delta_x
-    x_ls_scaled_rot_aligned = x_ls_scaled_rot + delta_x
-    x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0] + delta_x
-    x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot + delta_x
-
-    # Le y restano invariate
-    y_us_scaled_rot_aligned = y_us_scaled_rot
-    y_ls_scaled_rot_aligned = y_ls_scaled_rot
-    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0]
-    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot
-    
-    # --- Allineamento verticale aggiuntivo per il secondo profilo ---
-    offset_y = -0.1  # scegli tu il valore, negativo = verso il basso
-
-    y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
-    y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
-    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot_aligned + offset_y
-    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot_aligned + offset_y
-
-    # --- Plot finale ---
-    plt.figure(figsize=(10, 6))
-    plt.plot(np.concatenate([x_us_rotated, x_ls_rotated]), 
-             np.concatenate([y_us_rotated, y_ls_rotated]), 
-             'b-', label='Primo flap')
-    plt.plot(x_tangent_us_te_rotated, y_tangent_us_te_rotated, 'r--', 
-             label='Tangente al dorso (TE)')
-    plt.plot(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), 
-             np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned]), 
-             'c-', label='Secondo Flap')
-    plt.plot(x_us_ref_scaled_rot_aligned, y_us_ref_scaled_rot_aligned, 'mo', label='Punto a 20% corda')
-    plt.plot(x_tangent_ref_scaled_rot_aligned, y_tangent_ref_scaled_rot_aligned, 'm--', label='Tangente a 20%')
-    plt.axis('equal')
-    plt.grid(True)
-    plt.xlabel('x/c')
-    plt.ylabel('y/c')
-    plt.title(f'Accoppiamento Flap - Allineamento verticale su 20% corda')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.tight_layout()
-    plt.show()
+# --- Plot finale ---
+plt.figure(figsize=(10, 6))
+plt.plot(np.concatenate([x_us_rotated, x_ls_rotated]), 
+         np.concatenate([y_us_rotated, y_ls_rotated]), 
+         'b-', label='Primo flap')
+plt.plot(x_tangent_us_te_rotated, y_tangent_us_te_rotated, 'r--', 
+         label='Tangente al dorso (TE)')
+plt.plot(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), 
+         np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned]), 
+         'c-', label='Secondo Flap')
+plt.plot(x_us_ref_scaled_rot_aligned, y_us_ref_scaled_rot_aligned, 'mo', label='Punto a 20% corda')
+plt.plot(x_tangent_ref_scaled_rot_aligned, y_tangent_ref_scaled_rot_aligned, 'm--', label='Tangente a 20%')
+plt.axis('equal')
+plt.grid(True)
+plt.xlabel('x/c')
+plt.ylabel('y/c')
+plt.title(f'Accoppiamento Flap - Allineamento verticale su 20% corda')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
 
