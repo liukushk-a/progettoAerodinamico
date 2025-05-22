@@ -338,15 +338,58 @@ if x_cp is not None:
     x_us_ref_scaled_rot, y_us_ref_scaled_rot = rotate_profile([x_us_ref_scaled], [y_us_ref_scaled], angle_between)
 
     # --- Applica offset verticale tra i punti di riferimento ---
-    offset = -0.03  # Offset verticale definito dall'utente
+    offset = -0.05  # Offset negativo: verso il basso
 
     # Calcola la traslazione verticale necessaria per l'offset
-    y_translation = y_us_ref_scaled_rot[0] + offset - y_cp_scaled_final_aligned[0]
+    y_translation = y_te_us_rot + offset - y_us_ref_scaled_rot[0]
 
     # Applica la traslazione verticale al profilo scalato ruotato e ai relativi elementi
     y_us_scaled_rot_aligned = y_us_scaled_rot + y_translation
     y_ls_scaled_rot_aligned = y_ls_scaled_rot + y_translation
-    y_cp_scaled_final_aligned = y_cp_scaled_final_aligned + y_translation
+    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0] + y_translation
+    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot + y_translation
+
+    # Le x restano invariate
+    x_us_scaled_rot_aligned = x_us_scaled_rot
+    x_ls_scaled_rot_aligned = x_ls_scaled_rot
+    x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0]
+    x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot
+
+    # --- Plot finale ---
+    plt.figure(figsize=(10, 6))
+    plt.plot(np.concatenate([x_us_rotated, x_ls_rotated]), 
+             np.concatenate([y_us_rotated, y_ls_rotated]), 
+             'b-', label='Primo flap')
+    plt.plot(x_tangent_us_te_rotated, y_tangent_us_te_rotated, 'r--', 
+             label='Tangente al dorso (TE)')
+    plt.plot(np.concatenate([x_us_scaled_rot, x_ls_scaled_rot]), 
+             np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned]), 
+             'c-', label='Secondo Flap')
+    plt.plot(x_us_ref_scaled_rot_aligned, y_us_ref_scaled_rot_aligned, 'mo', label='Punto a 20% corda')
+    plt.plot(x_tangent_ref_scaled_rot_aligned, y_tangent_ref_scaled_rot_aligned, 'm--', label='Tangente a 20%')
+    plt.axis('equal')
+    plt.grid(True)
+    plt.xlabel('x/c')
+    plt.ylabel('y/c')
+    plt.title(f'Accoppiamento Flap - Allineamento su 20% corda e tangenti')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    plt.show()
+    
+    # --- Allineamento verticale: x del punto a 20% corda = x del TE originale ---
+    delta_x = x_te_us_rot - x_us_ref_scaled_rot[0]
+
+    # Applica la traslazione orizzontale al profilo scalato ruotato e ai relativi elementi
+    x_us_scaled_rot_aligned = x_us_scaled_rot + delta_x
+    x_ls_scaled_rot_aligned = x_ls_scaled_rot + delta_x
+    x_us_ref_scaled_rot_aligned = x_us_ref_scaled_rot[0] + delta_x
+    x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot + delta_x
+
+    # Le y restano invariate
+    y_us_scaled_rot_aligned = y_us_scaled_rot
+    y_ls_scaled_rot_aligned = y_ls_scaled_rot
+    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot[0]
+    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot
 
     # --- Plot finale ---
     plt.figure(figsize=(10, 6))
@@ -358,13 +401,42 @@ if x_cp is not None:
     plt.plot(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), 
              np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned]), 
              'c-', label='Secondo Flap')
-    plt.plot(x_us_ref_scaled_rot[0], y_us_ref_scaled_rot[0], 'mo', label='Punto a 20% corda')
-    plt.plot(x_tangent_ref_scaled_rot, y_tangent_ref_scaled_rot, 'm--', label='Tangente a 20%')
+    plt.plot(x_us_ref_scaled_rot_aligned, y_us_ref_scaled_rot_aligned, 'mo', label='Punto a 20% corda')
+    plt.plot(x_tangent_ref_scaled_rot_aligned, y_tangent_ref_scaled_rot_aligned, 'm--', label='Tangente a 20%')
     plt.axis('equal')
     plt.grid(True)
     plt.xlabel('x/c')
     plt.ylabel('y/c')
-    plt.title(f'Accoppiamento Flap - Allineamento su 20% corda e tangenti')
+    plt.title(f'Accoppiamento Flap - Allineamento verticale su 20% corda')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.tight_layout()
+    plt.show()
+    
+    # --- Allineamento verticale aggiuntivo per il secondo profilo ---
+    offset_y = -0.1  # scegli tu il valore, negativo = verso il basso
+
+    y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
+    y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
+    y_us_ref_scaled_rot_aligned = y_us_ref_scaled_rot_aligned + offset_y
+    y_tangent_ref_scaled_rot_aligned = y_tangent_ref_scaled_rot_aligned + offset_y
+
+    # --- Plot finale ---
+    plt.figure(figsize=(10, 6))
+    plt.plot(np.concatenate([x_us_rotated, x_ls_rotated]), 
+             np.concatenate([y_us_rotated, y_ls_rotated]), 
+             'b-', label='Primo flap')
+    plt.plot(x_tangent_us_te_rotated, y_tangent_us_te_rotated, 'r--', 
+             label='Tangente al dorso (TE)')
+    plt.plot(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), 
+             np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned]), 
+             'c-', label='Secondo Flap')
+    plt.plot(x_us_ref_scaled_rot_aligned, y_us_ref_scaled_rot_aligned, 'mo', label='Punto a 20% corda')
+    plt.plot(x_tangent_ref_scaled_rot_aligned, y_tangent_ref_scaled_rot_aligned, 'm--', label='Tangente a 20%')
+    plt.axis('equal')
+    plt.grid(True)
+    plt.xlabel('x/c')
+    plt.ylabel('y/c')
+    plt.title(f'Accoppiamento Flap - Allineamento verticale su 20% corda')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     plt.show()
