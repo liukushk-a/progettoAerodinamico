@@ -16,20 +16,10 @@ if not filename:
     print("Nessun file selezionato.")
     exit()
 
-# Carica i dati
+# Carica i dati (già ordinati TE -> LE -> TE)
 data = np.loadtxt(filename)
 x = data[:, 0]
 y = data[:, 1]
-
-# Trova il leading edge (min x)
-idx_le = np.argmin(x)
-
-# Ricostruisci la sequenza: TE -> dorso -> LE -> ventre -> TE
-x_ordered = np.concatenate([x[:idx_le+1], x[idx_le+1:][::-1]])
-y_ordered = np.concatenate([y[:idx_le+1], y[idx_le+1:][::-1]])
-
-x = x_ordered
-y = y_ordered
 
 # Chiudi il profilo se non è già chiuso
 if not (np.isclose(x[0], x[-1]) and np.isclose(y[0], y[-1])):
