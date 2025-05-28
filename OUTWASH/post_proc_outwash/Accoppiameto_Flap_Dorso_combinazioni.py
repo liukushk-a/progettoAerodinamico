@@ -146,6 +146,17 @@ for i, file1 in enumerate(dat_files):
         # Salva risultato (aggiungi anche l'angolo di attacco)
         results.append([file1, file2, angle_te_camber_deg, alpha_deg])
 
+# Trova la combinazione con l'angolo di deflessione massimo
+if results:
+    max_result = max(results, key=lambda r: abs(r[2]))  # usa abs se vuoi il valore assoluto
+    print(f"Angolo di deflessione massimo: {max_result[2]:.2f}° tra {max_result[0]} e {max_result[1]} (alpha = {max_result[3]:.2f}°)")
+
+    # Ordina tutte le combinazioni per angolo di deflessione (valore assoluto, decrescente)
+    results_sorted = sorted(results, key=lambda r: abs(r[2]), reverse=True)
+    print("\nClassifica combinazioni per angolo di deflessione (dal più alto al più basso):")
+    for r in results_sorted:
+        print(f"{r[0]} + {r[1]}: {r[2]:.2f}° (alpha = {r[3]:.2f}°)")
+
 # Salva su file CSV
 output_path = os.path.join(os.path.dirname(__file__), 'combinazioni_flap_angle.csv')
 with open(output_path, 'w', newline='') as f:
