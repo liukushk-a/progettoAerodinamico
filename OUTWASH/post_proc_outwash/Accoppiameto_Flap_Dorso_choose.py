@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import csv
 
 # --- Funzioni di utilità ---
 def calculate_tangent(x, y, idx, window=3):
@@ -237,14 +238,12 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
-import os
-
-# Crea la cartella di output nella stessa posizione dei file .dat
+# --- Salvataggio profili accoppiati ---
 output_folder = os.path.join(profili_path, f"simulazione_{selection+1}_{selection2+1}")
 os.makedirs(output_folder, exist_ok=True)
-output_file = os.path.join(output_folder, "profili_accoppiati.txt")
 
-# Prepara i punti: prima il primo airfoil, poi il secondo (già posizionati)
+# File di testo
+output_file = os.path.join(output_folder, "profili_accoppiati.txt")
 points = []
 
 # Primo airfoil (profilo originale ruotato)
@@ -255,12 +254,24 @@ for xi, yi in zip(np.concatenate([x_us_rotated, x_ls_rotated]), np.concatenate([
 for xi, yi in zip(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned])):
     points.append(f"{xi:.8f},{yi:.8f},0.0")
 
-# Salva il file
+# Salva il file di testo
 with open(output_file, "w") as f:
     for line in points:
         f.write(line + "\n")
 
 print(f"Punti dei due profili salvati in: {output_file}")
+
+# File CSV
+output_csv = os.path.join(output_folder, "profili_accoppiati.csv")
+with open(output_csv, "w", newline='') as f_csv:
+    writer = csv.writer(f_csv)
+    writer.writerow(["x", "y", "z"])
+    for xi, yi in zip(np.concatenate([x_us_rotated, x_ls_rotated]), np.concatenate([y_us_rotated, y_ls_rotated])):
+        writer.writerow([f"{xi:.8f}", f"{yi:.8f}", "0.0"])
+    for xi, yi in zip(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned])):
+        writer.writerow([f"{xi:.8f}", f"{yi:.8f}", "0.0"])
+
+print(f"Punti dei due profili salvati anche in: {output_csv}")
 
 
 
