@@ -33,7 +33,7 @@ if capovolgimento == "Y" or capovolgimento == "y":
     DataFrame["y"] = DataFrame["y"]*(-1)
 
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
-# funge anche da titolo d amettere nel file .dat in modo tale che xfoil o
+# funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
 # openVSP lo leggano bene
 nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
                     "solo il nome: ")
