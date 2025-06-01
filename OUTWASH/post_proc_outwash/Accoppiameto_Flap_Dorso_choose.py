@@ -169,7 +169,7 @@ x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot_aligned + delta_x
 # Le y restano invariate dopo la traslazione verticale
 
 # --- Allineamento verticale  per il secondo profilo ---
-offset_y = -0.03 # scegli tu il valore, negativo = verso il basso
+offset_y = -0.06 # scegli tu il valore, negativo = verso il basso
 
 y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
 y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
@@ -239,7 +239,14 @@ plt.tight_layout()
 plt.show()
 
 # --- Salvataggio profili accoppiati ---
-output_folder = os.path.join(profili_path, f"simulazione_{selection+1}_{selection2+1}")
+# Crea la cartella "CSV per simulazioni" dentro profili
+csv_sim_folder = os.path.join(profili_path, "CSV per simulazioni")
+os.makedirs(csv_sim_folder, exist_ok=True)
+
+# Usa i nomi dei file .dat selezionati (senza estensione)
+base1 = os.path.splitext(selected_file)[0]
+base2 = os.path.splitext(selected_file2)[0]
+output_folder = os.path.join(csv_sim_folder, f"{base1}__{base2}")
 os.makedirs(output_folder, exist_ok=True)
 
 # File di testo
