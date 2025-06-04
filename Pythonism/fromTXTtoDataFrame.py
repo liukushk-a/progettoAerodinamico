@@ -50,6 +50,18 @@ for i in range(len(DataFrame)):
     if DataFrame["x"][i] == riscalamento + traslazione_X:
         DataFrame["y"][i] = traslazione_Y
 
+# Chiede all'utilizzatore se desidera fare una rotazione del profilo
+rotazione = input("Desideri ruotare il profilo? (Y/n): ")
+if rotazione == "Y" or rotazione == "y":
+    print("0. Bordo d'attacco")
+    print("1. Un quarto di corda")
+    print("2. Metà corda")
+    input("Inserire il numero corrispondente al punto di rotazione desiderato: ")
+
+# Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
+mLE_TE = (DataFrame["y"](-1) - DataFrame["y"](0))/(DataFrame["x"](-1) - DataFrame["x"](0))
+
+
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
 # openVSP lo leggano bene
