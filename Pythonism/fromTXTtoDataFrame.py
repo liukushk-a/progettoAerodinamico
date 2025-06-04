@@ -56,10 +56,20 @@ if rotazione == "Y" or rotazione == "y":
     print("0. Bordo d'attacco")
     print("1. Un quarto di corda")
     print("2. Metà corda")
-    input("Inserire il numero corrispondente al punto di rotazione desiderato: ")
+    input(float("Inserire il numero corrispondente al punto di rotazione desiderato: "))
 
 # Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
 mLE_TE = (DataFrame["y"](-1) - DataFrame["y"](0))/(DataFrame["x"](-1) - DataFrame["x"](0))
+
+# Calcolo la corda del profilo in modo tale da poterla usare per il calcolo del polo di rotazione
+# corda = np.sqrt(() - )
+
+# Differenzio tra i diversi poli di rotazione in base alla scelta dell'utente
+if rotazione == 0:
+    polo_x = DataFrame["x"][0]
+    polo_y = DataFrame["y"][0]
+
+# if rotazione == 1:
 
 
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
