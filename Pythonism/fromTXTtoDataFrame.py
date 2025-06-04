@@ -45,7 +45,7 @@ if traslazione == "Y" or traslazione == "y":
 # È necessario fare in modo che, dato che airfoiltools non chiude i profili al bordo d'uscita,
 # faccio un controllo sul numero in coordinata x, in modo tale che se noto che il numero
 # corrisponde perfettamente al valore dato dal riscalamento della corda + la traslazione, ho
-# che la coordinata sull'asse y deve andare a zero.
+# che la coordinata sull'asse y deve andare non a zero, ma al valore imposto dalla traslazione.
 for i in range(len(DataFrame)):
     if DataFrame["x"][i] == riscalamento + traslazione_X:
         DataFrame["y"][i] = traslazione_Y
