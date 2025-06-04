@@ -32,6 +32,24 @@ capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
 if capovolgimento == "Y" or capovolgimento == "y":
     DataFrame["y"] = DataFrame["y"]*(-1)
 
+# Chiede all'utilizzatore se intende effettuare una traslazione nello spazio del profilo
+traslazione = input("Vuoi traslare il profilo nello spazio? (Y/n): ")
+if traslazione == "Y" or traslazione == "y":
+    
+    traslazione_X = float(input("Inserire la traslazione in x in metri (I.E. 160 mm = 0.160): "))
+    traslazione_Y = float(input("Inserire la traslazione in y in metri: "))
+
+    DataFrame["x"] = DataFrame["x"] + traslazione_X;
+    DataFrame["y"] = DataFrame["y"] + traslazione_Y;
+
+# È necessario fare in modo che, dato che airfoiltools non chiude i profili al bordo d'uscita,
+# faccio un controllo sul numero in coordinata x, in modo tale che se noto che il numero
+# corrisponde perfettamente al valore dato dal riscalamento della corda + la traslazione, ho
+# che la coordinata sull'asse y deve andare a zero.
+for i in range(len(DataFrame)):
+    if DataFrame["x"][i] == riscalamento + traslazione_X:
+        DataFrame["y"][i] = 0
+
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
 # openVSP lo leggano bene
@@ -44,3 +62,5 @@ DataFrame.to_csv(f"{nuovoNome}.dat", sep=" ", index=False, header=False)
 with open(f"{nuovoNome}.dat", "w") as f:
     f.write(nuovoNome + "\n")
     DataFrame.to_csv(f, sep=" ", index=False, header=False)
+
+
