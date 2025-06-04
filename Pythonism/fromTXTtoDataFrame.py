@@ -48,7 +48,7 @@ if traslazione == "Y" or traslazione == "y":
 # che la coordinata sull'asse y deve andare a zero.
 for i in range(len(DataFrame)):
     if DataFrame["x"][i] == riscalamento + traslazione_X:
-        DataFrame["y"][i] = 0
+        DataFrame["y"][i] = traslazione_Y
 
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
