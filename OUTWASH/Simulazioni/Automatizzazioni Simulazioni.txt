@@ -2,7 +2,7 @@ Automatizzazioni Simulazioni
 
 1. Import della geometria --> da capire la cartella di appartenenza e il nome
 2. Estrusione dei profili 
-3. Creazione Dominio -->  ho un po' ridotto a 20mx20m di dominio
+3. Creazione Dominio -->  20mx20m di dominio era etremamente troppo grande, farei un 5x5 circa
 4. Rename di surfaces e bodies
 5. Creazione delle parti --> ho messo very fine come tasselation option
 6. Subtract
@@ -10,6 +10,7 @@ Automatizzazioni Simulazioni
 8. Assign Part to Region
 9. Physics Continua
 10. Assegnazione inlet e outlet 
-11. Creazione Blocchi 
-12. Mesh --> ho sbagliato una cosina perché non si apre la scena
-13. Executing Mesh 
+11. Mesh 
+12. Executing Mesh 
+13. Creating Scenes
+

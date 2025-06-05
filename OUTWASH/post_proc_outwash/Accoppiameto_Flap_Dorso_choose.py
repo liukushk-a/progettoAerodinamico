@@ -239,8 +239,9 @@ plt.tight_layout()
 plt.show()
 
 # --- Salvataggio profili accoppiati ---
-# Crea la cartella "CSV per simulazioni" dentro profili
-csv_sim_folder = os.path.join(profili_path, "CSV per simulazioni")
+# Crea la cartella "CSV per simulazioni" dentro la cartella Simulazioni (non più in profili)
+simulazioni_path = os.path.join(os.path.dirname(profili_path), 'Simulazioni')
+csv_sim_folder = os.path.join(simulazioni_path, "CSV per simulazioni")
 os.makedirs(csv_sim_folder, exist_ok=True)
 
 # Usa i nomi dei file .dat selezionati (senza estensione)
@@ -268,11 +269,10 @@ with open(output_file, "w") as f:
 
 print(f"Punti dei due profili salvati in: {output_file}")
 
-# File CSV
+# File CSV senza intestazione
 output_csv = os.path.join(output_folder, "profili_accoppiati.csv")
 with open(output_csv, "w", newline='') as f_csv:
     writer = csv.writer(f_csv)
-    writer.writerow(["x", "y", "z"])
     for xi, yi in zip(np.concatenate([x_us_rotated, x_ls_rotated]), np.concatenate([y_us_rotated, y_ls_rotated])):
         writer.writerow([f"{xi:.8f}", f"{yi:.8f}", "0.0"])
     for xi, yi in zip(np.concatenate([x_us_scaled_rot_aligned, x_ls_scaled_rot_aligned]), np.concatenate([y_us_scaled_rot_aligned, y_ls_scaled_rot_aligned])):
