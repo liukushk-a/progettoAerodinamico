@@ -63,13 +63,21 @@ if rotazione == "Y" or rotazione == "y":
     print("2. Metà corda")
     input(float("Inserire il numero corrispondente al punto di rotazione desiderato: "))
 
+# Comunicazione di servizio, la lunghezza di ogni dataframe dovrebbe essere di 122 righe,
+# il problema è che gli indici in python e quindi anche col dataframe partono da 0; questo
+# mi dà qualche difficoltà. Ho 122 righe, con indici che vanno da 0 a 121, l'ultima riga 
+# del dorso è la 61, la prima del ventre è la 62. Se io chiedo di stampare la lunghezza 
+# del dataframe, mi restituisce 122.
+
 # Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
 # mLE_TE = (df["y"](-1) - df["y"](0))/(df["x"](-1) - df["x"](0))
 
-# Calcolo il df coi punti medi della corda
-#for i in range(len(df)/2):
-#    df["x_medio"](i) = df["x"](i)
-#    df["y_medio"](i) = df["y"](i) + df["y"](len(df)/2 + i +1)
+# Calcolo il df coi punti medi della corda, ma non posso usare subito il dataframe, devo prima
+# creare una lista che poi deve essere convertita in df, ovvero aggiunta al df esistente,
+# sennò fa casino
+for i in range(int(len(df)/2) + 1): # Mi fa andare da 0 a 61
+    df["x_medio"] = df.iloc[i, 0]
+    df["y_medio"] = (df.iloc[i, 1] + df.iloc[i + int(len(df)/2), 1]) / 2
 
 # Differenzio tra i diversi poli di rotazione in base alla scelta dell'utente
 if rotazione == 0:
