@@ -119,7 +119,7 @@ plt.show()
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
 # openVSP lo leggano bene
-nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
+nuovoNome = input("Inserire nuovo nome del file .txt, senza scrivere .txt, " \
                     "solo il nome: ")
 # Riporta il file in .dat
 df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
