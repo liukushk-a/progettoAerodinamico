@@ -10,6 +10,7 @@ dati e non titoli o altre cose strane dentro, quelli vanno cancellati a priori''
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Richiedi all'utilizzatore il percorso del file .txt
 percorso = input("Inserire il percorso del file .txt, fino al punto esatto, " \
@@ -31,6 +32,90 @@ df = df*riscalamento
 capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
 if capovolgimento == "Y" or capovolgimento == "y":
     df["y"] = df["y"]*(-1)
+
+# Chiede all'utilizzatore se desidera fare una rotazione del profilo
+rotazione = input("Desideri ruotare il profilo? (Y/n): ")
+if rotazione == "Y" or rotazione == "y":
+    print("0. Bordo d'attacco")
+    print("1. Un quarto di corda")
+    print("2. Metà corda")
+    input(float("Inserire il numero corrispondente al punto di rotazione desiderato: "))
+
+# Comunicazione di servizio, la lunghezza di ogni dataframe dovrebbe essere di 122 righe,
+# il problema è che gli indici in python e quindi anche col dataframe partono da 0; questo
+# mi dà qualche difficoltà. Ho 122 righe, con indici che vanno da 0 a 121, l'ultima riga 
+# del dorso è la 61, la prima del ventre è la 62. Se io chiedo di stampare la lunghezza 
+# del dataframe, mi restituisce 122.
+
+# Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
+# mLE_TE = (df["y"](-1) - df["y"](0))/(df["x"](-1) - df["x"](0))
+
+
+# Verifica la lunghezza del file: deve essere pari
+if len(df) % 2 != 0:
+    raise ValueError("Il numero di righe nel file non è pari: controlla il file!")
+
+# Suddividi il dataframe in due metà: dorso (superiore) e ventre (inferiore)
+n = len(df) // 2
+dorso = df.iloc[:n].reset_index(drop=True)
+ventre = df.iloc[n:].reset_index(drop=True)
+
+# Calcolo della linea media
+x_medio = dorso["x"]  # Le x sono le stesse per dorso e ventre
+y_medio = (dorso["y"] + ventre["y"]) / 2
+
+# Costruzione del dataframe della linea media
+df_linea_media = pd.DataFrame({
+    "x": x_medio,
+    "y_medio": y_medio
+})
+
+# Stampa i valori risultanti
+print("=== LINEA MEDIA ===")
+print(df_linea_media.to_string(index=False))
+
+# Differenzio tra i diversi poli di rotazione in base alla scelta dell'utente
+if rotazione == 0:
+    polo_x = df["x"][0]
+    polo_y = df["y"][0]
+
+x_camber = x_medio
+y_camber = y_medio
+
+# Parametri di rotazione
+x0 = float(input("Inserisci x del polo di rotazione: "))
+y0 = float(input("Inserisci y del polo di rotazione: "))
+theta_deg = float(input("Inserisci angolo di rotazione in gradi (positivo = antiorario): "))
+theta_rad = np.radians(theta_deg)
+
+# Applica la rotazione a tutti i punti
+x_shifted = df["x"] - x0
+y_shifted = df["y"] - y0
+
+x_c_shifted = x_camber - x0
+y_c_shifted = y_camber - y0
+
+x_c_rot = x0 + x_c_shifted * np.cos(theta_rad) - y_c_shifted * np.sin(theta_rad)
+y_c_rot = y0 + x_c_shifted * np.sin(theta_rad) + y_c_shifted * np.cos(theta_rad)
+
+x_rot = x0 + x_shifted * np.cos(theta_rad) - y_shifted * np.sin(theta_rad)
+y_rot = y0 + x_shifted * np.sin(theta_rad) + y_shifted * np.cos(theta_rad)
+
+# Aggiorna il dataframe
+df["x"] = x_rot
+df["y"] = y_rot
+
+# Salva il risultato se vuoi
+df.to_csv("profilo_ruotato.dat", sep=" ", index=False, header=False)
+
+# Mostra un'anteprima
+print("\n=== Profili ruotati (prime 5 righe) ===")
+print(df.head())
+
+
+
+
+
 
 # Chiede all'utilizzatore se intende effettuare una traslazione nello spazio del profilo
 traslazione = input("Vuoi traslare il profilo nello spazio? (Y/n): ")
@@ -55,34 +140,10 @@ for i in range(len(df)):
     if df["x"][i] == riscalamento + traslazione_X:
         df["y"][i] = traslazione_Y
 
-# Chiede all'utilizzatore se desidera fare una rotazione del profilo
-rotazione = input("Desideri ruotare il profilo? (Y/n): ")
-if rotazione == "Y" or rotazione == "y":
-    print("0. Bordo d'attacco")
-    print("1. Un quarto di corda")
-    print("2. Metà corda")
-    input(float("Inserire il numero corrispondente al punto di rotazione desiderato: "))
-
-# Comunicazione di servizio, la lunghezza di ogni dataframe dovrebbe essere di 122 righe,
-# il problema è che gli indici in python e quindi anche col dataframe partono da 0; questo
-# mi dà qualche difficoltà. Ho 122 righe, con indici che vanno da 0 a 121, l'ultima riga 
-# del dorso è la 61, la prima del ventre è la 62. Se io chiedo di stampare la lunghezza 
-# del dataframe, mi restituisce 122.
-
-# Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
-# mLE_TE = (df["y"](-1) - df["y"](0))/(df["x"](-1) - df["x"](0))
-
-# Calcolo il df coi punti medi della corda, ma non posso usare subito il dataframe, devo prima
-# creare una lista che poi deve essere convertita in df, ovvero aggiunta al df esistente,
-# sennò fa casino
-for i in range(int(len(df)/2) + 1): # Mi fa andare da 0 a 61
-    df["x_medio"] = df.iloc[i, 0]
-    df["y_medio"] = (df.iloc[i, 1] + df.iloc[i + int(len(df)/2), 1]) / 2
-
-# Differenzio tra i diversi poli di rotazione in base alla scelta dell'utente
-if rotazione == 0:
-    polo_x = df["x"][0]
-    polo_y = df["y"][0]
+plt.plot(df["x"], df["y"], 'b-', label='Punti Originali')
+# plt.plot(x_c_rot, y_c_rot, 'r-', label='Linea Media')
+plt.axis('equal')
+plt.show()
 
 # if rotazione == 1:
 
