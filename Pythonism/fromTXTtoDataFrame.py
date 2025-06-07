@@ -120,7 +120,3 @@ nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
 # Riporta il file in .dat
 df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
 
-# Aggiungi il titolo alla prima riga del file .dat
-with open(f"{nuovoNome}.dat", "w") as f:
-    f.write(nuovoNome + "\n")
-    df_flipped.to_csv(f, sep=" ", index=False, header=False)
