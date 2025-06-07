@@ -118,7 +118,7 @@ plt.show()
 nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
                     "solo il nome: ")
 # Riporta il file in .dat
-df_flipped.to_csv(f"{nuovoNome}.dat", sep=" ", index=False, header=False)
+df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
 
 # Aggiungi il titolo alla prima riga del file .dat
 with open(f"{nuovoNome}.dat", "w") as f:
