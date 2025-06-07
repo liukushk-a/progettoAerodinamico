@@ -108,6 +108,10 @@ if traslazione == "n" or traslazione == "N":
     traslazione_X = 0
     traslazione_Y = 0
 
+# Chiedo all'utilizzatore se vuole usare il file di output per xfoil oppure per gmsh, perchè se
+# lo usa per gmsh devo aggiungere una colonna z 
+df_flipped["z"] = 0.0
+
 plt.plot(df_flipped["x"], df_flipped["y"], 'b-', label='Punti Originali')
 plt.axis('equal')
 plt.show()

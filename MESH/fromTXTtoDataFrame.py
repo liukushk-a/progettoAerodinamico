@@ -108,6 +108,10 @@ if traslazione == "n" or traslazione == "N":
     traslazione_X = 0
     traslazione_Y = 0
 
+# Chiedo all'utilizzatore se vuole usare il file di output per xfoil oppure per gmsh, perchè se
+# lo usa per gmsh devo aggiungere una colonna z 
+df_flipped["z"] = 0.0
+
 plt.plot(df_flipped["x"], df_flipped["y"], 'b-', label='Punti Originali')
 plt.axis('equal')
 plt.show()
@@ -115,7 +119,8 @@ plt.show()
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
 # openVSP lo leggano bene
-nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
+nuovoNome = input("Inserire nuovo nome del file .txt, senza scrivere .txt, " \
                     "solo il nome: ")
 # Riporta il file in .dat
 df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
+
