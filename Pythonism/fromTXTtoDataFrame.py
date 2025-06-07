@@ -33,24 +33,6 @@ capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
 if capovolgimento == "Y" or capovolgimento == "y":
     df["y"] = df["y"]*(-1)
 
-# Chiede all'utilizzatore se desidera fare una rotazione del profilo
-rotazione = input("Desideri ruotare il profilo? (Y/n): ")
-if rotazione == "Y" or rotazione == "y":
-    print("0. Bordo d'attacco")
-    print("1. Un quarto di corda")
-    print("2. Metà corda")
-    input(float("Inserire il numero corrispondente al punto di rotazione desiderato: "))
-
-# Comunicazione di servizio, la lunghezza di ogni dataframe dovrebbe essere di 122 righe,
-# il problema è che gli indici in python e quindi anche col dataframe partono da 0; questo
-# mi dà qualche difficoltà. Ho 122 righe, con indici che vanno da 0 a 121, l'ultima riga 
-# del dorso è la 61, la prima del ventre è la 62. Se io chiedo di stampare la lunghezza 
-# del dataframe, mi restituisce 122.
-
-# Coefficiente angolare della retta che collega il bordo d'attacco a quello d'uscita
-# mLE_TE = (df["y"](-1) - df["y"](0))/(df["x"](-1) - df["x"](0))
-
-
 # Verifica la lunghezza del file: deve essere pari
 if len(df) % 2 != 0:
     raise ValueError("Il numero di righe nel file non è pari: controlla il file!")
@@ -69,15 +51,6 @@ df_linea_media = pd.DataFrame({
     "x": x_medio,
     "y_medio": y_medio
 })
-
-# Stampa i valori risultanti
-print("=== LINEA MEDIA ===")
-print(df_linea_media.to_string(index=False))
-
-# Differenzio tra i diversi poli di rotazione in base alla scelta dell'utente
-if rotazione == 0:
-    polo_x = df["x"][0]
-    polo_y = df["y"][0]
 
 x_camber = x_medio
 y_camber = y_medio
@@ -101,21 +74,24 @@ y_c_rot = y0 + x_c_shifted * np.sin(theta_rad) + y_c_shifted * np.cos(theta_rad)
 x_rot = x0 + x_shifted * np.cos(theta_rad) - y_shifted * np.sin(theta_rad)
 y_rot = y0 + x_shifted * np.sin(theta_rad) + y_shifted * np.cos(theta_rad)
 
+# Faccio in modo che le coordinate dell'ultimo punto del dorso e del ventre dopo la
+# rotazione siano uguali, in modo tale che il profilo sia chiuso
+if y_rot.iloc[-1] != y_rot.iloc[n-1]:
+    y_rot.iloc[-1] = y_rot.iloc[n-1]
+
 # Aggiorna il dataframe
 df["x"] = x_rot
 df["y"] = y_rot
 
-# Salva il risultato se vuoi
-df.to_csv("profilo_ruotato.dat", sep=" ", index=False, header=False)
 
-# Mostra un'anteprima
-print("\n=== Profili ruotati (prime 5 righe) ===")
-print(df.head())
+# Divide in due metà
+n = len(df) // 2
+dorso = df.iloc[:n].copy()
+#ventre = ventre.iloc[::-1].reset_index(drop=True)
+ventre = df.iloc[n:].iloc[::-1].copy()  # inversione del ventre
 
-
-
-
-
+# Ricombina in un unico dataframe
+df_flipped = pd.concat([dorso, ventre], ignore_index=True)
 
 # Chiede all'utilizzatore se intende effettuare una traslazione nello spazio del profilo
 traslazione = input("Vuoi traslare il profilo nello spazio? (Y/n): ")
@@ -124,29 +100,17 @@ if traslazione == "Y" or traslazione == "y":
     traslazione_X = float(input("Inserire la traslazione in x in metri (I.E. 160 mm = 0.160): "))
     traslazione_Y = float(input("Inserire la traslazione in y in metri: "))
 
-    df["x"] = df["x"] + traslazione_X;
-    df["y"] = df["y"] + traslazione_Y;
+    df_flipped["x"] = df_flipped["x"] + traslazione_X;
+    df_flipped["y"] = df_flipped["y"] + traslazione_Y;
 
 if traslazione == "n" or traslazione == "N":
 
     traslazione_X = 0
     traslazione_Y = 0
 
-# È necessario fare in modo che, dato che airfoiltools non chiude i profili al bordo d'uscita,
-# faccio un controllo sul numero in coordinata x, in modo tale che se noto che il numero
-# corrisponde perfettamente al valore dato dal riscalamento della corda + la traslazione, ho
-# che la coordinata sull'asse y deve andare non a zero, ma al valore imposto dalla traslazione.
-for i in range(len(df)):
-    if df["x"][i] == riscalamento + traslazione_X:
-        df["y"][i] = traslazione_Y
-
-plt.plot(df["x"], df["y"], 'b-', label='Punti Originali')
-# plt.plot(x_c_rot, y_c_rot, 'r-', label='Linea Media')
+plt.plot(df_flipped["x"], df_flipped["y"], 'b-', label='Punti Originali')
 plt.axis('equal')
 plt.show()
-
-# if rotazione == 1:
-
 
 # Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
 # funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
@@ -154,11 +118,9 @@ plt.show()
 nuovoNome = input("Inserire nuovo nome del file .dat, senza scrivere .dat, " \
                     "solo il nome: ")
 # Riporta il file in .dat
-df.to_csv(f"{nuovoNome}.dat", sep=" ", index=False, header=False)
+df_flipped.to_csv(f"{nuovoNome}.dat", sep=" ", index=False, header=False)
 
 # Aggiungi il titolo alla prima riga del file .dat
 with open(f"{nuovoNome}.dat", "w") as f:
     f.write(nuovoNome + "\n")
-    df.to_csv(f, sep=" ", index=False, header=False)
-
-
+    df_flipped.to_csv(f, sep=" ", index=False, header=False)
