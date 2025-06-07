@@ -169,7 +169,7 @@ x_tangent_ref_scaled_rot_aligned = x_tangent_ref_scaled_rot_aligned + delta_x
 # Le y restano invariate dopo la traslazione verticale
 
 # --- Allineamento verticale  per il secondo profilo ---
-offset_y = -0.06 # scegli tu il valore, negativo = verso il basso
+offset_y = -0.04 # scegli tu il valore, negativo = verso il basso
 
 y_us_scaled_rot_aligned = y_us_scaled_rot_aligned + offset_y
 y_ls_scaled_rot_aligned = y_ls_scaled_rot_aligned + offset_y
