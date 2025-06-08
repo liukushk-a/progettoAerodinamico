@@ -252,4 +252,16 @@ Line Loop(3001) = {2001, 2002, 2003, 2004};
 
 Plane Surface(3) = {3001, 1, 2};  // Esterno meno airfoil
 
+// ==================================BOUNDARY LAYER
+Field[1]=BoundaryLayer;
+Field[1].CurvesList={1,2};
+Field[1].Quads=1;
+Field[1].Ratio=1.5;
+Field[1].Size=0.00001;
+Field[1].Thickness=0.07;
+//Field[1].PointsList={1};
+Field[1].FanPointsList={1};
+Field[1].FanPointsSizesList={40};
+BoundaryLayer Field = 1;
+
 
