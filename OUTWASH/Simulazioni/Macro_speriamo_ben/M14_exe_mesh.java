@@ -53,11 +53,11 @@ public class M14_exe_mesh extends StarMacro {
 
     hardcopyProperties_0.setCurrentResolutionWidth(1045);
 
-    hardcopyProperties_0.setCurrentResolutionHeight(431);
+    hardcopyProperties_0.setCurrentResolutionHeight(1100);
 
     hardcopyProperties_1.setCurrentResolutionWidth(1043);
 
-    hardcopyProperties_1.setCurrentResolutionHeight(430);
+    hardcopyProperties_1.setCurrentResolutionHeight(1000);
 
     scene_1.resetCamera();
 

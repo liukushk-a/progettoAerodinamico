@@ -46,14 +46,14 @@ public class M01_importa_punti extends StarMacro {
 
     hardcopyProperties_0.setCurrentResolutionWidth(1043);
 
-    hardcopyProperties_0.setCurrentResolutionHeight(441);
+    hardcopyProperties_0.setCurrentResolutionHeight(430);
 
     scene_0.resetCamera();
 
     LabCoordinateSystem labCoordinateSystem_0 = 
       simulation_0.getCoordinateSystemManager().getLabCoordinateSystem();
 
-    cadModel_0.getFeatureManager().create3DSketches_2("C:\\Users\\silvi\\OneDrive\\Documenti\\GitHub\\progettoAerodinamico\\OUTWASH\\Simulazioni\\profili_accoppiati.csv", labCoordinateSystem_0, true, false);
+    cadModel_0.getFeatureManager().create3DSketches_2("C:\\Users\\silvi\\OneDrive\\Documenti\\GitHub\\progettoAerodinamico\\OUTWASH\\Simulazioni\\profili_accoppiati.csv", labCoordinateSystem_0, true, true);
 
     cadModel_0.update();
 

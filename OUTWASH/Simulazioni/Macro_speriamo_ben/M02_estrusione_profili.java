@@ -109,9 +109,9 @@ public class M02_estrusione_profili extends StarMacro {
 
     extrusionMerge_0.markFeatureForEdit();
 
-    scene_0.setTransparencyOverrideMode(SceneTransparencyOverride.USE_DISPLAYER_PROPERTY);
-
     cadModel_0.getFeatureManager().execute(extrusionMerge_0);
+
+    scene_0.setTransparencyOverrideMode(SceneTransparencyOverride.USE_DISPLAYER_PROPERTY);
 
     Sketch3D sketch3D_1 = 
       ((Sketch3D) cadModel_0.getFeature("Sketch3D 2"));
@@ -190,10 +190,5 @@ public class M02_estrusione_profili extends StarMacro {
     scene_0.setTransparencyOverrideMode(SceneTransparencyOverride.USE_DISPLAYER_PROPERTY);
 
     cadModel_0.getFeatureManager().execute(extrusionMerge_1);
-
-    CurrentView currentView_0 = 
-      scene_0.getCurrentView();
-
-    currentView_0.setInput(new DoubleVector(new double[] {0.7186800649999999, -0.22684185499999998, 0.0}), new DoubleVector(new double[] {0.7186800649999999, -0.22684185499999998, 2.9897696554605506}), new DoubleVector(new double[] {0.0, 1.0, 0.0}), 0.7804864974846424, 1, 30.0);
   }
 }
