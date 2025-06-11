@@ -30,6 +30,7 @@ public class M22_Autosave_Plot extends StarMacro {
       ((Cartesian2DAxis) cartesian2DAxisManager_0.getAxis("Left Axis"));
 
     cartesian2DAxis_0.setMaximum(2.0);
+    cartesian2DAxis_0.setMinimum(0.0);
 
     PlotUpdate plotUpdate_1 = 
       monitorPlot_0.getPlotUpdate();
@@ -78,7 +79,8 @@ public class M22_Autosave_Plot extends StarMacro {
     Cartesian2DAxis cartesian2DAxis_1 = 
       ((Cartesian2DAxis) cartesian2DAxisManager_1.getAxis("Left Axis"));
 
-    cartesian2DAxis_1.setMaximum(3.0);
+    cartesian2DAxis_1.setMaximum(4.0);
+    cartesian2DAxis_1.setMinimum(0.0);
 
     PlotUpdate plotUpdate_2 = 
       monitorPlot_1.getPlotUpdate();
@@ -114,7 +116,9 @@ public class M22_Autosave_Plot extends StarMacro {
     Cartesian2DAxis cartesian2DAxis_2 = 
       ((Cartesian2DAxis) cartesian2DAxisManager_2.getAxis("Left Axis"));
 
-    cartesian2DAxis_2.setMinimum(-10.0);
+    cartesian2DAxis_2.setMaximum(0.0);
+    cartesian2DAxis_2.setMinimum(-3.0);
+    
 
     PlotUpdate plotUpdate_3 = 
       monitorPlot_2.getPlotUpdate();
@@ -154,7 +158,8 @@ public class M22_Autosave_Plot extends StarMacro {
     Cartesian2DAxis cartesian2DAxis_3 = 
       ((Cartesian2DAxis) cartesian2DAxisManager_3.getAxis("Left Axis"));
 
-    cartesian2DAxis_3.setMinimum(-10.0);
+    cartesian2DAxis_3.setMinimum(-3.0);
+    cartesian2DAxis_3.setMaximum(0.0);
 
     PredefinedColorPalette predefinedColorPalette_2 = 
       ((PredefinedColorPalette) simulation_0.get(ColorPaletteManager.class).getObject("Siemens Color Palette"));
@@ -195,7 +200,8 @@ public class M22_Autosave_Plot extends StarMacro {
     Cartesian2DAxis cartesian2DAxis_4 = 
       ((Cartesian2DAxis) cartesian2DAxisManager_4.getAxis("Left Axis"));
 
-    cartesian2DAxis_4.setMinimum(-10.0);
+    cartesian2DAxis_4.setMinimum(-3.0);
+    cartesian2DAxis_4.setMaximum(0.0);
 
     PlotUpdate plotUpdate_5 = 
       monitorPlot_4.getPlotUpdate();
@@ -231,7 +237,8 @@ public class M22_Autosave_Plot extends StarMacro {
     Cartesian2DAxis cartesian2DAxis_5 = 
       ((Cartesian2DAxis) cartesian2DAxisManager_5.getAxis("Left Axis"));
 
-    cartesian2DAxis_5.setMinimum(-10.0);
+    cartesian2DAxis_5.setMinimum(-3.0);
+    cartesian2DAxis_5.setMaximum(0.0);
 
     PlotUpdate plotUpdate_6 = 
       monitorPlot_5.getPlotUpdate();

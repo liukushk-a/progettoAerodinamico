@@ -83,7 +83,7 @@ public class M17_velocity_vector extends StarMacro {
 
     iterationUpdateFrequency_2.setIterations(1500);
 
-    hardcopyProperties_4.setOutputWidth(1100);
+    hardcopyProperties_4.setOutputWidth(2200);
 
     hardcopyProperties_4.setOutputHeight(517);
 

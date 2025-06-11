@@ -92,7 +92,7 @@ public class M18_Velocity_Scalar extends StarMacro {
 
     iterationUpdateFrequency_3.setIterations(1500);
 
-    hardcopyProperties_6.setOutputWidth(1100);
+    hardcopyProperties_6.setOutputWidth(2200);
 
     hardcopyProperties_6.setOutputHeight(517);
 
