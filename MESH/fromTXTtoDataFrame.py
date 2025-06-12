@@ -108,9 +108,17 @@ if traslazione == "n" or traslazione == "N":
     traslazione_X = 0
     traslazione_Y = 0
 
+
+# Provo a rimuovere la ripetizione del primo punto sul bordo d'attacco per vedere se non scazza facendo il ricciolino
+df_flipped.drop(df_flipped.index[-1], inplace=True)
+
+
 # Chiedo all'utilizzatore se vuole usare il file di output per xfoil oppure per gmsh, perchè se
-# lo usa per gmsh devo aggiungere una colonna z 
-df_flipped["z"] = 0.0
+# lo usa per gmsh devo aggiungere una colonna z
+input_gmsh = input("Vuoi usare il file di output per xfoil o per gmsh? (xfoil/gmsh): ")
+if input_gmsh.lower() == "gmsh":
+    # Aggiungo una colonna z con valore 0.0
+    df_flipped["z"] = 0.0
 
 plt.plot(df_flipped["x"], df_flipped["y"], 'b-', label='Punti Originali')
 plt.axis('equal')
