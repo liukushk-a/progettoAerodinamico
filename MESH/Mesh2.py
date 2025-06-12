@@ -122,6 +122,16 @@ l4 = gmsh.model.geo.addLine(1003,1000)
 
 farfield = gmsh.model.geo.addCurveLoop([l1,l2,l3,l4])
 
+# Definizione dei Physical Groups per i bordi esterni
+inlet = gmsh.model.addPhysicalGroup(1, [l4])
+gmsh.model.setPhysicalName(1, inlet, "inlet")
+
+outlet = gmsh.model.addPhysicalGroup(1, [l2])
+gmsh.model.setPhysicalName(1, outlet, "outlet")
+
+wall_bottom = gmsh.model.addPhysicalGroup(1, [l1])
+gmsh.model.setPhysicalName(1, wall_bottom, "bottom")
+
 #Una sola superficie totale con tutti i buchi
 gmsh.model.geo.addPlaneSurface([farfield, curve_tags_1, curve_tags_2])
 
