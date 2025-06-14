@@ -37,6 +37,6 @@ public class M24_Autosave_SIM extends StarMacro {
     IntegerValue integerValue_0 = 
       stepStoppingCriterion_0.getMaximumNumberStepsObject();
 
-    integerValue_0.getQuantity().setValue(1500.0);
+    integerValue_0.getQuantity().setValue(3000);
   }
 }
