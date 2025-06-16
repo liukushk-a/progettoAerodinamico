@@ -6,15 +6,26 @@ Il nuovo file .dat viene salvato nella stessa cartella in cui tu lanci lo script
 Il codice, tra le altre cose, prende anche i file .txt e li trasforma in .dat, quindi può
 essere usato anche per quello, se non si vuole riscalare, si mette solo 1
 È importante come il file che venga dato in input abbia soltanto numeri dentro, colonne coi
-dati e non titoli o altre cose strane dentro, quelli vanno cancellati a priori'''
+dati e non titoli o altre cose strane dentro, quelli vanno cancellati a priori.
+Dato che airfoiltools è stato progettato da gente che aveva un gabinetto al posto del cervello,
+a volte i punti vanno dal bordo d'attacco al bordo d'uscita sul dorso e poi dal bordo d'attacco
+a quello d'uscita anche sul ventre, mentre altre volte invece seguono una linea unica, devo
+mettere manualmente una richiesta all'utilizzatore se è il caso di aggiustare questa cosa a 
+mano oppure no.'''
 
 import pandas as pd
 import numpy as np
+import os
+import matplotlib.pyplot as plt
+from tkinter.filedialog import askopenfilename
 import matplotlib.pyplot as plt
 
 # Richiedi all'utilizzatore il percorso del file .txt
-percorso = input("Inserire il percorso del file .txt, fino al punto esatto, " \
-                    "includendo il file .txt: ")
+percorso = askopenfilename(title="Seleziona il file .txt", filetypes=[("Text files", "*.txt")])
+
+# Mi salvo il nome del file, in modo da poterlo usare dopo
+nomeProfilo = os.path.basename(percorso)
+nomeProfilo, ext = os.path.splitext(nomeProfilo)
 
 # Leggi il file .txt e trasformalo in un df
 df = pd.read_csv(percorso, delim_whitespace=True, header=None, names=["x", "y", "z"])
@@ -25,11 +36,11 @@ del df["z"]
 # Chiedi all'utilizzatore di quanto vuole riscalare il profilo
 riscalamento = float(input("Inserire riscalatura del profilo: "))
 
-# Riscalamento effettivo
+# Riscalamento effettivo del dataFrame
 df = df*riscalamento
 
 # Chiede all'utilizzatore se intende capovolgere il profilo
-capovolgimento = input ("Vuoi capovolgere il profilo? (Y/n): ")
+capovolgimento = input ("Vuoi capovolgere il profilo? [Y/n]: ")
 if capovolgimento == "Y" or capovolgimento == "y":
     df["y"] = df["y"]*(-1)
 
@@ -83,18 +94,22 @@ if y_rot.iloc[-1] != y_rot.iloc[n-1]:
 df["x"] = x_rot
 df["y"] = y_rot
 
+# Chiedo se è necessario fare il flip nel dizionario
+necessaryFlip = input("Il profilo è definito con una linea ininterrotta di punti (1) oppure " \
+    "dorso e ventre con due linee separate (2)? :")
 
-# Divide in due metà
-n = len(df) // 2
-dorso = df.iloc[:n].copy()
-#ventre = ventre.iloc[::-1].reset_index(drop=True)
-ventre = df.iloc[n:].iloc[::-1].copy()  # inversione del ventre
+if necessaryFlip == 2:
+    # Divide in due metà
+    n = len(df) // 2
+    dorso = df.iloc[:n].copy()
+    #ventre = ventre.iloc[::-1].reset_index(drop=True)
+    ventre = df.iloc[n:].iloc[::-1].copy()  # inversione del ventre
 
 # Ricombina in un unico dataframe
 df_flipped = pd.concat([dorso, ventre], ignore_index=True)
 
 # Chiede all'utilizzatore se intende effettuare una traslazione nello spazio del profilo
-traslazione = input("Vuoi traslare il profilo nello spazio? (Y/n): ")
+traslazione = input("Vuoi traslare il profilo nello spazio? [Y/n]: ")
 if traslazione == "Y" or traslazione == "y":
     
     traslazione_X = float(input("Inserire la traslazione in x in metri (I.E. 160 mm = 0.160): "))
@@ -110,7 +125,7 @@ if traslazione == "n" or traslazione == "N":
 
 
 # Provo a rimuovere la ripetizione del primo punto sul bordo d'attacco per vedere se non scazza facendo il ricciolino
-df_flipped.drop(df_flipped.index[-1], inplace=True)
+#df_flipped.drop(df_flipped.index[-1], inplace=True)
 
 
 # Chiedo all'utilizzatore se vuole usare il file di output per xfoil oppure per gmsh, perchè se
@@ -124,11 +139,15 @@ plt.plot(df_flipped["x"], df_flipped["y"], 'b-', label='Punti Originali')
 plt.axis('equal')
 plt.show()
 
-# Chiede all'utilizzatore di definire un nuovo nome per il file .dat che 
-# funge anche da titolo da mettere nel file .dat in modo tale che xfoil o
-# openVSP lo leggano bene
-nuovoNome = input("Inserire nuovo nome del file .txt, senza scrivere .txt, " \
+# Chiede all'utilizzatore cosa intenda fare per il nome
+ask4Name = input("Intendi usare lo stesso nome per il profilo? [Y/n] :")
+
+if ask4Name == "Y" or ask4Name == "y":
+    nuovoNome = nomeProfilo
+else:
+    nuovoNome = input("Inserire nuovo nome del file .txt, senza scrivere .txt, " \
                     "solo il nome: ")
+
 # Riporta il file in .dat
 df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
 
