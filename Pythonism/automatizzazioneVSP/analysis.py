@@ -47,7 +47,7 @@ groundHeight = 0.5
 print("1. Sweep main wing")
 print("2. Dihedral main wing")
 print("3. Twist main wing (totale, sia alla radice che all'estremità alare)")
-print("4. Coordinate X secondary wing (di default si trova a +0.4 sull'asse X)")
+print("4. Coordinate X secondary wing (di default si trova a +0.4 sull'asse X, se metti 0, in realtà sei a 0.4)")
 print("5. Coordinate Z secondary wing (di default si trova a +0.35 sull'asse Z)")
 print("6. Sweep secondary wing")
 print("7. Dihedral secondary wing")

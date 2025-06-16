@@ -18,7 +18,10 @@ restituisce sempre la cartella dove il codice è stato lanciato, non la sottocar
 il codice in questo momento sta operando.
 Un problema simile l'ho riscontrato usando la funzione open, è come se si ostinasse a non
 riconoscere a che punto siamo col codice, ma cercasse di aprire file sempre nella cartella
-da cui lo script è stato lanciato, quindi bisogna dargli il percorso completo del file.'''
+da cui lo script è stato lanciato, quindi bisogna dargli il percorso completo del file.
+Quando ho scritto la funzione obiettivo ho usato non l'abs, ma il -1 poichè così se avessimo
+che un profilo dia CL positivo, così la funzione obiettivo scende invece che comunque 
+salire.'''
 
 import re
 import pandas as pd
@@ -83,7 +86,7 @@ for folder in os.listdir(directoryDiPartenza):
                                 CL = float(coeffPortanzaTotale.group(1))
 
                                 # Creo un esempio di funzione obiettivo che voglio ottimizzare
-                                funzioneObiettivo = abs(CL) + 0.2*CDtot
+                                funzioneObiettivo = -1*CL + 0.2*CDtot
 
                                 # Creo nuove righe per il dataframe. Aggiungo il sort_values per
                                 # ordinare il dataframe in base alla funzione obiettivo
