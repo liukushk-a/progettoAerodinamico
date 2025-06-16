@@ -18,7 +18,6 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 from tkinter.filedialog import askopenfilename
-import matplotlib.pyplot as plt
 
 # Richiedi all'utilizzatore il percorso del file .txt
 percorso = askopenfilename(title="Seleziona il file .txt", filetypes=[("Text files", "*.txt")])
@@ -53,19 +52,6 @@ n = len(df) // 2
 dorso = df.iloc[:n].reset_index(drop=True)
 ventre = df.iloc[n:].reset_index(drop=True)
 
-# Calcolo della linea media
-x_medio = dorso["x"]  # Le x sono le stesse per dorso e ventre
-y_medio = (dorso["y"] + ventre["y"]) / 2
-
-# Costruzione del dataframe della linea media
-df_linea_media = pd.DataFrame({
-    "x": x_medio,
-    "y_medio": y_medio
-})
-
-x_camber = x_medio
-y_camber = y_medio
-
 # Parametri di rotazione
 x0 = float(input("Inserisci x del polo di rotazione: "))
 y0 = float(input("Inserisci y del polo di rotazione: "))
@@ -75,12 +61,6 @@ theta_rad = np.radians(theta_deg)
 # Applica la rotazione a tutti i punti
 x_shifted = df["x"] - x0
 y_shifted = df["y"] - y0
-
-x_c_shifted = x_camber - x0
-y_c_shifted = y_camber - y0
-
-x_c_rot = x0 + x_c_shifted * np.cos(theta_rad) - y_c_shifted * np.sin(theta_rad)
-y_c_rot = y0 + x_c_shifted * np.sin(theta_rad) + y_c_shifted * np.cos(theta_rad)
 
 x_rot = x0 + x_shifted * np.cos(theta_rad) - y_shifted * np.sin(theta_rad)
 y_rot = y0 + x_shifted * np.sin(theta_rad) + y_shifted * np.cos(theta_rad)
@@ -95,8 +75,8 @@ df["x"] = x_rot
 df["y"] = y_rot
 
 # Chiedo se è necessario fare il flip nel dizionario
-necessaryFlip = input("Il profilo è definito con una linea ininterrotta di punti (1) oppure " \
-    "dorso e ventre con due linee separate (2)? :")
+necessaryFlip = int(input("Il profilo è definito con una linea ininterrotta di punti (1) oppure " \
+    "dorso e ventre con due linee separate (2)? :"))
 
 if necessaryFlip == 2:
     # Divide in due metà
@@ -105,8 +85,13 @@ if necessaryFlip == 2:
     #ventre = ventre.iloc[::-1].reset_index(drop=True)
     ventre = df.iloc[n:].iloc[::-1].copy()  # inversione del ventre
 
-# Ricombina in un unico dataframe
-df_flipped = pd.concat([dorso, ventre], ignore_index=True)
+    # Ricombina in un unico dataframe
+    df_flipped = pd.concat([dorso, ventre], ignore_index=True)
+
+# Se non dovessi flippare, perchè il file è già ordinato, comunque genero il df_flipped, perchè
+# è un nome importante
+if necessaryFlip == 1:
+    df_flipped = df.copy()
 
 # Chiede all'utilizzatore se intende effettuare una traslazione nello spazio del profilo
 traslazione = input("Vuoi traslare il profilo nello spazio? [Y/n]: ")
@@ -115,18 +100,13 @@ if traslazione == "Y" or traslazione == "y":
     traslazione_X = float(input("Inserire la traslazione in x in metri (I.E. 160 mm = 0.160): "))
     traslazione_Y = float(input("Inserire la traslazione in y in metri: "))
 
-    df_flipped["x"] = df_flipped["x"] + traslazione_X;
-    df_flipped["y"] = df_flipped["y"] + traslazione_Y;
+    df_flipped["x"] = df_flipped["x"] + traslazione_X
+    df_flipped["y"] = df_flipped["y"] + traslazione_Y
 
 if traslazione == "n" or traslazione == "N":
 
     traslazione_X = 0
     traslazione_Y = 0
-
-
-# Provo a rimuovere la ripetizione del primo punto sul bordo d'attacco per vedere se non scazza facendo il ricciolino
-#df_flipped.drop(df_flipped.index[-1], inplace=True)
-
 
 # Chiedo all'utilizzatore se vuole usare il file di output per xfoil oppure per gmsh, perchè se
 # lo usa per gmsh devo aggiungere una colonna z
