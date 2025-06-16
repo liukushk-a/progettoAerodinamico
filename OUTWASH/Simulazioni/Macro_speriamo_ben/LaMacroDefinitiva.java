@@ -29,6 +29,8 @@ public class LaMacroDefinitiva extends StarMacro {
 
     new StarScript(getActiveRootObject(), new File(resolvePath("M25_ExportCSV.java"))).play();
 
+    new StarScript(getActiveRootObject(), new File(resolvePath("M26_Line.java"))).play();
+
 
   }
 }
