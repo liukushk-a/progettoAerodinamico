@@ -48,9 +48,9 @@ if len(df) % 2 != 0:
     raise ValueError("Il numero di righe nel file non è pari: controlla il file!")
 
 # Suddividi il dataframe in due metà: dorso (superiore) e ventre (inferiore)
-n = len(df) // 2
-dorso = df.iloc[:n].reset_index(drop=True)
-ventre = df.iloc[n:].reset_index(drop=True)
+#n = len(df) // 2
+#dorso = df.iloc[:n].reset_index(drop=True)
+#ventre = df.iloc[n:].reset_index(drop=True)
 
 # Parametri di rotazione
 x0 = float(input("Inserisci x del polo di rotazione: "))
@@ -67,8 +67,8 @@ y_rot = y0 + x_shifted * np.sin(theta_rad) + y_shifted * np.cos(theta_rad)
 
 # Faccio in modo che le coordinate dell'ultimo punto del dorso e del ventre dopo la
 # rotazione siano uguali, in modo tale che il profilo sia chiuso
-if y_rot.iloc[-1] != y_rot.iloc[n-1]:
-    y_rot.iloc[-1] = y_rot.iloc[n-1]
+#if y_rot.iloc[-1] != y_rot.iloc[n-1]:
+#    y_rot.iloc[-1] = y_rot.iloc[n-1]
 
 # Aggiorna il dataframe
 df["x"] = x_rot
@@ -76,11 +76,17 @@ df["y"] = y_rot
 
 # Chiedo se è necessario fare il flip nel dizionario
 necessaryFlip = int(input("Il profilo è definito con una linea ininterrotta di punti (1) oppure " \
-    "dorso e ventre con due linee separate (2)? :"))
+    "dorso e ventre con due linee separate PARTENDO DAL LE AL TE (2)? :"))
 
 if necessaryFlip == 2:
     # Divide in due metà
     n = len(df) // 2
+
+    # Arrivato quì posso forzare la chiusura del profilo nel caso in cui debba flippare il dataframe
+    if df.iloc[-1, 1] != df.iloc[n-1, 1]:
+        df.iloc[-1, 1] = (df.iloc[n-1, 1] + df.iloc[-1, 1]) / 2
+        df.iloc[-1, 0] = max(df.iloc[n-1, 0], df.iloc[-1, 0]) + 0.005*df.iloc[-1, 0]
+
     dorso = df.iloc[:n].copy()
     #ventre = ventre.iloc[::-1].reset_index(drop=True)
     ventre = df.iloc[n:].iloc[::-1].copy()  # inversione del ventre
