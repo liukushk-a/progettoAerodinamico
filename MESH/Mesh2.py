@@ -32,6 +32,8 @@ for x, y, z  in data2:
     point_tags_2.append(tag)
 
 # Creo le spline 
+# line_tags_1 = gmsh.model.geo.addSpline(point_tags_1 + [point_tags_1[0]])
+# line_tags_2 = gmsh.model.geo.addSpline(point_tags_2 + [point_tags_2[0]])
 line_tags_1 = gmsh.model.geo.addSpline(point_tags_1 + [point_tags_1[0]])
 line_tags_2 = gmsh.model.geo.addSpline(point_tags_2 + [point_tags_2[0]])
 
@@ -64,17 +66,17 @@ gmsh.model.mesh.field.setAsBackgroundMesh(thresh)
 
 
 # Creo il campo Boundary Layer
-bl_field = gmsh.model.mesh.field.add("BoundaryLayer")
+# bl_field = gmsh.model.mesh.field.add("BoundaryLayer")
 
-# Parametri del boundary layer
-gmsh.model.mesh.field.setNumbers(bl_field, "CurvesList", [line_tags_1, line_tags_2])
-gmsh.model.mesh.field.setNumber(bl_field, "hwall_n", 0.002)  # spessore della prima cella
-gmsh.model.mesh.field.setNumber(bl_field, "thickness", 0.02) # spessore totale dello strato limite
-gmsh.model.mesh.field.setNumber(bl_field, "ratio", 1.2)      # fattore di crescita
-gmsh.model.mesh.field.setNumber(bl_field, "Quads", 1)        # elementi quadrilateri nello strato limite
+# # Parametri del boundary layer
+# gmsh.model.mesh.field.setNumbers(bl_field, "CurvesList", [line_tags_1, line_tags_2])
+# gmsh.model.mesh.field.setNumber(bl_field, "hwall_n", 0.002)  # spessore della prima cella
+# gmsh.model.mesh.field.setNumber(bl_field, "thickness", 0.003) # spessore totale dello strato limite
+# gmsh.model.mesh.field.setNumber(bl_field, "ratio", 1.2)      # fattore di crescita
+# gmsh.model.mesh.field.setNumber(bl_field, "Quads", 1)        # elementi quadrilateri nello strato limite
 
 # Attivo il campo
-gmsh.model.mesh.field.setAsBoundaryLayer(bl_field)
+# gmsh.model.mesh.field.setAsBoundaryLayer(bl_field)
 
 ## creazione della refinement box: 
 
@@ -94,7 +96,7 @@ l9 = gmsh.model.geo.addLine(p4, p1)
 
 box_field = gmsh.model.mesh.field.add("Box")
 gmsh.model.mesh.field.setNumber(box_field, "VIn", 0.002)
-gmsh.model.mesh.field.setNumber(box_field, "VOut", 0.05)
+gmsh.model.mesh.field.setNumber(box_field, "VOut", 0.02)
 gmsh.model.mesh.field.setNumber(box_field, "XMin", x_min)
 gmsh.model.mesh.field.setNumber(box_field, "XMax", x_max)
 gmsh.model.mesh.field.setNumber(box_field, "YMin", y_min)
@@ -102,6 +104,31 @@ gmsh.model.mesh.field.setNumber(box_field, "YMax", y_max)
 gmsh.model.mesh.field.setNumber(box_field, "ZMin", -1)
 gmsh.model.mesh.field.setNumber(box_field, "ZMax", 1)
 gmsh.model.mesh.field.setAsBackgroundMesh(box_field)
+
+x_min1, x_max1 = 0.38, 0.70
+y_min1, y_max1 = 0.26, 0.37
+cl_box1 = 0.0005  # cell size dentro il refinement box
+
+p11 = gmsh.model.geo.addPoint(x_min1, y_min1, 0, cl_box1)
+p12 = gmsh.model.geo.addPoint(x_max1, y_min1, 0, cl_box1)
+p13 = gmsh.model.geo.addPoint(x_max1, y_max1, 0, cl_box1)
+p14 = gmsh.model.geo.addPoint(x_min1, y_max1, 0, cl_box1)
+
+l16 = gmsh.model.geo.addLine(p11, p12)
+l17 = gmsh.model.geo.addLine(p12, p13)
+l18 = gmsh.model.geo.addLine(p13, p14)
+l19 = gmsh.model.geo.addLine(p14, p11)
+
+box_field1 = gmsh.model.mesh.field.add("Box")
+gmsh.model.mesh.field.setNumber(box_field1, "VIn", 0.0003)
+gmsh.model.mesh.field.setNumber(box_field1, "VOut", 0.0015)
+gmsh.model.mesh.field.setNumber(box_field1, "XMin", x_min1)
+gmsh.model.mesh.field.setNumber(box_field1, "XMax", x_max1)
+gmsh.model.mesh.field.setNumber(box_field1, "YMin", y_min1)
+gmsh.model.mesh.field.setNumber(box_field1, "YMax", y_max1)
+gmsh.model.mesh.field.setNumber(box_field1, "ZMin", -1)
+gmsh.model.mesh.field.setNumber(box_field1, "ZMax", 1)
+gmsh.model.mesh.field.setAsBackgroundMesh(box_field1)
 
 # Parametri farfield 
 Lx = 5
