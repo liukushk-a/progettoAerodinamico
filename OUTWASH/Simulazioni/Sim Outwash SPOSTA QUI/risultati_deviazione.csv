@@ -1,30 +1,30 @@
 cartella,tipo,min_theta,y_min,dettaglio
 Leo_Leo,CSV,-5.588595606031009,-0.78,
-Leo_Maurizio,,,,Cartella vuota o senza dati validi
-Leo_naca45008,,,,Cartella vuota o senza dati validi
-Leo_naca5406,,,,Cartella vuota o senza dati validi
-Leo_naca6408,,,,Cartella vuota o senza dati validi
-Leo_naca6508,,,,Cartella vuota o senza dati validi
+Leo_Maurizio,CSV,-7.215698001799881,-0.78,
+Leo_naca45008,CSV,-4.928649116827078,-0.72,
+Leo_naca5406,CSV,-5.415146747140466,-0.78,
+Leo_naca6408,CSV,-5.5872558695086125,-0.78,
+Leo_naca6508,CSV,-5.692446174428818,-0.78,
 Leo_s1210,CSV,-6.128672550178485,-0.8400000000000001,
-Leo_s1223,,,,Cartella vuota o senza dati validi
-Leo_s4083,,,,Cartella vuota o senza dati validi
-Leo_sd7037,,,,Cartella vuota o senza dati validi
-Leo_Viola,,,,Cartella vuota o senza dati validi
-Maurizio_Leo,,,,Cartella vuota o senza dati validi
-Maurizio_Maurizio,,,,Cartella vuota o senza dati validi
-Maurizio_naca45008,,,,Cartella vuota o senza dati validi
-Maurizio_naca5406,,,,Cartella vuota o senza dati validi
+Leo_s1223,CSV,-6.1022300709196555,-0.8400000000000001,
+Leo_s4083,CSV,-5.0680319717611235,-0.72,
+Leo_sd7037,CSV,-5.196806778851086,-0.18,
+Leo_Viola,CSV,-5.92645721769223,-0.78,
+Maurizio_Leo,CSV,-23.730186745079493,-1.7399999999999998,
+Maurizio_Maurizio,CSV,-23.92291778891986,-0.78,
+Maurizio_naca45008,CSV,-11.628629234247375,-0.72,
+Maurizio_naca5406,CSV,-6.666149307953709,-0.18,
 Maurizio_naca6408,CSV,-18.39578181157267,-1.08,
 Maurizio_naca6508,CSV,0.02053546660093758,-6.0,
 Maurizio_s1210,CSV,-0.662909584942534,0.0,
 Maurizio_s1223,CSV,-11.451047761645437,-0.96,
 Maurizio_s4083,CSV,-8.994366408075818,-0.66,
 Maurizio_sd7037,CSV,-14.09874920235863,-0.78,
-Maurizio_Viola,,,,Cartella vuota o senza dati validi
+Maurizio_Viola,CSV,-15.224263714629402,-1.08,
 naca45008_Leo,CSV,-3.998276135420704,-0.18,
 naca45008_Maurizio,CSV,-9.303472365218942,-0.8400000000000001,
 naca45008_s1210,CSV,-4.717713510629165,-0.18,
-naca45008_s1223,,,,Cartella vuota o senza dati validi
+naca45008_s1223,CSV,-4.834851842271247,-0.12,
 naca45008_Viola,CSV,-4.50299890257787,-0.18,
 naca5406_Leo,CSV,-5.777606855981838,-0.12,
 naca5406_Maurizio,CSV,-7.604958448324193,-0.06,
@@ -69,14 +69,14 @@ sd7037_Maurizio,CSV,-4.4907308837546775,0.0,
 sd7037_s1210,CSV,-4.846023820522838,-0.06,
 sd7037_s1223,CSV,-4.949549325823553,-0.18,
 sd7037_Viola,CSV,-4.740384772479516,-0.06,
-Viola_Leo,,,,Cartella vuota o senza dati validi
-Viola_Maurizio,,,,Cartella vuota o senza dati validi
+Viola_Leo,CSV,-6.295137179681974,-0.78,
+Viola_Maurizio,CSV,-7.506582605792004,-0.06,
 Viola_naca45008,CSV,-5.7219554502445,-0.78,
-Viola_naca5406,,,,Cartella vuota o senza dati validi
-Viola_naca6408,,,,Cartella vuota o senza dati validi
-Viola_naca6508,,,,Cartella vuota o senza dati validi
-Viola_s1210,,,,Cartella vuota o senza dati validi
-Viola_s1223,,,,Cartella vuota o senza dati validi
-Viola_s4083,,,,Cartella vuota o senza dati validi
-Viola_sd7037,,,,Cartella vuota o senza dati validi
-Viola_Viola,,,,Cartella vuota o senza dati validi
+Viola_naca5406,CSV,-5.985668955473024,-0.06,
+Viola_naca6408,CSV,-6.568631517628294,-0.78,
+Viola_naca6508,CSV,-6.3142003204532005,-0.24,
+Viola_s1210,CSV,-6.918359812311704,-0.18,
+Viola_s1223,CSV,-6.924281742091062,-0.24,
+Viola_s4083,CSV,-5.889677120222552,-0.78,
+Viola_sd7037,CSV,-5.930994507735736,-0.78,
+Viola_Viola,CSV,-6.899416244386734,-0.3,
