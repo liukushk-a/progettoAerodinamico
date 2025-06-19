@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 import numpy as np
+import math
+import csv
 
 def scegli_cartella(percorso):
     cartelle = [d for d in os.listdir(percorso) if os.path.isdir(os.path.join(percorso, d))]
@@ -20,7 +22,7 @@ def scegli_cartella(percorso):
     print("Scelta non valida.")
     return None
 
-def analizza_plot(cartella_base):
+def analizza_plot_csv(cartella_base):
     plot_path = os.path.join(cartella_base, "Plot")
     x_csv = os.path.join(plot_path, "X_Direction.csv")
     y_csv = os.path.join(plot_path, "Y_Direction.csv")
@@ -35,16 +37,90 @@ def analizza_plot(cartella_base):
             min_idx = np.argmin(theta)
             min_theta = theta[min_idx]
             y_min = y_pos.iloc[min_idx]
-            print(f"\nRisultati per la cartella '{os.path.basename(cartella_base)}':")
-            print(f"  Minimo angolo di deflessione: {min_theta:.2f}°")
-            print(f"  Posizione verticale corrispondente: {y_min}\n")
+            return {
+                "tipo": "CSV",
+                "min_theta": min_theta,
+                "y_min": y_min,
+                "dettaglio": ""
+            }
         except Exception as e:
-            print(f"Errore durante la lettura dei file: {e}")
-    else:
-        print("File X_Direction.csv o Y_Direction.csv non trovati nella sottocartella 'Plot'.")
+            return {
+                "tipo": "CSV",
+                "min_theta": "",
+                "y_min": "",
+                "dettaglio": f"Errore CSV: {e}"
+            }
+    return None
+
+def analizza_plot_txt(cartella_base):
+    plot_path = os.path.join(cartella_base, "Plot")
+    x_file = os.path.join(plot_path, "X_Direction")
+    y_file = os.path.join(plot_path, "Y_Direction")
+    if os.path.isfile(x_file) and os.path.isfile(y_file):
+        angoli = []
+        with open(x_file) as xf, open(y_file) as yf:
+            x_lines = xf.readlines()
+            y_lines = yf.readlines()
+            for i, (x, y) in enumerate(zip(x_lines, y_lines)):
+                try:
+                    x_val = float(x.strip())
+                    y_val = float(y.strip())
+                    angle_rad = math.atan2(y_val, x_val)
+                    angle_deg = math.degrees(angle_rad)
+                    angoli.append(angle_deg)
+                except ValueError:
+                    continue
+        if angoli:
+            min_theta = min(angoli)
+            return {
+                "tipo": "TXT",
+                "min_theta": min_theta,
+                "y_min": "",
+                "dettaglio": ""
+            }
+    return None
+
+def analizza_tutte_cartelle(base_dir):
+    risultati = []
+    for folder in os.listdir(base_dir):
+        folder_path = os.path.join(base_dir, folder)
+        plot_path = os.path.join(folder_path, "Plot")
+        if os.path.isdir(folder_path):
+            risultato = None
+            tipo = ""
+            if os.path.isdir(plot_path):
+                risultato = analizza_plot_csv(folder_path)
+                if risultato:
+                    tipo = risultato["tipo"]
+                else:
+                    risultato = analizza_plot_txt(folder_path)
+                    if risultato:
+                        tipo = risultato["tipo"]
+            if risultato:
+                risultati.append({
+                    "cartella": folder,
+                    "tipo": tipo,
+                    "min_theta": risultato["min_theta"],
+                    "y_min": risultato["y_min"],
+                    "dettaglio": risultato["dettaglio"]
+                })
+            else:
+                risultati.append({
+                    "cartella": folder,
+                    "tipo": "",
+                    "min_theta": "",
+                    "y_min": "",
+                    "dettaglio": "Cartella vuota o senza dati validi"
+                })
+    return risultati
 
 if __name__ == "__main__":
     percorso = os.path.dirname(os.path.abspath(__file__))
-    scelta = scegli_cartella(percorso)
-    if scelta:
-        analizza_plot(os.path.join(percorso, scelta))
+    risultati = analizza_tutte_cartelle(percorso)
+    output_csv = os.path.join(percorso, "risultati_deviazione.csv")
+    with open(output_csv, mode="w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["cartella", "tipo", "min_theta", "y_min", "dettaglio"])
+        writer.writeheader()
+        for r in risultati:
+            writer.writerow(r)
+    print(f"\nRisultati salvati in '{output_csv}'.")
