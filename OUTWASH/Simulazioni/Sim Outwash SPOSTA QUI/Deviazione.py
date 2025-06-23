@@ -80,8 +80,23 @@ def analizza_plot_txt(cartella_base):
             }
     return None
 
+def analizza_reports_txt(cartella_base):
+    report_path = os.path.join(cartella_base, "Plot", "Reports.txt")
+    if os.path.isfile(report_path):
+        valori = {}
+        with open(report_path, "r") as f:
+            for line in f:
+                if ":" in line:
+                    key, value = line.split(":", 1)
+                    valori[key.strip()] = value.strip()
+        return valori
+    return None
+
 def analizza_tutte_cartelle(base_dir):
     risultati = []
+    all_report_keys = set()
+    temp_risultati = []
+
     for folder in os.listdir(base_dir):
         folder_path = os.path.join(base_dir, folder)
         plot_path = os.path.join(folder_path, "Plot")
@@ -96,30 +111,38 @@ def analizza_tutte_cartelle(base_dir):
                     risultato = analizza_plot_txt(folder_path)
                     if risultato:
                         tipo = risultato["tipo"]
+            report_valori = analizza_reports_txt(folder_path)
             if risultato:
-                risultati.append({
+                r = {
                     "cartella": folder,
-                    "tipo": tipo,
                     "min_theta": risultato["min_theta"],
-                    "y_min": risultato["y_min"],
-                    "dettaglio": risultato["dettaglio"]
-                })
+                    "y_min": risultato["y_min"]
+                }
             else:
-                risultati.append({
+                r = {
                     "cartella": folder,
-                    "tipo": "",
                     "min_theta": "",
-                    "y_min": "",
-                    "dettaglio": "Cartella vuota o senza dati validi"
-                })
-    return risultati
+                    "y_min": ""
+                }
+            if report_valori:
+                r.update(report_valori)
+                all_report_keys.update(report_valori.keys())
+            temp_risultati.append(r)
+    # Ordina le colonne: fisse + tutte quelle trovate nei report
+    fieldnames = ["cartella", "min_theta", "y_min"] + sorted(all_report_keys)
+    for r in temp_risultati:
+        for k in all_report_keys:
+            if k not in r:
+                r[k] = ""
+        risultati.append(r)
+    return risultati, fieldnames
 
 if __name__ == "__main__":
     percorso = os.path.dirname(os.path.abspath(__file__))
-    risultati = analizza_tutte_cartelle(percorso)
+    risultati, fieldnames = analizza_tutte_cartelle(percorso)
     output_csv = os.path.join(percorso, "risultati_deviazione.csv")
     with open(output_csv, mode="w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["cartella", "tipo", "min_theta", "y_min", "dettaglio"])
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for r in risultati:
             writer.writerow(r)
