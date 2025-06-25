@@ -27,7 +27,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 vsp.DeleteAllResults()
 
 # Carico la geometria chiedendo all'utilizzatore il nome del file .vsp3
-nomeGeometria = askopenfilename(title="Seleziona il file di geometria .vsp3", filetypes=[("VSP files", "*.vsp3")])
+nomeGeometria = input("Inserisci il nome del file .vsp3 (senza .vsp3): ")
 vsp.ReadVSPFile(os.path.join(script_dir, f"{nomeGeometria}.vsp3"))
 #percorso = askopenfilename(title="Seleziona il file di geometria .vsp3", filetypes=[("VSP files", "*.vsp3")])
 
@@ -193,7 +193,8 @@ for valore in valori:
         #vsp.SetIntAnalysisInput("VSPAEROSweep", "MaxIter", [250])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
-        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])        
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -246,6 +247,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -297,6 +299,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -348,6 +351,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -399,6 +403,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -450,6 +455,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
@@ -502,6 +508,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
         # Eseguo l'analisi aerodinamica
