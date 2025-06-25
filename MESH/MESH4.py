@@ -42,11 +42,11 @@ point_tags_1 = []
 point_tags_2 = []
 
 for x, y, z in data1:
-    tag = gmsh.model.geo.addPoint(x, y, z, meshSize=0.01)
+    tag = gmsh.model.geo.addPoint(x, y, z,1e-2)
     point_tags_1.append(tag)
 
 for x, y, z in data2:
-    tag = gmsh.model.geo.addPoint(x, y, z, meshSize=0.01)
+    tag = gmsh.model.geo.addPoint(x, y, z,1e-2)
     point_tags_2.append(tag)
 
 # === Curve (Polyline invece di Spline) ===
@@ -82,7 +82,6 @@ farfield_loop = gmsh.model.geo.addCurveLoop([l1, l2, l3, l4])
 # --- Superficie con fori dei due profili ---
 surface = gmsh.model.geo.addPlaneSurface([farfield_loop, loop_1, loop_2])
 
-# --- Physical boundaries ---
 gmsh.model.addPhysicalGroup(1, [l4], tag=10)
 gmsh.model.setPhysicalName(1, 10, "inlet")
 gmsh.model.addPhysicalGroup(1, [l2], tag=11)
@@ -94,9 +93,6 @@ gmsh.model.setPhysicalName(1, 13, "top")
 
 gmsh.model.geo.synchronize()
 
-# --- Definizione campi mesh ---
-
-# Campo 1: distanza dai profili per refining fine
 dist = gmsh.model.mesh.field.add("Distance")
 gmsh.model.mesh.field.setNumbers(dist, "CurvesList", [line_tags_1, line_tags_2])
 
@@ -109,8 +105,8 @@ gmsh.model.mesh.field.setNumber(thresh, "DistMax", 0.01)
 
 # Campo 2: refinement intermedio (box grande)
 box_big = gmsh.model.mesh.field.add("Box")
-gmsh.model.mesh.field.setNumber(box_big, "VIn", 0.0015)
-gmsh.model.mesh.field.setNumber(box_big, "VOut", 0.01)
+gmsh.model.mesh.field.setNumber(box_big, "VIn", 0.01)
+gmsh.model.mesh.field.setNumber(box_big, "VOut", 0.1)
 gmsh.model.mesh.field.setNumber(box_big, "XMin", 0.13)
 gmsh.model.mesh.field.setNumber(box_big, "XMax", 2.5)
 gmsh.model.mesh.field.setNumber(box_big, "YMin", 0.18)
@@ -120,29 +116,6 @@ gmsh.model.mesh.field.setNumber(box_big, "ZMax", 1)
 
 gmsh.model.mesh.field.setAsBackgroundMesh(box_big)
 
-# Campo 3: zona critica (box piccolo)
-box_small = gmsh.model.mesh.field.add("Box")
-gmsh.model.mesh.field.setNumber(box_small, "VIn", 0.0003)
-gmsh.model.mesh.field.setNumber(box_small, "VOut", 0.0015)
-gmsh.model.mesh.field.setNumber(box_small, "XMin", 0.38)
-gmsh.model.mesh.field.setNumber(box_small, "XMax", 0.7)
-gmsh.model.mesh.field.setNumber(box_small, "YMin", 0.26)
-gmsh.model.mesh.field.setNumber(box_small, "YMax", 0.37)
-gmsh.model.mesh.field.setNumber(box_small, "ZMin", -1)
-gmsh.model.mesh.field.setNumber(box_small, "ZMax", 1)
-
-
-
-# gmsh.model.mesh.field.setAsBackgroundMesh(box_small)
-# Campo finale: minimo tra i tre
-#min_field = gmsh.model.mesh.field.add("Min")
-#gmsh.model.mesh.field.setNumbers("FieldsList", [thresh, box_big, box_small])
-#gmsh.model.mesh.field.setAsBackgroundMesh(min_field)
-
-# --- Sincronizza geometria ---
-# gmsh.model.geo.synchronize()
-
-# --- Debug: visualizza campo mesh prima di generare la mesh ---
 gmsh.fltk.run()
 
 # --- Genera mesh 2D ---
@@ -150,4 +123,9 @@ gmsh.model.mesh.generate(2)
 
 # --- Visualizza mesh finale ---
 gmsh.fltk.run()
+
+format = ".su2"
+name = "mesh"+format
+gmsh.write(name)
+
 gmsh.finalize()
