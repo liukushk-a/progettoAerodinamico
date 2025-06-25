@@ -31,7 +31,7 @@ naca5406_s1223	si
 naca5406_s4083	si	
 naca5406_sd7037	si
 naca5406_Viola	si
-naca6408_Leo	no	
+naca6408_Leo	si	
 naca6408_Maurizio	si	
 naca6408_naca5406	no	
 naca6408_naca6408	si	
@@ -74,8 +74,8 @@ Viola_naca5406	no
 Viola_naca6408	no	
 Viola_naca6508	no	
 Viola_naca45008	no	
-Viola_s1210	si		
-Viola_s1223	si	
+Viola_s1210	no		
+Viola_s1223	no	
 Viola_s4083	no	
 Viola_sd7037	no
-Viola_Viola	si
+Viola_Viola	no
