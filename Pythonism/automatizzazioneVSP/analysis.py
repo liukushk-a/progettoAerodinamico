@@ -17,6 +17,7 @@ import os
 import numpy as np
 import time
 from multiprocessing import Pool
+from tkinter.filedialog import askopenfilename
 #from openvsp import SPAN_WSECT_DRIVER, TAPER_WSECT_DRIVER, ROOTC_WSECT_DRIVER, AREA_WSECT_DRIVER, TIPC_WSECT_DRIVER # Prova del tizio sul blog
 
 # Directory in cui lo script è archiviato
@@ -26,8 +27,9 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 vsp.DeleteAllResults()
 
 # Carico la geometria chiedendo all'utilizzatore il nome del file .vsp3
-nomeGeometria = input("Inserisci il nome del file .vsp3 (senza .vsp3): ")
+nomeGeometria = askopenfilename(title="Seleziona il file di geometria .vsp3", filetypes=[("VSP files", "*.vsp3")])
 vsp.ReadVSPFile(os.path.join(script_dir, f"{nomeGeometria}.vsp3"))
+#percorso = askopenfilename(title="Seleziona il file di geometria .vsp3", filetypes=[("VSP files", "*.vsp3")])
 
 # Definisco i parametri che rimangono fissi (modificabili su altri script)
 Re_l = 180000
@@ -39,16 +41,16 @@ cref = 0.32
 AoA = 0
 NCPUs = 8
 farDist = 20
-wakeNumIter = 16
-numWakeNodes = 128
+wakeNumIter = 25
+numWakeNodes = 512
 groundHeight = 0.5
 
 # Faccio capire all'utilizzatore che numeri corrispondono ai parametri
 print("1. Sweep main wing")
 print("2. Dihedral main wing")
 print("3. Twist main wing (totale, sia alla radice che all'estremità alare)")
-print("4. Coordinate X secondary wing (di default si trova a +0.4 sull'asse X, se metti 0, in realtà sei a 0.4)")
-print("5. Coordinate Z secondary wing (di default si trova a +0.35 sull'asse Z)")
+print("4. Coordinate X secondary wing (di default si trova a +0.46 sull'asse X, se metti 0, in realtà sei a 0.4)")
+print("5. Coordinate Z secondary wing (di default si trova a +0.33 sull'asse Z)")
 print("6. Sweep secondary wing")
 print("7. Dihedral secondary wing")
 print("8. Twist secondary wing")
@@ -139,6 +141,7 @@ for valore in valori:
         vsp.SetIntAnalysisInput("VSPAEROSweep", "WakeNumIter", [wakeNumIter])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "NumWakeNodes", [numWakeNodes])
         vsp.SetIntAnalysisInput("VSPAEROSweep", "FarDistToggle", [1])
+        vsp.SetIntAnalysisInput("VSPAEROSweep", "Symmetry", [1])
         vsp.SetDoubleAnalysisInput("VSPAEROSweep", "FarDist", [farDist])
 
 
@@ -263,7 +266,7 @@ for valore in valori:
         #vsp.SetDriverGroup(mainWing_id, 1, AREA_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TIPC_WSECT_DRIVER );
 
         # Imposto la coordinata X della wing secondaria
-        vsp.SetParmVal(secWing_id, "X_Rel_Location", "XForm", 0.4 + valore) # Notare che per le posizioni usi XForm
+        vsp.SetParmVal(secWing_id, "X_Rel_Location", "XForm", 0.46 + valore) # Notare che per le posizioni usi XForm
 
         # Aggiorno la geometria
         vsp.Update()
@@ -314,7 +317,7 @@ for valore in valori:
         #vsp.SetDriverGroup(mainWing_id, 1, AREA_WSECT_DRIVER, ROOTC_WSECT_DRIVER, TIPC_WSECT_DRIVER );
 
         # Imposto la coordinata X della wing secondaria
-        vsp.SetParmVal(secWing_id, "Z_Rel_Location", "XForm", 0.35 + valore) # Notare che per le posizioni usi XForm
+        vsp.SetParmVal(secWing_id, "Z_Rel_Location", "XForm", 0.330 + valore) # Notare che per le posizioni usi XForm
 
         # Aggiorno la geometria
         vsp.Update()

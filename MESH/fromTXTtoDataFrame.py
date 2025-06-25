@@ -47,11 +47,6 @@ if capovolgimento == "Y" or capovolgimento == "y":
 if len(df) % 2 != 0:
     raise ValueError("Il numero di righe nel file non è pari: controlla il file!")
 
-# Suddividi il dataframe in due metà: dorso (superiore) e ventre (inferiore)
-#n = len(df) // 2
-#dorso = df.iloc[:n].reset_index(drop=True)
-#ventre = df.iloc[n:].reset_index(drop=True)
-
 # Parametri di rotazione
 x0 = float(input("Inserisci x del polo di rotazione: "))
 y0 = float(input("Inserisci y del polo di rotazione: "))
@@ -64,11 +59,6 @@ y_shifted = df["y"] - y0
 
 x_rot = x0 + x_shifted * np.cos(theta_rad) - y_shifted * np.sin(theta_rad)
 y_rot = y0 + x_shifted * np.sin(theta_rad) + y_shifted * np.cos(theta_rad)
-
-# Faccio in modo che le coordinate dell'ultimo punto del dorso e del ventre dopo la
-# rotazione siano uguali, in modo tale che il profilo sia chiuso
-#if y_rot.iloc[-1] != y_rot.iloc[n-1]:
-#    y_rot.iloc[-1] = y_rot.iloc[n-1]
 
 # Aggiorna il dataframe
 df["x"] = x_rot
@@ -136,4 +126,3 @@ else:
 
 # Riporta il file in .dat
 df_flipped.to_csv(f"{nuovoNome}_ruotato.txt", sep=" ", index=False, header=False)
-
