@@ -62,9 +62,9 @@ for folder in os.listdir(directoryDiPartenza):
             # Controllo ancora di essere in una cartella
             if os.path.isdir(folder_path1):
 
-                # Se trovo dentro i vari subfolder un file che finisce per .csv, lo analizzo
+                # Se trovo dentro i vari subfolder il file dei risultati, lo analizzo
                 for file in os.listdir(folder_path1):
-                    if file.endswith(".csv"):
+                    if file.endswith("Results.csv"):
 
                         # Mi porto nel path del file
                         file_path = os.path.join(folder_path1, file)
@@ -77,13 +77,23 @@ for folder in os.listdir(directoryDiPartenza):
                         # per i coefficienti di portanza e resistenza
                         # Curiosità: il $ alla fine della stringa indica che stai cercando la fine della riga
                         for line in lines:
-                            coeffResistenzaTotale = re.search(r"CDtot,(\d+\.\d+e-\d+)$", line)
+                            coeffResistenzaTotale = re.search(r"CDtot,([-+]?\d+\.\d+e[-+]?\d+)$", line)
                             if coeffResistenzaTotale is not None:
                                 CDtot = float(coeffResistenzaTotale.group(1))
 
-                            coeffPortanzaTotale = re.search(r"CL,(-\d+\.\d+e-\d+)$", line)
+                                # Controllo che il CDtot non sia negativo, in caso, agisco annullandolo,
+                                # poi annullerò anche il CL successivamente
+                                if CDtot < 0:
+                                    CDtot = 0
+
+                            coeffPortanzaTotale = re.search(r"CL,([-+]?\d+\.\d+e[-+]?\d+)$", line)
                             if coeffPortanzaTotale is not None:
                                 CL = float(coeffPortanzaTotale.group(1))
+
+                                # In caso di CDtot nullo, quindi se ci fosse stato un errore dato 
+                                # dal CD negativo, metto tutto a zero e lo esplicito all'utilizzatore
+                                if CDtot == 0:
+                                    CL = 0
 
                                 # Creo un esempio di funzione obiettivo che voglio ottimizzare
                                 funzioneObiettivo = -1*CL + 0.2*CDtot
@@ -97,6 +107,11 @@ for folder in os.listdir(directoryDiPartenza):
 
                                 # Aggiungo la nuova riga al dataframe
                                 df = pd.concat([df, newRow], ignore_index=True)
+
+                                # Stampo l'avviso in caso di errore di calcolo
+                                if CDtot == 0 and CL == 0:
+                                    print(f"ERRORE: risultati non fisici trovati nella cartella {subfolder}")
+
 
 # Stampo il dataframe finale
 print(df)
