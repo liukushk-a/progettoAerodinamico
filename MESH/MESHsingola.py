@@ -37,7 +37,7 @@ gmsh.model.addPhysicalGroup(1, [line_tags_1], tag=1)
 gmsh.model.setPhysicalName(1, 1, "Airfoil1")
 
 # --- Farfield geometry ---
-Lx, Ly = 5, 0.5
+Lx, Ly = 5, 1.5
 x0, y0 = -1, 0.25
 cl_far = 0.05
 
