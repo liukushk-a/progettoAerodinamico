@@ -97,10 +97,10 @@ cl_far = 0.05
 # Inserisco nel file .geo i punti del farfield
 with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("// Definizione farfield in senso antiorario\n")
-    file.write(f"Point(1001) = {{{x0}, {y0}, 0, {cl_far}}}; // Bottom-Left\n")
-    file.write(f"Point(1002) = {{{x0 + Lx}, {y0}, 0, {cl_far}}}; // Bottom-right\n")
-    file.write(f"Point(1003) = {{{x0 + Lx}, {y0 + Ly}, 0, {cl_far}}}; // Top-Left\n")
-    file.write(f"Point(1004) = {{{x0}, {y0 + Ly}, 0, {cl_far}}}; // Top-right\n")
+    file.write(f"Point(1001) = {{{x0}, {y0}, 0, {0.002}}}; // Bottom-Left\n")
+    file.write(f"Point(1002) = {{{x0 + Lx}, {y0}, 0, {cl__1}}}; // Bottom-right\n")
+    file.write(f"Point(1003) = {{{x0 + Lx}, {y0 + Ly}, 0, {0.005}}}; // Top-Left\n")
+    file.write(f"Point(1004) = {{{x0}, {y0 + Ly}, 0, {0.002}}}; // Top-right\n")
 
     file.write("\n")
 
