@@ -103,7 +103,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write(f"Point(1004) = {{{x0}, {y0 + Ly}, 0, {cl_far}}}; // Top-right\n")
 
     file.write("\n")
-    
+
     file.write("// Definizione delle linee del farfield\n")
     file.write("Line(2001) = {1001, 1002};\n")
     file.write("Line(2002) = {1002, 1003};\n")
@@ -117,5 +117,32 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     file.write("\n")
 
-    file.write("Plane Surface(3) = {3001, 1, 2}; // Esterno meno airfoil\n")
+
+    # Definisco su che superficie sono sia i profili che il farfield, che è una superficie per tutti
+    # e 3, dato che sono in 2D
+    file.write("Plane Surface(3) = {3001, 1, 2}; // Esterno + Airfoils\n")
+
+    file.write("\n")
+
+    file.write("Physical Surface(1) = {1, 2}; // Airfoils\n")
+    file.write("Physical Surface(2) = {3}; // Farfield\n")
+
+    file.write("\n")
+
+    # Definisco i nomi delle superfici in modo che su2 le legga col config e imponga 
+    # le condizioni al contorno
+
+    file.write("// Definizione dei nomi delle superfici\n")
+    file.write("Physical Line(\"Airfoil1\") = {1};\n")
+    file.write("Physical Line(\"Airfoil2\") = {2};\n")
+    file.write("Physical Line(\"inlet\") = {2004};\n")
+    file.write("Pysical Line(\"outlet\") = {2002};\n")
+    file.write("Physical Line(\"bottom\") = {2001};\n")
+    file.write("Physical Line(\"top\") = {2003};\n")
+
+    file.write("\n")
+
+    # Inserisco il tipo di algoritmo per la mesh
+    file.write("// Definizione del tipo di algoritmo per la mesh\n")
+    file.write("Mesh.Algorithm = 2; // Automatic\n")
 
