@@ -120,12 +120,13 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     # Definisco su che superficie sono sia i profili che il farfield, che è una superficie per tutti
     # e 3, dato che sono in 2D
-    file.write("Plane Surface(3) = {3001, 1, 2}; // Esterno + Airfoils\n")
+    file.write("Plane Surface(1) = {3001, 1, 2}; // Airfoils + Boundary\n")
+    #file.write("Plane Surface(2) = {1, 2}; // Airfoils\n")
 
     file.write("\n")
 
-    file.write("Physical Surface(1) = {1, 2}; // Airfoils\n")
-    file.write("Physical Surface(2) = {3}; // Farfield\n")
+    file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
+    #file.write("Physical Surface(2) = {2}; // Farfield\n")
 
     file.write("\n")
 
@@ -136,7 +137,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("Physical Line(\"Airfoil1\") = {1};\n")
     file.write("Physical Line(\"Airfoil2\") = {2};\n")
     file.write("Physical Line(\"inlet\") = {2004};\n")
-    file.write("Pysical Line(\"outlet\") = {2002};\n")
+    file.write("Physical Line(\"outlet\") = {2002};\n")
     file.write("Physical Line(\"bottom\") = {2001};\n")
     file.write("Physical Line(\"top\") = {2003};\n")
 
