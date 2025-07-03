@@ -89,9 +89,9 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
 # Definisco le dimensioni della galleria
 Lx = 5
-Ly = 0.5
+Ly = 0.25
 x0 = -1
-y0 = 0.25
+y0 = 0
 cl_far = 0.03
 
 # Inserisco nel file .geo i punti del farfield
@@ -125,7 +125,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     file.write("\n")
 
-    #file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
+    file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
     #file.write("Physical Surface(2) = {2}; // Farfield\n")
 
     file.write("\n")
