@@ -92,15 +92,15 @@ Lx = 5
 Ly = 0.5
 x0 = -1
 y0 = 0.25
-cl_far = 0.05
+cl_far = 0.03
 
 # Inserisco nel file .geo i punti del farfield
 with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("// Definizione farfield in senso antiorario\n")
-    file.write(f"Point(1001) = {{{x0}, {y0}, 0, {0.002}}}; // Bottom-Left\n")
-    file.write(f"Point(1002) = {{{x0 + Lx}, {y0}, 0, {cl__1}}}; // Bottom-right\n")
-    file.write(f"Point(1003) = {{{x0 + Lx}, {y0 + Ly}, 0, {0.005}}}; // Top-Left\n")
-    file.write(f"Point(1004) = {{{x0}, {y0 + Ly}, 0, {0.002}}}; // Top-right\n")
+    file.write(f"Point(1001) = {{{x0}, {y0}, 0, {cl_far}}}; // Bottom-Left\n")
+    file.write(f"Point(1002) = {{{x0 + Lx}, {y0}, 0, {cl_far}}}; // Bottom-right\n")
+    file.write(f"Point(1003) = {{{x0 + Lx}, {y0 + Ly}, 0, {cl_far}}}; // Top-Left\n")
+    file.write(f"Point(1004) = {{{x0}, {y0 + Ly}, 0, {cl_far}}}; // Top-right\n")
 
     file.write("\n")
 
@@ -113,7 +113,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("\n")
 
     file.write("// Line Loop e superficie farfield (chiusa)\n")
-    file.write("Line Loop(3001) = {2001, 2002, 2003, 2004};\n")
+    file.write("Curve Loop(3001) = {2001, 2002, 2003, 2004};\n")
 
     file.write("\n")
 
@@ -125,7 +125,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     file.write("\n")
 
-    file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
+    #file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
     #file.write("Physical Surface(2) = {2}; // Farfield\n")
 
     file.write("\n")
@@ -142,6 +142,38 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("Physical Line(\"top\") = {2003};\n")
 
     file.write("\n")
+
+    file.write("// Refinement box attorno ai profili\n")
+    file.write("Field[1] = Distance;\n")
+    file.write("Field[1].CurvesList = {1, 2};\n")  # Le curve sono i profili
+
+    file.write("\n")
+
+    file.write("// Threshold per la dimensione della mesh\n")
+    file.write("Field[2] = Threshold;\n")
+    file.write("Field[2].InField = 1;\n")
+    file.write("Field[2].SizeMin = 0.1;\n")  # Dimensione minima della mesh
+    file.write("Field[2].SizeMax = 0.3;\n")  # Dimensione massima della mesh
+    file.write("Field[2].DistMin = 0.001;\n")  # Distanza minima per il threshold
+    file.write("Field[2].DistMax = 0.01;\n")  # Distanza massima per il threshold
+
+    file.write("\n")
+
+    file.write("// Refinement box grande attorno ai profili\n")
+    file.write("Field[3] = Box;\n")
+    file.write("Field[3].VIn = 0.01;\n")  # Velocità in entrata
+    file.write("Field[3].VOut = 0.1;\n")  # Velocità in uscita
+    file.write("Field[3].XMin = 0.13;\n")  # Coordinate del box
+    file.write("Field[3].XMax = 2.5;\n")  # Coordinate del box
+    file.write("Field[3].YMin = 0.18;\n")  # Coordinate del box
+    file.write("Field[3].YMax = 0.45;\n")  # Coordinate del box
+    file.write("Field[3].ZMin = -1;\n")  # Coordinate del box
+    file.write("Field[3].ZMax = 1;\n")  # Coordinate del box
+
+    file.write("\n")
+
+    file.write("// Background mesh\n")
+    file.write("Background Field = 3;\n")
 
     # Inserisco il tipo di algoritmo per la mesh
     file.write("// Definizione del tipo di algoritmo per la mesh\n")
