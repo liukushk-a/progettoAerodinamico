@@ -88,11 +88,14 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("\n")
 
 # Definisco le dimensioni della galleria
-Lx = 4
-Ly = 1.25
-x0 = -0.5
-y0 = 0
-cl_far = 0.03
+# Lx = 4
+# Ly = 1.25
+# x0 = -0.5
+# y0 = 0
+# cl_far = 0.03
+Lx, Ly = 4, 0.75
+x0, y0 = -0.5, 0
+cl_far = 0.1
 
 # Inserisco nel file .geo i punti del farfield
 with open(f"{nomeFileGeo}.geo", "a") as file:
@@ -159,14 +162,25 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     file.write("\n")
 
+    # file.write("// Refinement box grande attorno ai profili\n")
+    # file.write("Field[3] = Box;\n")
+    # file.write("Field[3].VIn = 0.001;\n")  # Velocità in entrata
+    # file.write("Field[3].VOut = 0.01;\n")  # Velocità in uscita
+    # file.write("Field[3].XMin = 0.10;\n")  # Coordinate del box
+    # file.write("Field[3].XMax = 2.0;\n")  # Coordinate del box
+    # file.write("Field[3].YMin = -0.1;\n")  # Coordinate del box
+    # file.write("Field[3].YMax = 0.5;\n")  # Coordinate del box
+    # file.write("Field[3].ZMin = -1;\n")  # Coordinate del box
+    # file.write("Field[3].ZMax = 1;\n")  # Coordinate del box
+
     file.write("// Refinement box grande attorno ai profili\n")
     file.write("Field[3] = Box;\n")
-    file.write("Field[3].VIn = 0.001;\n")  # Velocità in entrata
-    file.write("Field[3].VOut = 0.01;\n")  # Velocità in uscita
-    file.write("Field[3].XMin = 0.10;\n")  # Coordinate del box
+    file.write("Field[3].VIn = 0.01;\n")  # Velocità in entrata
+    file.write("Field[3].VOut = 0.1;\n")  # Velocità in uscita
+    file.write("Field[3].XMin = 0;\n")  # Coordinate del box
     file.write("Field[3].XMax = 2.0;\n")  # Coordinate del box
-    file.write("Field[3].YMin = -0.1;\n")  # Coordinate del box
-    file.write("Field[3].YMax = 0.5;\n")  # Coordinate del box
+    file.write("Field[3].YMin = 0;\n")  # Coordinate del box
+    file.write("Field[3].YMax = 0.35;\n")  # Coordinate del box
     file.write("Field[3].ZMin = -1;\n")  # Coordinate del box
     file.write("Field[3].ZMax = 1;\n")  # Coordinate del box
 

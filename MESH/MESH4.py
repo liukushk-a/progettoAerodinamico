@@ -63,12 +63,12 @@ gmsh.model.addPhysicalGroup(1, [line_tags_2], tag=2)
 gmsh.model.setPhysicalName(1, 2, "Airfoil2")
 
 # --- Farfield geometry ---
-Lx, Ly = 5, 0.5
-x0, y0 = -1, 0.25
-cl_far = 0.05
+Lx, Ly = 4, 0.75
+x0, y0 = -0.5, 0
+cl_far = 0.1
 
-p0 = gmsh.model.geo.addPoint(x0, y0, 0, cl_far, 1000)
-p1 = gmsh.model.geo.addPoint(x0 + Lx, y0, 0, cl_far, 1001)
+p0 = gmsh.model.geo.addPoint(x0, y0, 0, cl_far/10, 1000)
+p1 = gmsh.model.geo.addPoint(x0 + Lx, y0, 0, cl_far/10, 1001)
 p2 = gmsh.model.geo.addPoint(x0 + Lx, y0 + Ly, 0, cl_far, 1002)
 p3 = gmsh.model.geo.addPoint(x0, y0 + Ly, 0, cl_far, 1003)
 
@@ -107,10 +107,10 @@ gmsh.model.mesh.field.setNumber(thresh, "DistMax", 0.01)
 box_big = gmsh.model.mesh.field.add("Box")
 gmsh.model.mesh.field.setNumber(box_big, "VIn", 0.01)
 gmsh.model.mesh.field.setNumber(box_big, "VOut", 0.1)
-gmsh.model.mesh.field.setNumber(box_big, "XMin", 0.13)
-gmsh.model.mesh.field.setNumber(box_big, "XMax", 2.5)
-gmsh.model.mesh.field.setNumber(box_big, "YMin", 0.18)
-gmsh.model.mesh.field.setNumber(box_big, "YMax", 0.45)
+gmsh.model.mesh.field.setNumber(box_big, "XMin", 0)
+gmsh.model.mesh.field.setNumber(box_big, "XMax", 2)
+gmsh.model.mesh.field.setNumber(box_big, "YMin", 0)
+gmsh.model.mesh.field.setNumber(box_big, "YMax", 0.35)
 gmsh.model.mesh.field.setNumber(box_big, "ZMin", -1)
 gmsh.model.mesh.field.setNumber(box_big, "ZMax", 1)
 
@@ -124,8 +124,8 @@ gmsh.model.mesh.generate(2)
 # --- Visualizza mesh finale ---
 gmsh.fltk.run()
 
-format = ".su2"
-name = "mesh"+format
-gmsh.write(name)
+# format = ".su2"
+# name = "mesh"+format
+# gmsh.write(name)
 
 gmsh.finalize()
