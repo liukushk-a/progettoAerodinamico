@@ -39,18 +39,19 @@ Sref = 0.41600
 bref = 1.3
 cref = 0.32
 AoA = 0
-NCPUs = 8
+NCPUs = 2
 farDist = 20
 wakeNumIter = 25
 numWakeNodes = 512
-groundHeight = 0.5
+groundHeight = 0.0
 
 # Faccio capire all'utilizzatore che numeri corrispondono ai parametri
 print("1. Sweep main wing")
 print("2. Dihedral main wing")
 print("3. Twist main wing (totale, sia alla radice che all'estremità alare)")
-print("4. Coordinate X secondary wing (di default si trova a +0.46 sull'asse X, se metti 0, in realtà sei a 0.4)")
-print("5. Coordinate Z secondary wing (di default si trova a +0.33 sull'asse Z)")
+print("4. Coordinate X secondary wing (di default si trova a +0.46 sull'asse X, se metti 0, \
+                                       in realtà sei a 0.46)")
+print("5. Coordinate Z secondary wing (di default si trova a +0.105 sull'asse Z, stesso discorso di prima)")
 print("6. Sweep secondary wing")
 print("7. Dihedral secondary wing")
 print("8. Twist secondary wing")
