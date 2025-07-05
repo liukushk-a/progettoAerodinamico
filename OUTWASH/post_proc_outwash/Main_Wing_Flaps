@@ -1,0 +1,78 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# Carica Be_183-125
+file_path_be = os.path.join('..', 'profili', 'Be_183-125.dat')
+data_be = np.loadtxt(file_path_be)
+x_be = data_be[:, 0]
+y_be = data_be[:, 1]
+
+# Carica Clark Y
+file_path_clark = os.path.join('..', 'profili', 'Clark-Y.dat')
+data_clark = np.loadtxt(file_path_clark)
+N = len(data_clark) // 2
+x_clark_dorso = data_clark[:N, 0]
+y_clark_dorso = data_clark[:N, 1]
+x_clark_ventre = data_clark[N:, 0][::-1]  # inverti il ventre
+y_clark_ventre = data_clark[N:, 1][::-1]
+
+# Unisci dorso e ventre per chiudere il profilo
+x_clark = np.concatenate([x_clark_dorso, x_clark_ventre])
+y_clark = np.concatenate([y_clark_dorso, y_clark_ventre])
+
+# Ruota di 180° attorno all'origine
+x_be_rot = -x_be
+y_be_rot = -y_be
+x_clark_rot = -x_clark
+y_clark_rot = -y_clark
+
+# Trova l'indice del LE (x minimo) e riordina i punti da lì
+def porta_le_a_sinistra(x, y):
+    idx_le = np.argmin(x)
+    x_new = np.concatenate([x[idx_le:], x[:idx_le]])
+    y_new = np.concatenate([y[idx_le:], y[:idx_le]])
+    return x_new, y_new
+
+x_be_rot, y_be_rot = porta_le_a_sinistra(x_be_rot, y_be_rot)
+x_clark_rot, y_clark_rot = porta_le_a_sinistra(x_clark_rot, y_clark_rot)
+
+# Chiudi il profilo aggiungendo il primo punto alla fine
+x_be_rot = np.append(x_be_rot, x_be_rot[0])
+y_be_rot = np.append(y_be_rot, y_be_rot[0])
+x_clark_rot = np.append(x_clark_rot, x_clark_rot[0])
+y_clark_rot = np.append(y_clark_rot, y_clark_rot[0])
+
+# Ruota di 3 gradi verso l'alto il Clark Y (antiorario)
+theta = -np.deg2rad(3)  # negativo per senso orario
+x_c = x_clark_rot * np.cos(theta) - y_clark_rot * np.sin(theta)
+y_c = x_clark_rot * np.sin(theta) + y_clark_rot * np.cos(theta)
+
+# Scala il Be_183-125 del 70%
+x_be_rot_scaled = 0.4 * x_be_rot
+y_be_rot_scaled = 0.4* y_be_rot
+
+# Inclina il Be_183-125 di 12 gradi in senso orario
+theta_incl = -np.deg2rad(12)  # negativo per senso orario
+x_be_rot_scaled_incl = x_be_rot_scaled * np.cos(theta_incl) - y_be_rot_scaled * np.sin(theta_incl)
+y_be_rot_scaled_incl = x_be_rot_scaled * np.sin(theta_incl) + y_be_rot_scaled * np.cos(theta_incl)
+
+# Trova quanto traslare per portare il LE in x = 0.7
+shift_x = 0.7 
+x_be_rot_scaled_incl_shifted = -x_be_rot_scaled_incl + shift_x
+
+# Trova quanto traslare per portare il LE in y = 1
+shift_y = 0.35- y_be_rot_scaled_incl[0]  # 0.2 è il valore di y del LE del Clark Y
+y_be_rot_scaled_incl_shifted = y_be_rot_scaled_incl + shift_y
+
+# Plot
+plt.figure(figsize=(10, 4))
+plt.plot(x_be_rot_scaled_incl_shifted, y_be_rot_scaled_incl_shifted, '-', label='Be_183-125 ruotato, scalato, inclinato, traslato')
+plt.plot(-x_c, y_c, '-', label='Clark Y ruotato + 3°')
+plt.title('Be_183-125 ruotato, scalato 70%, inclinato 12°, traslato in x=0.7, y=1 vs Clark Y')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.show()

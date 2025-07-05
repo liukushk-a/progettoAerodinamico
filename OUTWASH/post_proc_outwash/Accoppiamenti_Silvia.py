@@ -141,9 +141,21 @@ for j, file2 in enumerate(dat_files):
 
     print(f"{file1} + {file2}: angolo deviazione = {angle_te_camber_deg:.2f}°, angolo attacco = {alpha_deg:.2f}°")
 
+    # --- Calcolo distanza LE secondo flap rispetto al primo ---
+    # LE primo flap dopo rotazione
+    le1_x, le1_y = x_rotated_orig[np.argmin(x)], y_rotated_orig[np.argmin(x)]
+    # LE secondo flap dopo scaling, rotazione, traslazione
+    le2_x = x_us_scaled_rot_aligned[np.argmin(x_us_scaled)]
+    le2_y = y_us_scaled_rot_aligned[np.argmin(x_us_scaled)]
+
+    dx_le = le2_x - le1_x
+    dy_le = le2_y - le1_y
+
+    print(f"Distanza LE secondo flap rispetto al primo: Δx = {dx_le:.4f}, Δy = {dy_le:.4f}")
+
     # --- Salva il risultato numerico su file (CSV style) ---
     with open(txt_path, 'a') as ftxt:
-        ftxt.write(f"{file1},{file2},{angle_te_camber_deg:.2f},{alpha_deg:.2f}\n")
+        ftxt.write(f"{file1},{file2},{angle_te_camber_deg:.2f},{alpha_deg:.2f},{dx_le:.4f},{dy_le:.4f}\n")
 
     # --- Plot dei due profili e delle tangenti ---
     plt.figure(figsize=(10, 6))
@@ -172,3 +184,44 @@ for j, file2 in enumerate(dat_files):
     plot_path = os.path.join(subfolder, plot_filename)
     plt.savefig(plot_path)
     plt.close()  # Chiude la figura per non saturare la memoria
+
+    # --- Calcolo distanza LE primo flap - punto c/4 secondo flap ---
+    # Trova il punto a c/4 sul secondo flap scalato (x = 0.25 * scale_factor)
+    x_c4_scaled = 0.25 * scale_factor
+    idx_us_c4_scaled = np.argmin(np.abs(x_us_scaled - x_c4_scaled))
+    # Prendi le coordinate dopo tutte le trasformazioni
+    x_c4_transf = x_us_scaled_rot_aligned[idx_us_c4_scaled]
+    y_c4_transf = y_us_scaled_rot_aligned[idx_us_c4_scaled]
+
+    dist_x_le_c4 = x_c4_transf - le1_x
+    dist_y_le_c4 = y_c4_transf - le1_y
+
+    print(f"Distanza LE primo flap - c/4 secondo flap: Δx = {dist_x_le_c4:.4f}, Δy = {dist_y_le_c4:.4f}")
+
+    # (Opzionale) Salva anche questa distanza nel file risultati
+    with open(txt_path, 'a') as ftxt:
+        ftxt.write(f"LE-c/4:,{dist_x_le_c4:.4f},{dist_y_le_c4:.4f}\n")
+
+    # Calcolo inclinazione LE secondo flap rispetto all'orizzontale
+    # Prendi i primi punti della superficie superiore e inferiore trasformati
+    idx_le_us = np.argmin(x_us_scaled)
+    idx_le_ls = np.argmin(x_ls_scaled)
+    x_le_us = x_us_scaled_rot_aligned[idx_le_us]
+    y_le_us = y_us_scaled_rot_aligned[idx_le_us]
+    x_le_ls = x_ls_scaled_rot_aligned[idx_le_ls]
+    y_le_ls = y_ls_scaled_rot_aligned[idx_le_ls]
+
+    # Calcola la pendenza e l'angolo rispetto all'orizzontale
+    if x_le_us != x_le_ls:
+        slope_le2 = (y_le_us - y_le_ls) / (x_le_us - x_le_ls)
+    else:
+        slope_le2 = np.sign(y_le_us - y_le_ls) * 1e6  # verticale
+
+    angle_le2_rad = np.arctan(slope_le2)
+    angle_le2_deg = np.degrees(angle_le2_rad)
+
+    print(f"Inclinazione LE secondo flap rispetto all'orizzontale: {angle_le2_deg:.2f}°")
+
+    # (Opzionale) Salva anche questa informazione nel file risultati
+    with open(txt_path, 'a') as ftxt:
+        ftxt.write(f"Inclinazione_LE2:,{angle_le2_deg:.2f}\n")

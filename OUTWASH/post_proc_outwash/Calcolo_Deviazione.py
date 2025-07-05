@@ -44,8 +44,13 @@ x = data[:, 0]
 y = data[:, 1]
 
 idx_min = np.argmin(x)
-x_us = x[:idx_min]
-y_us = y[:idx_min]
+# Se il primo e ultimo punto sono uguali, elimina l'ultimo (duplicato)
+if np.allclose([x[0], y[0]], [x[-1], y[-1]]):
+    x = x[:-1]
+    y = y[:-1]
+idx_min = np.argmin(x)
+x_us = x[:idx_min+1]
+y_us = y[:idx_min+1]
 x_ls = x[idx_min:]
 y_ls = y[idx_min:]
 
