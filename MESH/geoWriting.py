@@ -13,10 +13,13 @@ from tkinter.filedialog import askopenfilename
 main = askopenfilename(title="Seleziona il file .txt del main", filetypes=[("Text files", "*.txt")])
 secondary = askopenfilename(title="Seleziona il file .txt dell'ala secondaria",
                             filetypes=[("Text files", "*.txt")])
+nose = askopenfilename(title="Seleziona il file .txt del naso",
+                       filetypes=[("Text files", "*.txt")])
 
 # Vado in dataframe per comodità nella manipolazione, dato che askopenfilename salva una tupla
 dfMain = pd.read_csv(main, delim_whitespace=True, header=None, names=["x", "y", "z"])
 dfSecondary = pd.read_csv(secondary, delim_whitespace=True, header=None, names=["x", "y", "z"])
+dfNose = pd.read_csv(nose, delim_whitespace=True, header=None, names=["x", "y"])
 
 # Chiedo all'utilizzatore il nome del file .geo da creare
 nomeFileGeo = input("Inserisci il nome del file .geo da creare (senza estensione): ")
@@ -50,20 +53,32 @@ for i in range(len(dfMain)):
     with open(f"{nomeFileGeo}.geo", "a") as file:
         file.write(f"Point({i+1}) = {{{x}, {y}, 0, cl__1}};\n")
 
+servizio1 = 0
 # Scrivo le coordinate del profilo secondario sfruttando la variabile di servizio
 for i in range(len(dfSecondary)):
 
     x = dfSecondary["x"][i]
     y = dfSecondary["y"][i]
 
+    # Incremento il valore della variabile di servizio
+    servizio1 = servizio1 + 1
+
     # Scrivo le coordinate nel file .geo
     with open(f"{nomeFileGeo}.geo", "a") as file:
         file.write(f"Point({i+1+len(dfMain)}) = {{{x}, {y}, 0, cl__1}};\n")
 
+for i in range(len(dfNose)):
+    x = dfNose["x"][i]
+    y = dfNose["y"][i]
+
+    # Scrivo le coordinate nel file .geo
+    with open(f"{nomeFileGeo}.geo", "a") as file:
+        file.write(f"Point({i+1+len(dfSecondary)+len(dfMain)}) = {{{x}, {y}, 0, cl__1}};\n")
+
 with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("\n")
 
-# Scrivo con quali spline compongo i due profili
+# Scrivo con quali spline compongo i due profili e il naso
 with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("Spline(1) = {")
     for i in range(len(dfMain) - 1):
@@ -82,8 +97,18 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("\n")
 
 with open(f"{nomeFileGeo}.geo", "a") as file:
+    file.write("Spline(3) = {")
+    for i in range(len(dfNose)):
+        file.write(f"{i+1+len(dfMain)+len(dfSecondary)}, ")
+    file.write(f"{servizio + servizio1 + 1}")
+    file.write("};\n")
+
+    file.write("\n") 
+
+with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("Curve Loop(1) = {1};\n")
     file.write("Curve Loop(2) = {2};\n")
+    file.write("Curve Loop(3) = {3};\n")
 
     file.write("\n")
 
@@ -123,12 +148,12 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 
     # Definisco su che superficie sono sia i profili che il farfield, che è una superficie per tutti
     # e 3, dato che sono in 2D
-    file.write("Plane Surface(1) = {3001, 1, 2}; // Airfoils + Boundary\n")
+    file.write("Plane Surface(1) = {3001, 1, 2, 3}; // Airfoils + Nose + Boundary\n")
     #file.write("Plane Surface(2) = {1, 2}; // Airfoils\n")
 
     file.write("\n")
 
-    file.write("Physical Surface(1) = {1, 2}; // Airfoils + Boundary\n")
+    file.write("Physical Surface(1) = {1}; // Airfoils + Nose + Boundary\n")
     #file.write("Physical Surface(2) = {2}; // Farfield\n")
 
     file.write("\n")
@@ -139,6 +164,7 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
     file.write("// Definizione dei nomi delle superfici\n")
     file.write("Physical Line(\"Airfoil1\") = {1};\n")
     file.write("Physical Line(\"Airfoil2\") = {2};\n")
+    file.write("Physical Line(\"Nose\") = {3};\n")
     file.write("Physical Line(\"inlet\") = {2004};\n")
     file.write("Physical Line(\"outlet\") = {2002};\n")
     file.write("Physical Line(\"bottom\") = {2001};\n")
