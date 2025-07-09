@@ -118,8 +118,8 @@ with open(f"{nomeFileGeo}.geo", "a") as file:
 # x0 = -0.5
 # y0 = 0
 # cl_far = 0.03
-Lx, Ly = 5, 2.5
-x0, y0 = -1, 0
+Lx, Ly = 10, 3
+x0, y0 = -1.5, 0
 cl_far = 0.1
 
 # Inserisco nel file .geo i punti del farfield

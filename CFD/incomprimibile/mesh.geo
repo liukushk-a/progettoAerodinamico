@@ -373,10 +373,10 @@ Curve Loop(2) = {2};
 Curve Loop(3) = {3};
 
 // Definizione farfield in senso antiorario
-Point(1001) = {-1, 0, 0, 0.1/10}; // Bottom-Left
-Point(1002) = {4, 0, 0, 0.1/10}; // Bottom-right
-Point(1003) = {4, 2.5, 0, 0.1}; // Top-Left
-Point(1004) = {-1, 2.5, 0, 0.1}; // Top-right
+Point(1001) = {-1.5, 0, 0, 0.1/10}; // Bottom-Left
+Point(1002) = {8.5, 0, 0, 0.1/10}; // Bottom-right
+Point(1003) = {8.5, 3, 0, 0.1}; // Top-Left
+Point(1004) = {-1.5, 3, 0, 0.1}; // Top-right
 
 // Definizione delle linee del farfield
 Line(2001) = {1001, 1002};
