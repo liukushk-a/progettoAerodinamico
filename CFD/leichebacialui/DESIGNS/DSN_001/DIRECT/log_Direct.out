@@ -1,0 +1,8 @@
+
+
+Error in "void CConfig::SetMarkers(SU2_COMPONENT)": 
+-------------------------------------------------------------------------
+DV_MARKER contains marker names that do not exist in the lists of BCs in the config file.
+------------------------------ Error Exit -------------------------------
+
+
