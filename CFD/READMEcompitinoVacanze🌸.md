@@ -6,13 +6,13 @@ Selig S1210 (ok)
 
 Be 092-075 (ok)
 
-EPPLER 61
+EPPLER 61 (ok)
 
-Wortmann FX 082-512 (Per il meme)
+Wortmann FX 082-512 (Per il meme) (ok)
 
-Be 123-076
+Be 123-076 (ok)
 
-GOE 431
+GOE 431 (ok)
 
 ## Indicazioni
 
