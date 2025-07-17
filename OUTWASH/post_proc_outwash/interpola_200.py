@@ -10,7 +10,7 @@ root = tk.Tk()
 root.withdraw()
 filename = filedialog.askopenfilename(
     title="Seleziona un file .dat",
-    filetypes=[("DAT files", "*.dat")]
+    filetypes=[("DAT files", "*.dat","*.txt")]
 )
 if not filename:
     print("Nessun file selezionato.")
