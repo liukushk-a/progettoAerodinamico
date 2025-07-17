@@ -1,10 +1,10 @@
 # Combinazioni profili da provare
 
-## Flap
+## Flap (ok se nella cartella /MESH/PROFILI/FLAP/)
 
-Selig S1210
+Selig S1210 (ok)
 
-Be 92-075
+Be 092-075 (ok)
 
 EPPLER 61
 
@@ -43,14 +43,14 @@ Ognuno ha dentro CFD/incomprimibile una cartella RESULTS con il suo nome. Dentro
 Ogni simulazione va fatta per due volte: con e senza naso. Il file txt del naso si chiama coordinateNaso.txt.
 
 
-
-## Malloreddus man
+## (ok se messo nella cartella /MESH/PROFILI/MAIN/)
+## Malloreddus man 
 
 Main:
 
-- EPPLER 398
-- Be 183-056
-- NACA 6412
+- EPPLER 398 (ok)
+- Be 183-056 (ok)
+- NACA 6412 (ok)
 
 ## Uomo orso
 
@@ -65,7 +65,7 @@ Main:
 
 Main:
 
-- Selig S1223
+- Selig S1223 (ok)
 - NACA 4412
 - Be 153-076
 
