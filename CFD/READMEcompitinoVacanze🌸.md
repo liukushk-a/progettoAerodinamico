@@ -36,7 +36,7 @@ All'inizio si usa interpola_200.py, lo script di Giorgio per aumentare il numero
 
 Dopodichè c'è il geowriting.py, che prende in input sia i due profili che il naso. Per le simulazioni senza naso, farò un'altra funzione a parte.
 
-Per la mesh, come cl__1 mettiamo 0.005 e le altre misure sono scritte in automatico nel geowriting.py.
+Per la mesh, come cl__1 mettiamo 0.006 e le altre misure sono scritte in automatico nel geowriting.py.
 
 Ognuno ha dentro CFD/incomprimibile una cartella RESULTS con il suo nome. Dentro questa cartella mettiamo tante cartelle coi nomi delle combinazioni, tipo wing_flap. Dentro ognuna di queste cartelle tu fai le simulazioni e devi tenere solo il file .cfg, il .geo e il history.csv e un txt coi risultati.
 
