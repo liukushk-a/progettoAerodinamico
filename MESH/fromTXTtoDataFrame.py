@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 from tkinter.filedialog import askopenfilename
 
 # Richiedi all'utilizzatore il percorso del file .txt
-percorso = askopenfilename(title="Seleziona il file .txt", filetypes=[("Text files", "*.txt")])
+percorso = askopenfilename(title="Seleziona il file .txt", filetypes=[("Text files", "*.txt"), ("DAT files", "*.dat")])
 
 # Mi salvo il nome del file, in modo da poterlo usare dopo
 nomeProfilo = os.path.basename(percorso)
