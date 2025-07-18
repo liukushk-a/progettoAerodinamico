@@ -57,7 +57,7 @@ Main:
 Main:
 
 - Be 183-105
-- EPPLER 396
+- EPPLER 396 (ok)
 - Be 153-055
 
 
@@ -66,6 +66,6 @@ Main:
 Main:
 
 - Selig S1223 (ok)
-- NACA 4412
+- NACA 4412 (ok)
 - Be 153-076
 
