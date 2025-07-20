@@ -4,7 +4,7 @@ mpirun -n 4 SU2_CFD config.cfg &&
 
 cd ../n03_naca6412_s1210 &&
 gmsh -2 naca6412_s1210_nonaso.geo -format su2 && 
-mv naca6412_be092_075_nonaso.su2 mesh.su2 &&
+mv naca6412_s1210_nonaso.su2 mesh.su2 &&
 mpirun -n 4 SU2_CFD config.cfg &&
 
 cd ../../flap_be092_075/y03_naca6412_be092_075 &&
@@ -39,7 +39,7 @@ mpirun -n 4 SU2_CFD config.cfg &&
 
 --
 
-gmsh -2 naca6412_s1210_sinaso.geo -format su2 && mv naca6412_s1210_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_s1210 && gmsh -2 naca6412_s1210_nonaso.geo -format su2 && mv naca6412_be092_075_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_be092_075/y03_naca6412_be092_075 && gmsh -2 naca6412_be092_075_sinaso.geo -format su2 && mv naca6412_be092_075_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_be092_075 && gmsh -2 naca6412_be092_075_nonaso.geo -format su2 && mv naca6412_be092_075_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_eppler61/y03_naca6412_eppler61 && gmsh -2 naca6412_eppler61_sinaso.geo -format su2 && mv naca6412_eppler61_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_eppler61 && gmsh -2 naca6412_eppler61_nonaso.geo -format su2 && mv naca6412_eppler61_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_wortmann/y03_naca6412_wortmann && gmsh -2 naca6412_wortmann_sinaso.geo -format su2 &&  mv naca6412_wortmann_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_wortmann && gmsh -2 naca6412_wortmann_nonaso.geo -format su2 &&  mv naca6412_wortmann_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg   
+mv naca6412_s1210_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_be092_075/y03_naca6412_be092_075 && gmsh -2 naca6412_be092_075_sinaso.geo -format su2 && mv naca6412_be092_075_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_be092_075 && gmsh -2 naca6412_be092_075_nonaso.geo -format su2 && mv naca6412_be092_075_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_eppler61/y03_naca6412_eppler61 && gmsh -2 naca6412_eppler61_sinaso.geo -format su2 && mv naca6412_eppler61_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_eppler61 && gmsh -2 naca6412_eppler61_nonaso.geo -format su2 && mv naca6412_eppler61_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../../flap_wortmann/y03_naca6412_wortmann && gmsh -2 naca6412_wortmann_sinaso.geo -format su2 &&  mv naca6412_wortmann_sinaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg && cd ../n03_naca6412_wortmann && gmsh -2 naca6412_wortmann_nonaso.geo -format su2 &&  mv naca6412_wortmann_nonaso.su2 mesh.su2 && mpirun -n 4 SU2_CFD config.cfg   
 
 --
 
