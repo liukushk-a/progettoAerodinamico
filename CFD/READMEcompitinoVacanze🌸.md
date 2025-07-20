@@ -42,6 +42,7 @@ Ognuno ha dentro CFD/incomprimibile una cartella RESULTS con il suo nome. Dentro
 
 Ogni simulazione va fatta per due volte: con e senza naso. Il file txt del naso si chiama coordinateNaso.txt.
 
+Sono Luca: finora ho fatto simulazioni con 100 iterazioni interne e massimo CFL 400. Funziona abbastanza bene e nonostante durante il processo di aumento del CFl i residui aumentino un po' e anche dopo aver raggiunto il CFL massimo debba passare un po' di tempo prima di vedere stabilità, dopo si stabilizza bene e i residui scendono stabili e un bel po'. Può capitare, però, che i residui col CFL di 400 salgano inspiegabilmente certe volte, perciò credo proprio che il setting migliore per il nostro caso sia tenere 100 iterazioni interne, ma abbassare il CFL max a 350: in questo modo si verificano meno questi episodi, anche nelle fasi finali della simulazione, raggiungendo secondo me il miglior tempo di esecuzione.
 
 ## (ok se messo nella cartella /MESH/PROFILI/MAIN/)
 ## Malloreddus man 
