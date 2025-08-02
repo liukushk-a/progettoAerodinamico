@@ -52,24 +52,24 @@ incomprimibile,RESULT_LUCA,s1223_wortmannfx082-512,-1.021622,0.230195,incomprimi
 incomprimibile,RESULT_LUCA,s1223_eppler61,-1.111048,0.241172,incomprimibile/RESULT_LUCA/noNose/s1223_eppler61/results.txt
 incomprimibile,RESULT_LUCA,naca4412_goe431,-2.377692,0.278343,incomprimibile/RESULT_LUCA/noNose/naca4412_goe431/results.txt
 incomprimibile,RESULT_LUCA,naca4412_s1210,-1.358925,0.189118,incomprimibile/RESULT_LUCA/noNose/naca4412_s1210/results.txt
-incomprimibile,RESULT_LUCA,be153-076_be123-076,-2.09426,0.363884,incomprimibile/RESULT_LUCA/withNose/be153-076_be123-076/results.txt
-incomprimibile,RESULT_LUCA,s1223_s1210,-2.294564,0.367935,incomprimibile/RESULT_LUCA/withNose/s1223_s1210/results.txt
-incomprimibile,RESULT_LUCA,be153-076_goe431,-2.055137,0.365361,incomprimibile/RESULT_LUCA/withNose/be153-076_goe431/results.txt
-incomprimibile,RESULT_LUCA,naca4412_eppler61,-2.476482,0.256611,incomprimibile/RESULT_LUCA/withNose/naca4412_eppler61/results.txt
-incomprimibile,RESULT_LUCA,be153-076_s1210,-2.054082,0.36439,incomprimibile/RESULT_LUCA/withNose/be153-076_s1210/results.txt
-incomprimibile,RESULT_LUCA,naca4412_be123-076,-2.47598,0.275084,incomprimibile/RESULT_LUCA/withNose/naca4412_be123-076/results.txt
-incomprimibile,RESULT_LUCA,s1223_be092-075,-2.31719,0.359914,incomprimibile/RESULT_LUCA/withNose/s1223_be092-075/results.txt
-incomprimibile,RESULT_LUCA,s1223_goe431,-2.304504,0.367132,incomprimibile/RESULT_LUCA/withNose/s1223_goe431/results.txt
-incomprimibile,RESULT_LUCA,be153-076_be092-075,-2.038804,0.350885,incomprimibile/RESULT_LUCA/withNose/be153-076_be092-075/results.txt
-incomprimibile,RESULT_LUCA,naca4412_wortmannfx082-512,-2.372053,0.249199,incomprimibile/RESULT_LUCA/withNose/naca4412_wortmannfx082-512/results.txt
-incomprimibile,RESULT_LUCA,naca4412_be092-075,-2.103592,0.260638,incomprimibile/RESULT_LUCA/withNose/naca4412_be092-075/results.txt
-incomprimibile,RESULT_LUCA,s1223_be123-076,-2.28369,0.365334,incomprimibile/RESULT_LUCA/withNose/s1223_be123-076/results.txt
-incomprimibile,RESULT_LUCA,be153-076_eppler61,-2.01772,0.340548,incomprimibile/RESULT_LUCA/withNose/be153-076_eppler61/results.txt
-incomprimibile,RESULT_LUCA,s1223_wortmannfx082-512,-2.264927,0.336986,incomprimibile/RESULT_LUCA/withNose/s1223_wortmannfx082-512/results.txt
-incomprimibile,RESULT_LUCA,s1223_eppler61,-2.310756,0.348261,incomprimibile/RESULT_LUCA/withNose/s1223_eppler61/results.txt
-incomprimibile,RESULT_LUCA,naca4412_goe431,-2.377692,0.278343,incomprimibile/RESULT_LUCA/withNose/naca4412_goe431/results.txt
-incomprimibile,RESULT_LUCA,be153-076_wortmannfx082-512,-1.990111,0.332592,incomprimibile/RESULT_LUCA/withNose/be153-076_wortmannfx082-512/results.txt
-incomprimibile,RESULT_LUCA,naca4412_s1210,-2.450294,0.277979,incomprimibile/RESULT_LUCA/withNose/naca4412_s1210/results.txt
+incomprimibile,RESULT_LUCA,be153-076_be092-075_naso,-2.038804,0.350885,incomprimibile/RESULT_LUCA/withNose/be153-076_be092-075_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_goe431_naso,-2.377692,0.278343,incomprimibile/RESULT_LUCA/withNose/naca4412_goe431_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_be092-075_naso,-2.31719,0.359914,incomprimibile/RESULT_LUCA/withNose/s1223_be092-075_naso/results.txt
+incomprimibile,RESULT_LUCA,be153-076_s1210_naso,-2.054082,0.36439,incomprimibile/RESULT_LUCA/withNose/be153-076_s1210_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_s1210_naso,-2.294564,0.367935,incomprimibile/RESULT_LUCA/withNose/s1223_s1210_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_be123-076_naso,-2.28369,0.365334,incomprimibile/RESULT_LUCA/withNose/s1223_be123-076_naso/results.txt
+incomprimibile,RESULT_LUCA,be153-076_wortmannfx082-512_naso,-1.990111,0.332592,incomprimibile/RESULT_LUCA/withNose/be153-076_wortmannfx082-512_naso/results.txt
+incomprimibile,RESULT_LUCA,be153-076_eppler61_naso,-2.01772,0.340548,incomprimibile/RESULT_LUCA/withNose/be153-076_eppler61_naso/results.txt
+incomprimibile,RESULT_LUCA,be153-076_be123-076_naso,-2.09426,0.363884,incomprimibile/RESULT_LUCA/withNose/be153-076_be123-076_naso/results.txt
+incomprimibile,RESULT_LUCA,be153-076_goe431_naso,-2.055137,0.365361,incomprimibile/RESULT_LUCA/withNose/be153-076_goe431_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_s1210_naso,-2.450294,0.277979,incomprimibile/RESULT_LUCA/withNose/naca4412_s1210_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_goe431_naso,-2.304504,0.367132,incomprimibile/RESULT_LUCA/withNose/s1223_goe431_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_be092-075_naso,-2.103592,0.260638,incomprimibile/RESULT_LUCA/withNose/naca4412_be092-075_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_be123-076_naso,-2.47598,0.275084,incomprimibile/RESULT_LUCA/withNose/naca4412_be123-076_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_wortmannfx082-512_naso,-2.264927,0.336986,incomprimibile/RESULT_LUCA/withNose/s1223_wortmannfx082-512_naso/results.txt
+incomprimibile,RESULT_LUCA,s1223_eppler61_naso,-2.310756,0.348261,incomprimibile/RESULT_LUCA/withNose/s1223_eppler61_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_eppler61_naso,-2.476482,0.256611,incomprimibile/RESULT_LUCA/withNose/naca4412_eppler61_naso/results.txt
+incomprimibile,RESULT_LUCA,naca4412_wortmannfx082-512_naso,-2.372053,0.249199,incomprimibile/RESULT_LUCA/withNose/naca4412_wortmannfx082-512_naso/results.txt
 incomprimibile,RESULT_DANI,Eppler_396_Be_092_075,-1.208539819,0.1957182916,incomprimibile/RESULT_DANI/No Naso/Eppler_396_Be_092_075/Result.txt
 incomprimibile,RESULT_DANI,Be_183_105_GOE_431,-0.09922792796,0.2259483713,incomprimibile/RESULT_DANI/No Naso/Be_183_105_GOE_431/Result.txt
 incomprimibile,RESULT_DANI,Be_183_105_Be_123_076,-0.08793082203,0.2235674205,incomprimibile/RESULT_DANI/No Naso/Be_183_105_Be_123_076/Result.txt
