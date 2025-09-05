@@ -72,7 +72,6 @@ Viola_Leo	no
 Viola_Maurizio	si		
 Viola_naca5406	no	
 Viola_naca6408	no	
-Viola_naca6408_muso si	
 Viola_naca6508	no	
 Viola_naca45008	no	
 Viola_s1210	no		
