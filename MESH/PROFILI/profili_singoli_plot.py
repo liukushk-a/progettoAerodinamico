@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 # --- Caricamento file profilo ---
-profili_path = os.path.join(os.path.dirname(__file__), '..', 'profili')
+profili_path = os.path.join(os.path.dirname(__file__), 'MAIN')
 if not os.path.exists(profili_path):
 	os.makedirs(profili_path)
 	print(f"Cartella 'profili' creata in: {profili_path}")

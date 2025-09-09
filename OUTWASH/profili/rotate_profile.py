@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy.polynomial.polynomial as Polynomial 
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-plt.style.use('fivethirtyeight')
+# plt.style.use('fivethirtyeight')  # Commentato per avere sfondo bianco
 
 def find_rot_location(rot_location,x_camber): 
     x = x_camber
@@ -151,6 +151,43 @@ plt.axvline(x=x_rot, color='red', linestyle='--', label="25% cord")
 plt.title("Fit")
 plt.grid(True)
 plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# === Nuovo Plot di Confronto ===
+plt.figure(figsize=(12, 5))
+
+# Subplot 1: Profilo originale
+plt.subplot(1, 2, 1)
+plt.plot(data[:, 0], data[:, 1], 'b-', linewidth=2, label='Profilo Originale')
+plt.plot(x_c, y_c, 'k--', linewidth=1.5, alpha=0.8, label='Linea media')
+plt.scatter(*pivot, color='red', s=50, marker='o', label=f'Pivot ({rot_location}% corda)')
+plt.axis('equal')
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Profilo Originale')
+
+# Subplot 2: Profilo ruotato
+plt.subplot(1, 2, 2)
+# Plottiamo il profilo ruotato completo usando le superfici superiore e inferiore come un unico profilo
+plt.plot(x_up, y_up, 'r-', linewidth=2)
+plt.plot(x_lo, y_lo, 'r-', linewidth=2, label='Profilo Ruotato')
+plt.plot(rotated_data[:, 0], rotated_data[:, 1], 'k--', linewidth=1.5, alpha=0.8, label='Linea media ruotata')
+plt.scatter(*pivot, color='red', s=50, marker='o', label=f'Pivot ({rot_location}% corda)')
+# Linea tangente al profilo ruotato nel punto pivot
+# Dopo la rotazione, la tangente è orizzontale (pendenza = 0)
+x_tang_range_rot = np.linspace(min(x_lo.min(), x_up.min()), max(x_lo.max(), x_up.max()), 100)
+y_tang_rot = np.full_like(x_tang_range_rot, pivot[1])  # Linea orizzontale
+plt.plot(x_tang_range_rot, y_tang_rot, 'r--', linewidth=1.5, alpha=0.7, label='Linea tangente (orizzontale)')
+plt.axis('equal')
+plt.grid(True, alpha=0.3)
+plt.legend()
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Profilo Ruotato')
 
 plt.tight_layout()
 plt.show()

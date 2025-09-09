@@ -41,10 +41,10 @@ df_plot = df_merged[df_merged["stallo"].str.lower() == "no"]
 if "Cd.csv" not in df_merged.columns or "min_theta" not in df_merged.columns or "cartella" not in df_merged.columns:
     raise ValueError("Il file CSV deve contenere le colonne 'Cd.csv', 'min_theta' e 'cartella'.")
 
-# Normalizza rispetto al massimo di Cd.csv e al valore assoluto del minimo di min_theta (sul dataframe completo)
-cd_max_all = df_merged["Cd.csv"].max()
+# Normalizza rispetto al massimo di 1/Cd.csv e al valore assoluto del minimo di min_theta (sul dataframe completo)
+cd_inv_max_all = (1 / df_merged["Cd.csv"]).max()
 theta_min_abs_all = abs(df_merged["min_theta"].min())
-df_merged["Cd_norm"] = df_merged["Cd.csv"] / cd_max_all if cd_max_all != 0 else df_merged["Cd.csv"]
+df_merged["Cd_inv_norm"] = (1 / df_merged["Cd.csv"]) / cd_inv_max_all if cd_inv_max_all != 0 else (1 / df_merged["Cd.csv"])
 df_merged["min_theta_norm"] = df_merged["min_theta"] / theta_min_abs_all if theta_min_abs_all != 0 else df_merged["min_theta"]
 
 # Plot TUTTI I DATI (senza filtro stallo)
@@ -87,17 +87,22 @@ plt.tight_layout()
 plt.show()
 
 # Normalizza e calcola funzione obiettivo solo per i non stallo (come prima)
-cd_max = df_plot["Cd.csv"].max()
+cd_inv_max = (1 / df_plot["Cd.csv"]).max()
 theta_min_abs = abs(df_plot["min_theta"].min())
-df_plot["Cd_norm"] = df_plot["Cd.csv"] / cd_max if cd_max != 0 else df_plot["Cd.csv"]
+print(f"Max 1/Cd (non stallo): {cd_inv_max}, Min |theta| (non stallo): {theta_min_abs}")
+df_plot["Cd_inv_norm"] = (1 / df_plot["Cd.csv"]) / cd_inv_max if cd_inv_max != 0 else (1 / df_plot["Cd.csv"])
 df_plot["min_theta_norm"] = df_plot["min_theta"] / theta_min_abs if theta_min_abs != 0 else df_plot["min_theta"]
 
 # Definisci i pesi (modifica a piacere)
-w_theta = -0.6
-w_cd = -0.4
+w_theta = -0.55
+w_cd = 0.45
 
 # Calcola la funzione obiettivo come somma pesata
-df_plot["obiettivo"] = w_theta * df_plot["min_theta_norm"] + w_cd * df_plot["Cd_norm"]
+df_plot["obiettivo"] = w_theta * df_plot["min_theta_norm"] + w_cd * df_plot["Cd_inv_norm"]
+
+print(f"w_theta * df_plot['min_theta_norm']: {w_theta * df_plot['min_theta_norm']}")
+print(f"w_cd * df_plot['Cd_inv_norm']: {w_cd * df_plot['Cd_inv_norm']}")
+print(df_plot[["cartella", "Cd.csv", "min_theta", "obiettivo"]])
 
 # Plot SOLO NON STALLO (senza ordinamento)
 fig, ax = plt.subplots(figsize=(15, 8))
